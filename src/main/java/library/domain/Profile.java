@@ -8,6 +8,12 @@ public class Profile {
 	private String mail;
 	private Adress[] adresses;
 	
+	public Adress[] getAdresses() {
+		return adresses;
+	}
+	public void setAdresses(Adress[] adresses) {
+	
+	}
 	public String getName() {
 		return name;
 	}
