@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class Book {
     private int id;
-    private BookInformation bookInformation;
+//    private BookInformation bookInformation;
     private Publisher publisher;
     private LocalDate releaseDate;
     private LocalDate additionDate;
@@ -21,13 +21,13 @@ public class Book {
         this.id = id;
     }
 
-    public BookInformation getBookInformation() {
-        return bookInformation;
-    }
-
-    public void setBookInformation(BookInformation bookInformation) {
-        this.bookInformation = bookInformation;
-    }
+//    public BookInformation getBookInformation() {
+//        return bookInformation;
+//    }
+//
+//    public void setBookInformation(BookInformation bookInformation) {
+//        this.bookInformation = bookInformation;
+//    }
 
     public Publisher getPublisher() {
         return publisher;

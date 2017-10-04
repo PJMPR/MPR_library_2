@@ -3,7 +3,7 @@ package library.domain;
 public class Publisher {
     private String name;
     private int phoneNumber;
-    private String mailAdress;
+    private String emailAdress;
     private String website;
 
 
@@ -23,12 +23,12 @@ public class Publisher {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getMailAdress() {
-        return mailAdress;
+    public String getEmailAdress() {
+        return emailAdress;
     }
 
-    public void setMailAdress(String mailAdress) {
-        this.mailAdress = mailAdress;
+    public void setEmailAdress(String emailAdress) {
+        this.emailAdress = emailAdress;
     }
 
     public String getWebsite() {
