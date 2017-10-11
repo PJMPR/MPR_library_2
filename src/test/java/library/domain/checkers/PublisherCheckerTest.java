@@ -41,7 +41,7 @@ public class PublisherCheckerTest {
         assertTrue("Publisher is a valid publisher", isPublisherEmailValid);
         assertFalse("Publisher  with null email is invalid",isPublisherWithNullEmailValid);
         assertFalse("Publisher with empty email is invalid", isPublisherEmailEmptyStringValid);
-//hahahhaha
+        
         Publisher publisherWithWebsite = new Publisher();
         publisherWithWebsite.setWebsite("www.a.com");
         Publisher publisherWithNullWebsite = new Publisher();
@@ -56,6 +56,21 @@ public class PublisherCheckerTest {
         assertFalse("Publisher  with null Website is invalid",isPublisherWithNullWebsiteValid);
         assertFalse("Publisher with empty Website is invalid", isPublisherWebsiteEmptyStringValid);
 
+        
+        
+        Publisher publisherWithPhoneNumber = new Publisher();
+        publisherWithPhoneNumber.setPhoneNumber("560258027");
+        Publisher publisherWithNullPhoneNumber = new Publisher();
+        Publisher publisherWithEmptyStringPhoneNumber = new Publisher();
+        publisherWithEmptyStringPhoneNumber.setPhoneNumber("");
+        
+        boolean isPublisherWithPhoneNumberValid = checker.validPhoneNumber(publisherWithPhoneNumber);
+        boolean isPublisherWithNullPhoneNumberValid = checker.validPhoneNumber(publisherWithNullPhoneNumber);
+        boolean isPublisherWithEmptyStringPhoneNumber = checker.validPhoneNumber(publisherWithEmptyStringPhoneNumber);
+        
+        assertTrue("Publisher is a valid publisher", isPublisherWithPhoneNumberValid);
+        assertFalse("Publisher with null phone number is invalid", isPublisherWithNullPhoneNumberValid);
+        assrtFalse("Publisher with empty phone number is invalid", isPublisherWithEmptyStringPhoneNumber);
 
 
 
