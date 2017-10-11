@@ -11,19 +11,6 @@ public class AdressCheckerTest {
 	@Test
 	public void test() {
 		AdressChecker checker = new AdressChecker();
-
-		/*authorWithName.setName("a");
-		Author authorWithhNullName = new Author();
-		Author authorWithEnmptyStringName = new Author();
-		authorWithEnmptyStringName.setName("");
-		
-		boolean isActorValid = checker.validAuthorName(authorWithName);
-		boolean isActorWithNullNameValid = checker.validAuthorName(authorWithhNullName);
-		boolean isActorWithEmtyStrngNameValid = checker.validAuthorName(authorWithEnmptyStringName);
-		
-		assertTrue("Author with name should be a valid actor", isActorValid);
-		assertFalse("Author with null name should be invalid",isActorWithNullNameValid);
-		assertFalse("author with empty string name should be invalid", isActorWithEmtyStrngNameValid); */
 		
 		Adress adressWithNullStreet = new Adress();
 		Adress adressWithEmptyStringStreet = new Adress();
