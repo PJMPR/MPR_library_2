@@ -14,9 +14,8 @@ public class AdressChecker {
 		return adress.getCity() != null && !adress.getCity().isEmpty();
 	}
 
-	public boolean validAdressSPostal(Adress adress) {
-		// TODO Auto-generated method stub
-		return adress.getPostalCode() != null && !adress.getPostalCode().isEmpty();
+	public boolean validAdressPostal(Adress adress) {
+		return adress.getPostalCode() != null && !adress.getPostalCode().isEmpty() && adress.getPostalCode().matches("[0-9]{2}-[0-9]{3}");
 	}
 
 	public boolean validAdressApt(Adress adress) {
