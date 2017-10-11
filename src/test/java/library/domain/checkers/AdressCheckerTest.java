@@ -29,7 +29,7 @@ public class AdressCheckerTest {
 		Adress adressWithEmptyStringCity = new Adress();
 		adressWithEmptyStringCity.setCity("");
 		
-		boolean nullCityIsValid = checker.validAdressStreet(adressWithNullCity);
+		boolean nullCityIsValid = checker.validAdressCity(adressWithNullCity);
 		boolean isACityWithEmptyStringValid = checker.validAdressCity(adressWithEmptyStringCity);
 		
 		assertFalse("City with null field should be invalid", nullCityIsValid);
@@ -41,10 +41,14 @@ public class AdressCheckerTest {
 		Adress adressWithNullPostal = new Adress();
 		Adress adressWithEmptyStringPostal = new Adress();
 		adressWithEmptyStringPostal.setPostalCode("");
+		Adress adressWithWrongPostalStyle = new Adress();
+		adressWithWrongPostalStyle.setPostalCode("12345");
 		
-		boolean nullPostalIsValid = checker.validAdressSPostal(adressWithNullPostal);
-		boolean isAPostalWithEmptyStringValid = checker.validAdressStreet(adressWithEmptyStringPostal);
-		
+		boolean nullPostalIsValid = checker.validAdressPostal(adressWithNullPostal);
+		boolean isAPostalWithEmptyStringValid = checker.validAdressPostal(adressWithEmptyStringPostal);
+		boolean isPostalCodeValid = checker.validAdressPostal(adressWithWrongPostalStyle);
+				
+		assertFalse("Wrong postal style should be invalid", isPostalCodeValid);
 		assertFalse("Postal code with null field should be invalid", nullPostalIsValid);
 		assertFalse("Adress with empty postal code name should be invalid", isAPostalWithEmptyStringValid);
 	}	
