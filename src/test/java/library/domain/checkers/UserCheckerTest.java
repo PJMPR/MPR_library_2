@@ -4,8 +4,7 @@ package library.domain.checkers;
 import library.domain.User;
 import org.junit.Test;
 
-import static org.testng.AssertJUnit.assertFalse;
-import static org.testng.AssertJUnit.assertTrue;
+import static org.junit.Assert.*;
 
 public class UserCheckerTest {
 
