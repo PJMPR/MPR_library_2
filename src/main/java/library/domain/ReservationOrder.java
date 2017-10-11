@@ -8,7 +8,6 @@ public class ReservationOrder {
 	private User user;
 	private Date date;
 
-
 	public ReservationOrder(User user ,BookInformation bookInformation) {
 		this.bookInformation = bookInformation;
 		this.user = user;
@@ -25,5 +24,13 @@ public class ReservationOrder {
 
 	public Date getDate() {
 		return date;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 }
