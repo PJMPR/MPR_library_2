@@ -9,12 +9,7 @@ public class ReservationOrder {
 	private Date date;
 
 
-	public ReservationOrder(User user /*,BookInformation bookInformation*/) {
-		//this.bookInformation = bookInformation;
-		this.user = user;
-		date = new Date();
-	}
-	
+
 	public User getUser() {
 		return user;
 	}
@@ -22,5 +17,13 @@ public class ReservationOrder {
 
 	public Date getDate() {
 		return date;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 }
