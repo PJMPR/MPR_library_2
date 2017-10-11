@@ -9,20 +9,29 @@ public class BorrowingOrder {
 	private Book book;
 	private Date dateFrom;
 	private Date dateTo;
-	
-	public BorrowingOrder(User user, Book book) {
-		this.user = user;
-		this.book = book;
+
+
+	public BorrowingOrder(){
 		
-		SetDates();
 	}
 	
-	private void SetDates() {
-		Calendar calInstance = Calendar.getInstance();
-		dateFrom = calInstance.getTime();
-		calInstance.add(Calendar.MONTH, 1);
-		dateTo = calInstance.getTime();
+	public void setDateFrom(Date dateFrom) {
+		this.dateFrom = dateFrom;
 	}
+
+
+	public void setDateTo(Date dateTo) {
+		this.dateTo = dateTo;
+	}
+	
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public void setBook(Book book) {
+		this.book = book;
+	}
+
 
 	public User getUser() {
 		return user;
@@ -39,6 +48,5 @@ public class BorrowingOrder {
 	public Date getDateTo() {
 		return dateTo;
 	}
-	
-	
+		
 }
