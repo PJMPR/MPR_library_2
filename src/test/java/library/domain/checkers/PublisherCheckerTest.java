@@ -13,10 +13,10 @@ public class PublisherCheckerTest {
     public void test_publisher_checker_should_check_publisher_name() {
         PublisherChecker checker = new PublisherChecker();
 
-        Publisher publisherWithName= new Publisher;
+        Publisher publisherWithName= new Publisher();
         publisherWithName.setName("b");
-        Publisher publisherWithNullName= new Publisher;
-        Publisher publisherWithEmptyName= new Publisher;
+        Publisher publisherWithNullName= new Publisher();
+        Publisher publisherWithEmptyName= new Publisher();
         publisherWithEmptyName.setName("");
 
 
@@ -28,10 +28,10 @@ public class PublisherCheckerTest {
         assertFalse("Publisher  with null name is invalid",isPublisherWithNullNameValid);
         assertFalse("Publisher with empty name is invalid", isPublisherWithEmtyStrngNameValid);
 
-        Publisher publisherWithEmail = new Publisher;
+        Publisher publisherWithEmail = new Publisher();
         publisherWithEmail.setEmailAdress("a@com");
-        Publisher publisherWithNullEmail = new Publisher;
-        Publisher publisherWithEmptyStringEmail = new Publisher;
+        Publisher publisherWithNullEmail = new Publisher();
+        Publisher publisherWithEmptyStringEmail = new Publisher();
         publisherWithEmptyStringEmail.setEmailAdress("");
 
         boolean isPublisherEmailValid = checker.validEmailAdress(publisherWithEmail);
@@ -42,10 +42,10 @@ public class PublisherCheckerTest {
         assertFalse("Publisher  with null email is invalid",isPublisherWithNullEmailValid);
         assertFalse("Publisher with empty email is invalid", isPublisherEmailEmptyStringValid);
 
-        Publisher publisherWithWebsite = new Publisher;
+        Publisher publisherWithWebsite = new Publisher();
         publisherWithWebsite.setWebsite("www.a.com");
-        Publisher publisherWithNullWebsite = new Publisher;
-        Publisher publisherWithEmptyStringWebsite = new Publisher;
+        Publisher publisherWithNullWebsite = new Publisher();
+        Publisher publisherWithEmptyStringWebsite = new Publisher();
         publisherWithEmptyStringWebsite.setWebsite("");
 
         boolean isPublisherWebsiteValid = checker.validWebsite(publisherWithWebsite);
