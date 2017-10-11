@@ -41,7 +41,7 @@ public class PublisherCheckerTest {
         assertTrue("Publisher is a valid publisher", isPublisherEmailValid);
         assertFalse("Publisher  with null email is invalid",isPublisherWithNullEmailValid);
         assertFalse("Publisher with empty email is invalid", isPublisherEmailEmptyStringValid);
-
+//hahahhaha
         Publisher publisherWithWebsite = new Publisher();
         publisherWithWebsite.setWebsite("www.a.com");
         Publisher publisherWithNullWebsite = new Publisher();
