@@ -13,6 +13,9 @@ public class Adress {
 		this.street = street;
 		this.apNumber = apNumber;
 	}
+	public Adress() {
+		super();
+	}
 	public String getCity() {
 		return city;
 	}
