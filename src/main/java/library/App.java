@@ -33,6 +33,7 @@ public class App
     	publisher.setEmailAdress("vadenecum@gmail.com");
     	publisher.setPhoneNumber(123456789);
     	publisher.setWebsite("vadenecum.com");
+    	publisherRepository.add(publisher);
     	
     	NotificationRepository notificationRepository = new NotificationRepository();
     	notificationRepository.createTable();
