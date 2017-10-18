@@ -1,13 +1,14 @@
 package library.domain;
 
-import java.time.LocalDate;
+import java.util.Date;
+
 
 public class Book {
     private int id;
-//    private BookInformation bookInformation;
+    private BookInformation bookInformation;
     private Publisher publisher;
-    private LocalDate releaseDate;
-    private LocalDate additionDate;
+    private Date releaseDate;
+    private Date additionDate;
     private String language;
     private Section section;
     private boolean isAvailable;
@@ -21,13 +22,13 @@ public class Book {
         this.id = id;
     }
 
-//    public BookInformation getBookInformation() {
-//        return bookInformation;
-//    }
-//
-//    public void setBookInformation(BookInformation bookInformation) {
-//        this.bookInformation = bookInformation;
-//    }
+    public BookInformation getBookInformation() {
+        return bookInformation;
+    }
+
+    public void setBookInformation(BookInformation bookInformation) {
+        this.bookInformation = bookInformation;
+    }
 
     public Publisher getPublisher() {
         return publisher;
@@ -37,19 +38,19 @@ public class Book {
         this.publisher = publisher;
     }
 
-    public LocalDate getReleaseDate() {
+    public Date getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(LocalDate releaseDate) {
+    public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
     }
 
-    public LocalDate getAdditionDate() {
+    public Date getAdditionDate() {
         return additionDate;
     }
 
-    public void setAdditionDate(LocalDate additionDate) {
+    public void setAdditionDate(Date additionDate) {
         this.additionDate = additionDate;
     }
 

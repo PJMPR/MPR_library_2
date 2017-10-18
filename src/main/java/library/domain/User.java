@@ -5,11 +5,7 @@ public class User {
 	private String login;
 	private String password;
 	private boolean status;
-	
-	
-	
-	
-	
+
 	public String getLogin() {
 		return login;
 	}
@@ -28,9 +24,5 @@ public class User {
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
-	
-	
-	
-	
 
 }

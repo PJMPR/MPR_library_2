@@ -12,7 +12,10 @@ public class Author {
         this.surname = surname;
     }
 
-    public String getName() {
+    public Author() {
+	}
+
+	public String getName() {
         return name;
     }
 
