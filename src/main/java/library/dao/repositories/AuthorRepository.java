@@ -15,6 +15,11 @@ public class AuthorRepository {
 	private boolean tableExists;
 	
 	PreparedStatement insert;
+    PreparedStatement selectById;
+    PreparedStatement selectMaxId;
+    PreparedStatement slectByPage;
+    PreparedStatement count;
+  
 	
 	public AuthorRepository() {
 
@@ -24,6 +29,9 @@ public class AuthorRepository {
 			insert = connection.prepareStatement(""
 					+ "INSERT INTO author(name,secondname,surname)"
 					+ "VALUES(?,?,?)");
+			
+			selectById = connection.prepareStatement(""
+					+ "SELECT * FROM author WHERE id=?");
 			
 			ResultSet rs = connection.getMetaData().getTables(null, null, null, null);
 			
@@ -37,6 +45,27 @@ public class AuthorRepository {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+	}
+	
+	public Author get(int id){
+		Author author = null;
+				
+		try {
+			selectById.setInt(1, id);
+			ResultSet rs = selectById.executeQuery();
+			while(rs.next()){
+				author=new Author();
+				author.setName(rs.getString("name"));
+				author.setSecondName(rs.getString("secondname"));
+				author.setSurname(rs.getString("surname"));
+				author.setId(rs.getInt("id"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+				
+		return author;
 		
 	}
 	

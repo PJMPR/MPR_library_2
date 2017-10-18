@@ -2,6 +2,7 @@ package library.domain;
 
 public class Author {
 
+	private int id;
     private String name;
     private String secondName;
     private String surname;
@@ -13,6 +14,15 @@ public class Author {
     }
 
     public Author() {
+	}
+
+    
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getName() {
