@@ -1,14 +1,11 @@
 package library;
 
+import library.dao.repositories.AdressRepository;
 import library.dao.repositories.AuthorRepository;
+import library.dao.repositories.PublisherRepository;
 import library.dao.repositories.BorrowingOrderRepository;
 import library.dao.repositories.NotificationRepository;
 import library.dao.repositories.ReservationOrderRepository;
-
-/**
- * Hello world!
- *
- */
 public class App 
 {
     public static void main( String[] args )
@@ -16,6 +13,11 @@ public class App
     	AuthorRepository authorRepository = new AuthorRepository();
     	authorRepository.createTable();
     	
+    	AdressRepository adressRepository = new AdressRepository();
+    	adressRepository.createtable();
+    	
+    	PublisherRepository publisherRepository = new PublisherRepository();
+    	publisherRepository.createTable();
     	NotificationRepository notificationRepository = new NotificationRepository();
     	notificationRepository.createTable();
     	
