@@ -1,11 +1,10 @@
 package library.domain.checkers;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import library.domain.Profile;
-
+import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import library.domain.Profile;
 
 public class ProfileCheckerTest {
 
