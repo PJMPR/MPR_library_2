@@ -8,11 +8,13 @@ import library.dao.repositories.PublisherRepository;
 import library.dao.repositories.BorrowingOrderRepository;
 import library.dao.repositories.NotificationRepository;
 import library.dao.repositories.ReservationOrderRepository;
+import library.domain.Adress;
 import library.domain.Author;
 import library.domain.Book;
 import library.domain.BookInformation;
 import library.domain.Publisher;
 import library.domain.Section;
+import library.domain.Publisher;
 public class App 
 {
     public static void main( String[] args )
@@ -25,9 +27,18 @@ public class App
     	
     	AdressRepository adressRepository = new AdressRepository();
     	adressRepository.createtable();
+    	Adress adress = new Adress("Gdansk", "32-456", "Grunwaldzka", "121");
+    	adressRepository.add(adress);
     	
     	PublisherRepository publisherRepository = new PublisherRepository();
     	publisherRepository.createTable();
+    	Publisher publisher = new Publisher();
+    	publisher.setName("Vadenecum");
+    	publisher.setEmailAdress("vadenecum@gmail.com");
+    	publisher.setPhoneNumber(123456789);
+    	publisher.setWebsite("vadenecum.com");
+    	publisherRepository.add(publisher);
+    	
     	NotificationRepository notificationRepository = new NotificationRepository();
     	notificationRepository.createTable();
     	

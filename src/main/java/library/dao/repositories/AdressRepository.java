@@ -2,19 +2,28 @@ package library.dao.repositories;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import library.domain.Adress;
 
 public class AdressRepository {
 	
 	Connection connection;
 	private boolean tableExist;
 	
+	PreparedStatement insert;
+	
 	public AdressRepository(){
 		
 		try{
 			connection = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/workdb");
+			
+			insert = connection.prepareStatement(""
+					+ "INSERT INTO adress(city,postalcode,street,apnumber)"
+					+ "VALUES(?,?,?,?)");
 			
 			ResultSet rs = connection.getMetaData().getTables(null, null, null, null);
 			
@@ -26,6 +35,20 @@ public class AdressRepository {
 			}
 			
 		}catch(SQLException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void add(Adress adress)
+	{
+		try {
+			insert.setString(1,adress.getCity());
+			insert.setString(2,adress.getPostalCode());
+			insert.setString(3,adress.getStreet());
+			insert.setString(4,adress.getApNumber());
+			insert.executeUpdate();
+			
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
