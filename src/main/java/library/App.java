@@ -8,12 +8,16 @@ import library.dao.repositories.PublisherRepository;
 import library.dao.repositories.BorrowingOrderRepository;
 import library.dao.repositories.NotificationRepository;
 import library.dao.repositories.ReservationOrderRepository;
+import library.domain.Author;
 public class App 
 {
     public static void main( String[] args )
     {
     	AuthorRepository authorRepository = new AuthorRepository();
     	authorRepository.createTable();
+    	Author author = new Author("Jan", "Maciej", "Kowalski");
+    	authorRepository.add(author);
+    	
     	
     	AdressRepository adressRepository = new AdressRepository();
     	adressRepository.createtable();

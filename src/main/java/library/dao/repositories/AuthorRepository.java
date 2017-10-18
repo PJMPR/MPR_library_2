@@ -2,19 +2,28 @@ package library.dao.repositories;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import library.domain.Author;
 
 public class AuthorRepository {
 
 	Connection connection;
 	private boolean tableExists;
 	
+	PreparedStatement insert;
+	
 	public AuthorRepository() {
 
 		try {
 			connection = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/workdb");
+			
+			insert = connection.prepareStatement(""
+					+ "INSERT INTO author(name,secondname,surname)"
+					+ "VALUES(?,?,?)");
 			
 			ResultSet rs = connection.getMetaData().getTables(null, null, null, null);
 			
@@ -24,6 +33,20 @@ public class AuthorRepository {
 					break;
 				}
 			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void add(Author author){
+		
+		try {
+			insert.setString(1, author.getName());
+			insert.setString(2, author.getSecondName());
+			insert.setString(3, author.getSurname());
+			insert.executeUpdate();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
