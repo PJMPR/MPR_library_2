@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Book {
     private int id;
-//    private BookInformation bookInformation;
+    private BookInformation bookInformation;
     private Publisher publisher;
     private Date releaseDate;
     private Date additionDate;
@@ -22,13 +22,13 @@ public class Book {
         this.id = id;
     }
 
-//    public BookInformation getBookInformation() {
-//        return bookInformation;
-//    }
-//
-//    public void setBookInformation(BookInformation bookInformation) {
-//        this.bookInformation = bookInformation;
-//    }
+    public BookInformation getBookInformation() {
+        return bookInformation;
+    }
+
+    public void setBookInformation(BookInformation bookInformation) {
+        this.bookInformation = bookInformation;
+    }
 
     public Publisher getPublisher() {
         return publisher;
