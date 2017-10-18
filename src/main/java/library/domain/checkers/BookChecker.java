@@ -22,6 +22,11 @@ public class BookChecker {
         return book.getPublisher() != null;
     }
 
+    public boolean validDate(Book book)
+    {
+        return book.getAdditionDate().isAfter(book.getReleaseDate()) && book.getAdditionDate()!=null && book.getReleaseDate()!=null;
+    }
+
     public boolean validTitle(BookInformation book)
     {
         return !book.getTitle().isEmpty() && book.getTitle() !=null;
@@ -31,4 +36,5 @@ public class BookChecker {
     {
         return !book.getAuthors().isEmpty() && book.getAuthors() != null;
     }
+
 }

@@ -1,8 +1,11 @@
-package library.domain.checkers;
+package library;
 
 import library.domain.*;
+import library.domain.checkers.BookChecker;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -74,15 +77,34 @@ class BookCheckerTest {
     }
 
     @Test
-    void validList()
+    void validDate()
     {
         BookChecker checker = new BookChecker();
 
+        Book BookChecker = new Book();
+        LocalDate today = LocalDate.now();
+        LocalDate tomorrow = today.plus(1, ChronoUnit.DAYS);
+        BookChecker.setAdditionDate(tomorrow);
+        BookChecker.setReleaseDate(today);
+
+        boolean isDateValid = checker.validDate(BookChecker);
+
+        assertTrue(isDateValid);
+    }
+
+    @Test
+    void validList()
+    {
+        BookChecker checker = new BookChecker();
+        ArrayList<Author> authors = new ArrayList<>();
+        authors.add(new Author("X","Y","Z"));
+
         BookInformation BookChecker = new BookInformation();
-        BookChecker.setAuthors(new ArrayList<Author>());
+        BookChecker.setAuthors(authors);
 
         boolean isListValid = checker.validList(BookChecker);
 
         assertTrue(isListValid);
     }
+
 }
