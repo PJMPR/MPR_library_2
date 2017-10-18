@@ -15,7 +15,6 @@ public class PublisherRepository {
     private boolean tableExists;
    
     PreparedStatement insert;
-  
     public PublisherRepository() {
 
         try {
@@ -24,9 +23,11 @@ public class PublisherRepository {
             insert = connection.prepareStatement(""
                     + "INSERT INTO publisher(name,phoneNumber,emailAdress,website)"
                     + "VALUES(?,?,?,?)");
-          
+            
             ResultSet rs = connection.getMetaData().getTables(null, null, null, null);
           
+            
+            
             while(rs.next()){
                 if(rs.getString("TABLE_NAME").equalsIgnoreCase("publisher")){
                     tableExists = true;
