@@ -2,19 +2,28 @@ package library.dao.repositories;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import library.domain.Book;
 
 public class BookRepository {
 	
 Connection connection;
 private boolean tableExists;
+
+PreparedStatement insert;
 	
 	public BookRepository() {
 
 		try {
 			connection = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/workdb");
+			
+			insert = connection.prepareStatement(""
+					+ "INSERT INTO book(publisher,language,section,isAvailable)"
+					+ "VALUES(?,?,?,?)");
 			
 			ResultSet rs = connection.getMetaData().getTables(null, null, null, null);
 			
@@ -24,6 +33,21 @@ private boolean tableExists;
 					break;
 				}
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+public void add(Book book){
+		
+		try {
+			insert.setString(1, book.getPublisher().getName());
+			insert.setString(2, book.getLanguage());
+			insert.setString(3, book.getSection().getName());
+			insert.setString(4, (book.isAvailable() ? "Y" : "N"));
+			insert.executeUpdate();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
