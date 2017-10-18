@@ -2,17 +2,28 @@ package library.dao.repositories;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 public class AuthorRepository {
 
 	Connection connection;
+	private boolean tableExists;
 	
 	public AuthorRepository() {
 
 		try {
 			connection = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/workdb");
+			
+			ResultSet rs = connection.getMetaData().getTables(null, null, null, null);
+			
+			while(rs.next()){
+				if(rs.getString("TABLE_NAME").equalsIgnoreCase("author")){
+					tableExists = true;
+					break;
+				}
+			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -31,7 +42,8 @@ public class AuthorRepository {
 		
 		try {
 			Statement createTable = connection.createStatement();
-			createTable.executeUpdate(createTableSql);
+			if(!tableExists)
+				createTable.executeUpdate(createTableSql);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
