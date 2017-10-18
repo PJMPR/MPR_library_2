@@ -24,6 +24,7 @@ public class App
     	
     	PublisherRepository publisherRepository = new PublisherRepository();
     	publisherRepository.createTable();
+    	
     	NotificationRepository notificationRepository = new NotificationRepository();
     	notificationRepository.createTable();
     	
