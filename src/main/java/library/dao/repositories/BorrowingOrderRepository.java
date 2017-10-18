@@ -2,19 +2,30 @@ package library.dao.repositories;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+
+import library.domain.BorrowingOrder;
 
 public class BorrowingOrderRepository {
 
 	Connection connection;
 	private boolean tableExists;
 	
+	PreparedStatement insert;
+	
 	public BorrowingOrderRepository() {
 
 		try {
 			connection = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/workdb");
+			
+			insert = connection.prepareStatement(""
+					+ "INSERT INTO borrowingorder(datefrom,dateto)"
+					+ "VALUES(?,?)");			
+			
 			
 			ResultSet rs = connection.getMetaData().getTables(null, null, null, null);
 			
@@ -24,6 +35,19 @@ public class BorrowingOrderRepository {
 					break;
 				}
 			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+public void add(BorrowingOrder borrowingOrder){
+		
+		try {
+			insert.setString(1, borrowingOrder.getDateFrom().toString());
+			insert.setString(2, borrowingOrder.getDateTo().toString());
+			insert.executeUpdate();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -27,6 +27,13 @@ public class Notification {
 		this.notification_type = notification_type;
 	}
 	
+	public Notification(User user, String message, String notification_type) {
+		super();
+		this.user = user;
+		this.message = message;
+		this.notification_type = notification_type;
+	}
+	
 	
 
 }

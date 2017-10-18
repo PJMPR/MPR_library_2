@@ -1,6 +1,6 @@
 package library.domain;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class ReservationOrder {
 
@@ -10,7 +10,7 @@ public class ReservationOrder {
 	}
 
 	private User user;
-	private Date date;
+	private LocalDate date;
 
 	public BookInformation getBookInformation() {
 		return bookInformation;
@@ -20,7 +20,7 @@ public class ReservationOrder {
 		return user;
 	}
 
-	public Date getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
@@ -28,7 +28,7 @@ public class ReservationOrder {
 		this.user = user;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 }
