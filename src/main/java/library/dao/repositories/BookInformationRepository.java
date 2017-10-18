@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import library.domain.Author;
 import library.domain.BookInformation;
 
 public class BookInformationRepository {
@@ -16,7 +15,8 @@ Connection connection;
 private boolean tableExists;
 
 PreparedStatement insert;
-	
+PreparedStatement selectById;
+
 	public BookInformationRepository() {
 
 		try {
@@ -25,6 +25,9 @@ PreparedStatement insert;
 			insert = connection.prepareStatement(""
 					+ "INSERT INTO bookInformation(title)"
 					+ "VALUES(?)"); 
+			
+			selectById = connection.prepareStatement(""
+					+ "SELECT * FROM bookInformation WHERE id=?");
 			
 			ResultSet rs = connection.getMetaData().getTables(null, null, null, null);
 			
@@ -37,6 +40,24 @@ PreparedStatement insert;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+	}
+	
+	public BookInformation get(int id){
+		BookInformation bookInformation = null;
+				
+		try {
+			selectById.setInt(1, id);
+			ResultSet rs = selectById.executeQuery();
+			while(rs.next()){
+				bookInformation=new BookInformation();
+				bookInformation.setTitle(rs.getString("title"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+				
+		return bookInformation;
 		
 	}
 	

@@ -14,6 +14,7 @@ public class BookRepository {
 Connection connection;
 private boolean tableExists;
 
+PreparedStatement selectById;
 PreparedStatement insert;
 	
 	public BookRepository() {
@@ -24,6 +25,9 @@ PreparedStatement insert;
 			insert = connection.prepareStatement(""
 					+ "INSERT INTO book(publisher,language,section,isAvailable)"
 					+ "VALUES(?,?,?,?)");
+			
+			selectById = connection.prepareStatement(""
+					+ "SELECT * FROM book WHERE id=?");
 			
 			ResultSet rs = connection.getMetaData().getTables(null, null, null, null);
 			
@@ -37,6 +41,25 @@ PreparedStatement insert;
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public Book get(int id){
+		Book book = null;
+				
+		try {
+			selectById.setInt(1, id);
+			ResultSet rs = selectById.executeQuery();
+			while(rs.next()){
+				book=new Book();
+				book.setLanguage(rs.getString("language"));
+				book.setAvailable(rs.getString("surname").contentEquals("Y"));
+				book.setId(rs.getInt("id"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+				
+		return book;
 	}
 	
 public void add(Book book){

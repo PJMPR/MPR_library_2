@@ -14,7 +14,6 @@ import library.domain.Book;
 import library.domain.BookInformation;
 import library.domain.Publisher;
 import library.domain.Section;
-import library.domain.Publisher;
 public class App 
 {
     public static void main( String[] args )
@@ -59,8 +58,6 @@ public class App
     	book.setAdditionDate(null);
     	book.setAvailable(true);
     	book.setLanguage("polski");
-    	Publisher publisher = new Publisher();
-    	publisher.setName("Testowy wydawca");
     	book.setPublisher(publisher);
     	Section section = new Section();
     	section.setName("Testowy rodzaj");
