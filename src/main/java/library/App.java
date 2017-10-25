@@ -16,6 +16,7 @@ import library.domain.Publisher;
 import library.domain.Section;
 import library.dao.repositories.*;
 import library.domain.*;
+import library.examples.AdressRepositoryExample;
 import library.examples.AuthorRepositoryExample;
 public class App 
 {
@@ -23,6 +24,7 @@ public class App
     {
     	
     	AuthorRepositoryExample.execute();
+    	AdressRepositoryExample.execute();
     	
         System.out.println( "Koniec" );
     }
