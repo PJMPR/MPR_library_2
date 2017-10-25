@@ -11,25 +11,11 @@ import java.util.List;
 
 import library.domain.Notification;
 
-public class NotificationRepository {
-
-	Connection connection;
-	private boolean tableExists;
+public class NotificationRepository extends RepositoryBase{
 	
-	PreparedStatement insert;
-	PreparedStatement selectById;
-    PreparedStatement lastId;
-    PreparedStatement selectByUser;
-    PreparedStatement selectByPage;
-    PreparedStatement count;
-    PreparedStatement selectByMessageType;
-    PreparedStatement delete;
-    PreparedStatement update;
-	
-	public NotificationRepository() {
+	public NotificationRepository(Connection connection) {
 		try {
-			
-			connection = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/workdb");
+			_connection = connection;
 			
 			insert = connection.prepareStatement(""
 					+ "INSERT INTO notification(message,notification_type)"
@@ -102,32 +88,6 @@ public void update(Notification notification){
 	}
 }
 
-public int count(){
-	
-	try {
-		ResultSet rs = count.executeQuery();
-		while(rs.next())
-			return rs.getInt(1);
-		
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}
-	return 0;
-}
-
-public int lastId(){
-	
-	try {
-		ResultSet rs = lastId.executeQuery();
-		while(rs.next())
-			return rs.getInt(1);
-		
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}
-	return 0;
-}
-
 public List<Notification> getPage(int offset, int limit){
 	
 	List<Notification> result = new ArrayList<Notification>();
@@ -138,8 +98,8 @@ public List<Notification> getPage(int offset, int limit){
 		while(rs.next()){
 			Notification a = new Notification();
 			a.setId(rs.getInt("id"));
-			a.setMessage(rs.getString("name"));
-			a.setNotification_type(rs.getString("secondname"));
+			a.setMessage(rs.getString("message"));
+			a.setNotification_type(rs.getString("notification_type"));
 			result.add(a);
 		}
 	} catch (SQLException e) {
@@ -156,8 +116,8 @@ public Notification get(int id){
 		ResultSet rs = selectById.executeQuery();
 		while(rs.next()){
 			notification=new Notification();
-			notification.setMessage(rs.getString("name"));
-			notification.setNotification_type(rs.getString("secondname"));
+			notification.setMessage(rs.getString("message"));
+			notification.setNotification_type(rs.getString("notification_type"));
 			notification.setId(rs.getInt("id"));
 		}
 	} catch (SQLException e) {
@@ -190,9 +150,9 @@ public void add(Notification notification){
 				+ ")";
 		
 		try {
-			Statement createTable = connection.createStatement();
+			Statement createTable = _connection.createStatement();
 			if(!tableExists)
-			createTable.executeUpdate(createTableSql);
+				createTable.executeUpdate(createTableSql);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

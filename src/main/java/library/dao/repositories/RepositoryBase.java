@@ -13,6 +13,8 @@ public abstract class RepositoryBase {
 	protected PreparedStatement selectById;
 	protected PreparedStatement lastId;
 	protected PreparedStatement selectByPage;
+	protected PreparedStatement selectByUser;
+	protected PreparedStatement selectByMessageType;
 	protected PreparedStatement count;
 	protected PreparedStatement delete;
 	protected PreparedStatement update;
