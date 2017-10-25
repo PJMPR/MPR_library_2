@@ -60,8 +60,6 @@ public class App
     	book.setAdditionDate(null);
     	book.setAvailable(true);
     	book.setLanguage("polski");
-    	Publisher publisher = new Publisher();
-    	publisher.setName("Testowy wydawca");
     	book.setPublisher(publisher);
     	Section section = new Section();
     	section.setName("Testowy rodzaj");
