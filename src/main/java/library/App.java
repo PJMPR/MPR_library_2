@@ -13,8 +13,8 @@ public class App
     	try(Connection connection = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/workdb")) {
 			
 	    	AuthorRepositoryExample.execute(connection);
+	    	AdressRepositoryExample.execute(connection);
 	    	UserRepositoryExample.execute(connection);
-	    	AdressRepositoryExample.execute();
 	    	PublisherRepositoryExample.execute();
 			BookInformationRepositoryExample.execute();
 	    	

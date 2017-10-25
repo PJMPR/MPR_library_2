@@ -1,16 +1,16 @@
 package library.examples;
 
+import java.sql.Connection;
 import java.util.List;
 
 import library.dao.repositories.AdressRepository;
 import library.domain.Adress;
-import library.domain.Author;
 
 public class AdressRepositoryExample {
 
 	
-	public static void execute(){
-		AdressRepository adressRepo = new AdressRepository();
+	public static void execute(Connection connection){
+		AdressRepository adressRepo = new AdressRepository(connection);
 		adressRepo.createtable();
 		Adress adress = new Adress("Gdansk", "34-123", "Brzegi", "55");
 		adressRepo.add(adress);
