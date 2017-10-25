@@ -25,6 +25,14 @@ public class AuthorRepositoryExample {
     		System.out.println(a.getId());
     	}
 		
+    	Author toDelete = authors.get(0);
+    	authorRepository.delete(toDelete);
+    	
+    	Author updateName = authors.get(1);
+    	updateName.setName("Adam");
+    	
+    	authorRepository.update(updateName);
+    	
 	}
 	
 }
