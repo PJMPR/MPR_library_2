@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import library.domain.Author;
 
@@ -16,8 +18,8 @@ public class AuthorRepository {
 	
 	PreparedStatement insert;
     PreparedStatement selectById;
-    PreparedStatement selectMaxId;
-    PreparedStatement slectByPage;
+    PreparedStatement lastId;
+    PreparedStatement selectByPage;
     PreparedStatement count;
   
 	
@@ -33,6 +35,19 @@ public class AuthorRepository {
 			selectById = connection.prepareStatement(""
 					+ "SELECT * FROM author WHERE id=?");
 			
+			lastId = connection.prepareStatement(""
+					+ "SELECT MAX(id) FROM author"
+					+ "");
+			
+			count = connection.prepareStatement(""
+					+ "SELECT COUNT(*) FROM author"
+					+ "");
+			
+			selectByPage = connection.prepareStatement(""
+					+ "SELECT * FROM author OFFSET ? LIMIT ?"
+					+ "");
+			
+			
 			ResultSet rs = connection.getMetaData().getTables(null, null, null, null);
 			
 			while(rs.next()){
@@ -46,6 +61,52 @@ public class AuthorRepository {
 			e.printStackTrace();
 		}
 		
+	}
+
+	public int count(){
+		
+		try {
+			ResultSet rs = count.executeQuery();
+			while(rs.next())
+				return rs.getInt(1);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	public int lastId(){
+		
+		try {
+			ResultSet rs = lastId.executeQuery();
+			while(rs.next())
+				return rs.getInt(1);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+	public List<Author> getPage(int offset, int limit){
+		
+		List<Author> result = new ArrayList<Author>();
+		try {
+			selectByPage.setInt(1, offset);
+			selectByPage.setInt(2, limit);
+			ResultSet rs = selectByPage.executeQuery();
+			while(rs.next()){
+				Author a = new Author();
+				a.setId(rs.getInt("id"));
+				a.setName(rs.getString("name"));
+				a.setSecondName(rs.getString("secondname"));
+				a.setSurname(rs.getString("surname"));
+				result.add(a);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 	
 	public Author get(int id){
