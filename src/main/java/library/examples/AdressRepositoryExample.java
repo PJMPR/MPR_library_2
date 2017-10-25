@@ -4,6 +4,7 @@ import java.util.List;
 
 import library.dao.repositories.AdressRepository;
 import library.domain.Adress;
+import library.domain.Author;
 
 public class AdressRepositoryExample {
 
@@ -24,5 +25,13 @@ public class AdressRepositoryExample {
     	for(Adress a: adresses){
     		System.out.println(a.getId());
     	}
+    	
+    	Adress toDelete = adresses.get(0);
+    	adressRepo.delete(toDelete);
+    	
+    	Adress updateName = adresses.get(1);
+    	updateName.setCity("Radom");
+    	
+    	adressRepo.update(updateName);
 	}
 }

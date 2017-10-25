@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import library.domain.Adress;
-import library.domain.Author;
 
 public class AdressRepository {
 	
@@ -22,7 +21,8 @@ public class AdressRepository {
     PreparedStatement lastId;
 	PreparedStatement selectByPage;
 	PreparedStatement count;
-	  
+    PreparedStatement delete;
+    PreparedStatement update;  
 	
 	public AdressRepository(){
 		
@@ -48,6 +48,12 @@ public class AdressRepository {
 					+ "SELECT * FROM adress OFFSET ? LIMIT ?"
 					+ "");
 			
+			delete = connection.prepareStatement(""
+					+ "DELETE FROM adress WHERE id=?");
+			
+			update = connection.prepareStatement(""
+					+ "UPDATE adress SET (city, postalcode, street, apnumber)=(?,?,?,?) WHERE id=?");
+			
 			ResultSet rs = connection.getMetaData().getTables(null, null, null, null);
 			
 			while(rs.next()){
@@ -58,6 +64,31 @@ public class AdressRepository {
 			}
 			
 		}catch(SQLException e){
+			e.printStackTrace();
+		}
+	}
+	
+public void delete(Adress adress){
+		
+		try {
+			delete.setInt(1, adress.getId());
+			delete.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void update(Adress adress){
+		
+		try {
+			
+			update.setString(1, adress.getCity());
+			update.setString(2, adress.getPostalCode());
+			update.setString(3, adress.getStreet());
+			update.setString(4, adress.getApNumber());
+			update.setInt(5, adress.getId());
+			update.executeUpdate();
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
