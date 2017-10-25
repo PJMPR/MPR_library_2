@@ -23,6 +23,8 @@ public class UserRepository {
     PreparedStatement lastId;
     PreparedStatement selectByPage;
     PreparedStatement count;
+    PreparedStatement delete;
+    PreparedStatement update;
 
     public UserRepository(){
 
@@ -48,6 +50,13 @@ public class UserRepository {
 					+ "SELECT COUNT(*) FROM user"
 					+ "");
 
+
+			delete = connection.prepareStatement(""
+					+ "DELETE FROM user WHERE id=?");
+			
+			update = connection.prepareStatement(""
+					+ "UPDATE user SET (login, password, status)=(?,?,?) WHERE id=?");
+			
             ResultSet rs = connection.getMetaData().getTables(null,null,null,null);
 
             while(rs.next()){
@@ -61,6 +70,29 @@ public class UserRepository {
             e.printStackTrace();
         }
     }
+public void delete(User user){
+		
+		try {
+			delete.setInt(1, user.getId());
+			delete.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void update(User user){
+		
+		try {
+			
+			update.setString(1, user.getLogin());
+			update.setString(2, user.getPassword());
+			update.setBoolean(3, user.isStatus());
+			update.setInt(4, user.getId());
+			update.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
     
     public int count(){
 		
