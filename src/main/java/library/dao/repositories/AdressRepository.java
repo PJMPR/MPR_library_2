@@ -1,8 +1,6 @@
 package library.dao.repositories;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,23 +9,12 @@ import java.util.List;
 
 import library.domain.Adress;
 
-public class AdressRepository {
+public class AdressRepository extends RepositoryBase{
 	
-	Connection connection;
-	private boolean tableExist;
-	
-	PreparedStatement insert;
-	PreparedStatement selectById;
-    PreparedStatement lastId;
-	PreparedStatement selectByPage;
-	PreparedStatement count;
-    PreparedStatement delete;
-    PreparedStatement update;  
-	
-	public AdressRepository(){
+	public AdressRepository(Connection connection){
 		
 		try{
-			connection = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/workdb");
+			_connection = connection;
 			
 			insert = connection.prepareStatement(""
 					+ "INSERT INTO adress(city,postalcode,street,apnumber)"
@@ -58,7 +45,7 @@ public class AdressRepository {
 			
 			while(rs.next()){
 				if(rs.getString("TABLE_NAME").equalsIgnoreCase("adress")){
-					tableExist = true;
+					tableExists = true;
 					break;
 				}
 			}
@@ -68,7 +55,7 @@ public class AdressRepository {
 		}
 	}
 	
-public void delete(Adress adress){
+	public void delete(Adress adress){
 		
 		try {
 			delete.setInt(1, adress.getId());
@@ -93,19 +80,6 @@ public void delete(Adress adress){
 		}
 	}
 	
-	public int count(){
-		
-		try {
-			ResultSet rs = count.executeQuery();
-			while(rs.next())
-				return rs.getInt(1);
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return 0;
-	}
-	
 	public List<Adress> getPage(int offset, int limit){
 		
 		List<Adress> result = new ArrayList<Adress>();
@@ -127,19 +101,6 @@ public void delete(Adress adress){
 			e.printStackTrace();
 		}
 		return result;
-	}
-	
-	public int lastId(){
-		
-		try {
-			ResultSet rs = lastId.executeQuery();
-			while(rs.next())
-				return rs.getInt(1);
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return 0;
 	}
 	
 	public Adress get(int id){
@@ -188,8 +149,8 @@ public void delete(Adress adress){
 				+ ")";
 		
 		try{
-			Statement createTable = connection.createStatement();
-			if(!tableExist)
+			Statement createTable = _connection.createStatement();
+			if(!tableExists)
 				createTable.executeUpdate(createtableSql);
 			
 		}catch(SQLException e){

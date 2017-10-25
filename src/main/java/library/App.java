@@ -16,7 +16,7 @@ public class App
 			
 	    	AuthorRepositoryExample.execute(connection);
 	    	UserRepositoryExample.execute();
-	    	AdressRepositoryExample.execute();
+	    	AdressRepositoryExample.execute(connection);
 	    	PublisherRepositoryExample.execute();
 	    	
     	} catch (SQLException e) {
