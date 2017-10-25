@@ -1,6 +1,7 @@
 package library.domain;
 
 public class Adress {
+	private int id;
 	private String city;
 	private String postalCode;
 	private String street;
@@ -39,5 +40,11 @@ public class Adress {
 	}
 	public void setApNumber(String apNumber) {
 		this.apNumber = apNumber;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 }
