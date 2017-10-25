@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserRepository {
 
@@ -18,6 +20,9 @@ public class UserRepository {
     PreparedStatement insert;
     PreparedStatement selectByLogin;
     PreparedStatement selectById;
+    PreparedStatement lastId;
+    PreparedStatement selectByPage;
+    PreparedStatement count;
 
     public UserRepository(){
 
@@ -25,7 +30,7 @@ public class UserRepository {
             connection = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/workdb");
 
             insert = connection.prepareStatement(""
-                                                    +"INSERT INTO user(id,login,password,status)"
+                                                    +"INSERT INTO user(login,password,status)"
                                                     +"VALUES(?,?,?)");
 
             selectByLogin = connection.prepareStatement(""
@@ -33,6 +38,15 @@ public class UserRepository {
 
             selectById = connection.prepareStatement(""
                                                         +"SELECT * FROM user WHERE id=?");
+            lastId = connection.prepareStatement(""
+            										+ "SELECT MAX(id) FROM user"
+            										+ "");
+            selectByPage = connection.prepareStatement(""
+					+ "SELECT * FROM user OFFSET ? LIMIT ?"
+					+ "");		
+            count = connection.prepareStatement(""
+					+ "SELECT COUNT(*) FROM user"
+					+ "");
 
             ResultSet rs = connection.getMetaData().getTables(null,null,null,null);
 
@@ -47,6 +61,31 @@ public class UserRepository {
             e.printStackTrace();
         }
     }
+    
+    public int count(){
+		
+		try {
+			ResultSet rs = count.executeQuery();
+			while(rs.next())
+				return rs.getInt(1);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	public int lastId(){
+		
+		try {
+			ResultSet rs = lastId.executeQuery();
+			while(rs.next())
+				return rs.getInt(1);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
 
     public User getByLogin(String login){
         User user = null;
@@ -88,6 +127,48 @@ public class UserRepository {
 
         return user;
     }
+    
+    public List<User> getPage(int offset, int limit){
+		
+		List<User> result = new ArrayList<User>();
+		try {
+			selectByPage.setInt(1, offset);
+			selectByPage.setInt(2, limit);
+			ResultSet rs = selectByPage.executeQuery();
+			while(rs.next()){
+				User a = new User();
+				a.setId(rs.getInt("id"));
+				a.setLogin(rs.getString("login"));
+				a.setPassword(rs.getString("password"));
+				a.setStatus(rs.getBoolean("status"));
+				result.add(a);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+    
+    public User get(int id){
+		User user = null;
+				
+		try {
+			selectById.setInt(1, id);
+			ResultSet rs = selectById.executeQuery();
+			while(rs.next()){
+				user = new User();
+				user.setLogin(rs.getString("login"));
+				user.setPassword(rs.getString("password"));
+				user.setStatus(rs.getBoolean("status"));
+				user.setId(rs.getInt("id"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+				
+		return user;
+		
+	}
 
     public void add(User user){
 

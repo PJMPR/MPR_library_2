@@ -17,12 +17,14 @@ import library.domain.Section;
 import library.dao.repositories.*;
 import library.domain.*;
 import library.examples.AuthorRepositoryExample;
+import library.examples.UserRepositoryExample;
 public class App 
 {
     public static void main( String[] args )
     {
     	
     	AuthorRepositoryExample.execute();
+    	UserRepositoryExample.execute();
     	
         System.out.println( "Koniec" );
     }
