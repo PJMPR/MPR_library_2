@@ -2,6 +2,7 @@ package library.dao.repositories;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,9 +12,36 @@ public class NotificationRepository {
 	Connection connection;
 	private boolean tableExists;
 	
+	PreparedStatement insert;
+    PreparedStatement selectByUser;
+    PreparedStatement selectByPage;
+    PreparedStatement count;
+    PreparedStatement selectByMessageType;
+	
 	public NotificationRepository() {
 		try {
+			
 			connection = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/workdb");
+			
+			insert = connection.prepareStatement(""
+					+ "INSERT INTO notification(user,message,notification_type)"
+					+ "VALUES(?,?,?)");
+			
+			selectByUser = connection.prepareStatement(""
+					+ "SELECT * FROM user WHERE login=?");
+			
+			selectByPage = connection.prepareStatement(""
+					+ "SELECT * FROM notification OFFEST ? LIMIT ?"
+					+ "");
+			
+			count = connection.prepareStatement(""
+					+ "SELECT COUNT(*) FROM notification"
+					+ "");
+			
+			selectByMessageType = connection.prepareStatement(""
+					+ "SELECT * FROM notification WHERE notification_type=?"
+					+ "");
+			
 			
 			ResultSet rs = connection.getMetaData().getTables(null, null, null, null);
 			
