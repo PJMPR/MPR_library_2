@@ -21,7 +21,8 @@ public class AuthorRepository {
     PreparedStatement lastId;
     PreparedStatement selectByPage;
     PreparedStatement count;
-  
+    PreparedStatement delete;
+    PreparedStatement update;
 	
 	public AuthorRepository() {
 
@@ -47,6 +48,11 @@ public class AuthorRepository {
 					+ "SELECT * FROM author OFFSET ? LIMIT ?"
 					+ "");
 			
+			delete = connection.prepareStatement(""
+					+ "DELETE FROM author WHERE id=?");
+			
+			update = connection.prepareStatement(""
+					+ "UPDATE author SET (name, secondname, surname)=(?,?,?) WHERE id=?");
 			
 			ResultSet rs = connection.getMetaData().getTables(null, null, null, null);
 			
@@ -63,6 +69,30 @@ public class AuthorRepository {
 		
 	}
 
+	public void delete(Author author){
+		
+		try {
+			delete.setInt(1, author.getId());
+			delete.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void update(Author author){
+		
+		try {
+			
+			update.setString(1, author.getName());
+			update.setString(2, author.getSecondName());
+			update.setString(3, author.getSurname());
+			update.setInt(4, author.getId());
+			update.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public int count(){
 		
 		try {

@@ -6,7 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
+import library.domain.Author;
 import library.domain.Publisher;
 
 public class PublisherRepository {
@@ -15,6 +18,12 @@ public class PublisherRepository {
     private boolean tableExists;
    
     PreparedStatement insert;
+    PreparedStatement selectById;
+    PreparedStatement lastId;
+    PreparedStatement selectByPage;
+    PreparedStatement count;
+    
+    
     public PublisherRepository() {
 
         try {
@@ -23,6 +32,21 @@ public class PublisherRepository {
             insert = connection.prepareStatement(""
                     + "INSERT INTO publisher(name,phoneNumber,emailAdress,website)"
                     + "VALUES(?,?,?,?)");
+            
+			selectById = connection.prepareStatement(""
+					+ "SELECT * FROM publisher WHERE id=?");
+			
+			lastId = connection.prepareStatement(""
+					+ "SELECT MAX(id) FROM publisher"
+					+ "");
+			
+			count = connection.prepareStatement(""
+					+ "SELECT COUNT(*) FROM publisher"
+					+ "");
+			
+			selectByPage = connection.prepareStatement(""
+					+ "SELECT * FROM publisher OFFSET ? LIMIT ?"
+					+ "");
             
             ResultSet rs = connection.getMetaData().getTables(null, null, null, null);
           
@@ -40,7 +64,78 @@ public class PublisherRepository {
         }
 
 }
-   
+    
+public int count(){
+		
+		try {
+			ResultSet rs = count.executeQuery();
+			while(rs.next())
+				return rs.getInt(1);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	public int lastId(){
+		
+		try {
+			ResultSet rs = lastId.executeQuery();
+			while(rs.next())
+				return rs.getInt(1);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+	public List<Publisher> getPage(int offset, int limit){
+		
+		List<Publisher> result = new ArrayList<Publisher>();
+		try {
+			selectByPage.setInt(1, offset);
+			selectByPage.setInt(2, limit);
+			ResultSet rs = selectByPage.executeQuery();
+			while(rs.next()){
+				Publisher a = new Publisher();
+				a.setId(rs.getInt("id"));
+				a.setName(rs.getString("name"));
+				a.setPhoneNumber(rs.getInt("phoneNumber"));
+				a.setEmailAdress(rs.getString("emailAdress"));
+				a.setWebsite(rs.getString("website"));
+				result.add(a);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public Publisher get(int id){
+		Publisher publisher = null;
+				
+		try {
+			selectById.setInt(1, id);
+			ResultSet rs = selectById.executeQuery();
+			while(rs.next()){
+				publisher=new Publisher();
+				publisher.setId(rs.getInt("id"));
+				publisher.setName(rs.getString("name"));
+				publisher.setPhoneNumber(rs.getInt("phoneNumber"));
+				publisher.setEmailAdress(rs.getString("empublisherilpublisherdress"));
+				publisher.setWebsite(rs.getString("website"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+				
+		return publisher;
+		
+	}
+    
+    
+    
 public void add(Publisher publisher){
        
         try {
