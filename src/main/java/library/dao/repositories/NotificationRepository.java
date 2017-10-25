@@ -2,18 +2,67 @@ package library.dao.repositories;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import library.domain.Notification;
 
 public class NotificationRepository {
 
 	Connection connection;
 	private boolean tableExists;
 	
+	PreparedStatement insert;
+	PreparedStatement selectById;
+    PreparedStatement lastId;
+    PreparedStatement selectByUser;
+    PreparedStatement selectByPage;
+    PreparedStatement count;
+    PreparedStatement selectByMessageType;
+    PreparedStatement delete;
+    PreparedStatement update;
+	
 	public NotificationRepository() {
 		try {
+			
 			connection = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/workdb");
+			
+			insert = connection.prepareStatement(""
+					+ "INSERT INTO notification(message,notification_type)"
+					+ "VALUES(?,?)");
+			
+			selectById = connection.prepareStatement(""
+					+ "SELECT * FROM notification WHERE id=?");
+			
+			lastId = connection.prepareStatement(""
+					+ "SELECT MAX(id) FROM notification"
+					+ "");
+			
+			selectByUser = connection.prepareStatement(""
+					+ "SELECT * FROM user WHERE login=?");
+			
+			selectByPage = connection.prepareStatement(""
+					+ "SELECT * FROM notification OFFSET ? LIMIT ?"
+					+ "");
+			
+			count = connection.prepareStatement(""
+					+ "SELECT COUNT(*) FROM notification"
+					+ "");
+			
+			selectByMessageType = connection.prepareStatement(""
+					+ "SELECT * FROM notification WHERE notification_type=?"
+					+ "");
+			
+			delete = connection.prepareStatement(""
+					+ "DELETE FROM notification WHERE id=?");
+			
+			update = connection.prepareStatement(""
+					+ "UPDATE notification SET (message, notifiaction_type)=(?,?) WHERE id=?");
+			
 			
 			ResultSet rs = connection.getMetaData().getTables(null, null, null, null);
 			
@@ -29,6 +78,108 @@ public class NotificationRepository {
 		}
 		
 	}
+	
+public void delete(Notification notification){
+		
+		try {
+			delete.setInt(1, notification.getId());
+			delete.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+public void update(Notification notification){
+	
+	try {
+		update.setString(1, notification.getMessage());
+		update.setString(2, notification.getNotification_type());
+		update.setInt(3, notification.getId());
+		update.executeUpdate();
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+}
+
+public int count(){
+	
+	try {
+		ResultSet rs = count.executeQuery();
+		while(rs.next())
+			return rs.getInt(1);
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	return 0;
+}
+
+public int lastId(){
+	
+	try {
+		ResultSet rs = lastId.executeQuery();
+		while(rs.next())
+			return rs.getInt(1);
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	return 0;
+}
+
+public List<Notification> getPage(int offset, int limit){
+	
+	List<Notification> result = new ArrayList<Notification>();
+	try {
+		selectByPage.setInt(1, offset);
+		selectByPage.setInt(2, limit);
+		ResultSet rs = selectByPage.executeQuery();
+		while(rs.next()){
+			Notification a = new Notification();
+			a.setId(rs.getInt("id"));
+			a.setMessage(rs.getString("name"));
+			a.setNotification_type(rs.getString("secondname"));
+			result.add(a);
+		}
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	return result;
+}
+
+public Notification get(int id){
+	Notification notification = null;
+			
+	try {
+		selectById.setInt(1, id);
+		ResultSet rs = selectById.executeQuery();
+		while(rs.next()){
+			notification=new Notification();
+			notification.setMessage(rs.getString("name"));
+			notification.setNotification_type(rs.getString("secondname"));
+			notification.setId(rs.getInt("id"));
+		}
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}		
+			
+	return notification;
+	
+}
+
+public void add(Notification notification){
+	
+	try {
+		insert.setString(1, notification.getMessage());
+		insert.setString(2, notification.getNotification_type());
+		insert.executeUpdate();
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+}
 	
 	public void createTable(){
 		

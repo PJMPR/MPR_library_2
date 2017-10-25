@@ -2,6 +2,7 @@ package library.domain;
 
 public class Notification {
 	
+	private int id;
 	private User user;
 	private String message;
 	private String notification_type;
@@ -25,6 +26,12 @@ public class Notification {
 	}
 	public void setNotification_type(String notification_type) {
 		this.notification_type = notification_type;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	
