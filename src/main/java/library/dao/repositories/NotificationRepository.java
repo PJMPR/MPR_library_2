@@ -46,7 +46,7 @@ public class NotificationRepository {
 					+ "SELECT * FROM user WHERE login=?");
 			
 			selectByPage = connection.prepareStatement(""
-					+ "SELECT * FROM notification OFFEST ? LIMIT ?"
+					+ "SELECT * FROM notification OFFSET ? LIMIT ?"
 					+ "");
 			
 			count = connection.prepareStatement(""
