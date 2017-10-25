@@ -4,11 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import library.examples.AdressRepositoryExample;
-import library.examples.AuthorRepositoryExample;
-import library.examples.UserRepositoryExample;
-import library.examples.PublisherRepositoryExample;
-public class App 
+import library.examples.*;
+
+public class App
 {
     public static void main( String[] args )
     {
@@ -18,6 +16,7 @@ public class App
 	    	UserRepositoryExample.execute();
 	    	AdressRepositoryExample.execute();
 	    	PublisherRepositoryExample.execute();
+			BookInformationRepositoryExample.execute();
 	    	
     	} catch (SQLException e) {
 			// TODO Auto-generated catch block

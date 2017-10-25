@@ -25,5 +25,13 @@ public class BookInformationRepositoryExample {
         for (BookInformation bI: bookInformations){
             System.out.println(bI.getId());
         }
+
+        BookInformation toDelete = bookInformations.get(0);
+        bookInformationRepository.delete(toDelete);
+
+        BookInformation updateTitle = bookInformations.get(1);
+        updateTitle.setTitle("otherExample");
+
+        bookInformationRepository.update(updateTitle);
     }
 }
