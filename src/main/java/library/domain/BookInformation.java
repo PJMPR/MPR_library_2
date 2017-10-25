@@ -5,6 +5,8 @@ import java.util.List;
 
 public class BookInformation {
 
+    private int id;
+
     private String title;
     List<Author> authors = new ArrayList<Author>();
 
@@ -22,5 +24,13 @@ public class BookInformation {
 
     public void setAuthors(List<Author> authors) {
         this.authors = authors;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

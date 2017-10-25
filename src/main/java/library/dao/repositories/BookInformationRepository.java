@@ -6,7 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
+import library.domain.Author;
 import library.domain.BookInformation;
 
 	public class BookInformationRepository {
@@ -18,6 +21,7 @@ import library.domain.BookInformation;
 		PreparedStatement selectById;
 		PreparedStatement lastId;
 		PreparedStatement count;
+		PreparedStatement selectByPage;
 
 		public BookInformationRepository() {
 
@@ -30,6 +34,18 @@ import library.domain.BookInformation;
 
 				selectById = connection.prepareStatement(""
 						+ "SELECT * FROM bookInformation WHERE id=?");
+
+				lastId = connection.prepareStatement(""
+						+"SELECT MAX(id) FROM bookInformation"
+						+"");
+
+				count = connection.prepareStatement(""
+						+"SELECT COUNT(*) FROM bookInformation"
+						+"");
+
+				selectByPage = connection.prepareStatement(""
+						+"SELECT * FROM bookInformation OFFSET ? LIMIT ?"
+						+"");
 
 				ResultSet rs = connection.getMetaData().getTables(null, null, null, null);
 
@@ -63,6 +79,18 @@ import library.domain.BookInformation;
 
 		}
 
+		public int count(){
+
+			try {
+				ResultSet rs = count.executeQuery();
+				while(rs.next())
+					return rs.getInt(1);
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return 0;
+		}
 		public int lastId(){
 
 			try{
@@ -75,6 +103,25 @@ import library.domain.BookInformation;
 				e.printStackTrace();
 			}
 			return 0;
+		}
+
+		public List<BookInformation> getPage(int offset, int limit){
+
+			List<BookInformation> result = new ArrayList<BookInformation>();
+			try {
+				selectByPage.setInt(1, offset);
+				selectByPage.setInt(2, limit);
+				ResultSet rs = selectByPage.executeQuery();
+				while(rs.next()){
+					BookInformation bI = new BookInformation();
+					bI.setId(rs.getInt("id"));
+					bI.setTitle(rs.getString("title"));
+					result.add(bI);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return result;
 		}
 
 		public void add(BookInformation bookInformation){
