@@ -3,6 +3,7 @@ package library.examples;
 import java.util.List;
 
 import library.dao.repositories.UserRepository;
+import library.domain.Author;
 import library.domain.User;
 
 public class UserRepositoryExample {
@@ -28,7 +29,13 @@ public class UserRepositoryExample {
     	for(User a: users){
     		System.out.println(a.getId());
     	}
-		
+    	User toDelete = users.get(0);
+    	userRepository.delete(toDelete);
+    	
+    	User updateLogin = users.get(1);
+    	updateLogin.setLogin("ewik");
+    	
+    	userRepository.update(updateLogin);
 	}
 
 }
