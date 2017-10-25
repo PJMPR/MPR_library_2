@@ -11,23 +11,12 @@ import java.util.List;
 
 import library.domain.Author;
 
-public class AuthorRepository {
+public class AuthorRepository extends RepositoryBase{
 
-	Connection connection;
-	private boolean tableExists;
-	
-	PreparedStatement insert;
-    PreparedStatement selectById;
-    PreparedStatement lastId;
-    PreparedStatement selectByPage;
-    PreparedStatement count;
-    PreparedStatement delete;
-    PreparedStatement update;
-	
-	public AuthorRepository() {
+	public AuthorRepository(Connection connection) {
 
 		try {
-			connection = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/workdb");
+			_connection = connection;
 			
 			insert = connection.prepareStatement(""
 					+ "INSERT INTO author(name,secondname,surname)"
@@ -91,31 +80,6 @@ public class AuthorRepository {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public int count(){
-		
-		try {
-			ResultSet rs = count.executeQuery();
-			while(rs.next())
-				return rs.getInt(1);
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return 0;
-	}
-	public int lastId(){
-		
-		try {
-			ResultSet rs = lastId.executeQuery();
-			while(rs.next())
-				return rs.getInt(1);
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return 0;
 	}
 	
 	public List<Author> getPage(int offset, int limit){
@@ -184,7 +148,7 @@ public class AuthorRepository {
 				+ ")";
 		
 		try {
-			Statement createTable = connection.createStatement();
+			Statement createTable = _connection.createStatement();
 			if(!tableExists)
 				createTable.executeUpdate(createTableSql);
 			
