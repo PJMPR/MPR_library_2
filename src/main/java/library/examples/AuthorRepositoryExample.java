@@ -1,7 +1,6 @@
 package library.examples;
 
 import java.util.List;
-
 import library.dao.repositories.AuthorRepository;
 import library.domain.Author;
 
