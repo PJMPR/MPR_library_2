@@ -1,11 +1,21 @@
 package library.domain;
 
 public class Publisher {
-    private String name;
+	
+	private int id;
+	private String name;
     private int phoneNumber;
     private String emailAdress;
     private String website;
 
+    
+    public int getId() {
+ 		return id;
+ 	}
+
+ 	public void setId(int id) {
+ 		this.id = id;
+ 	}
 
     public String getName() {
         return name;
@@ -38,4 +48,19 @@ public class Publisher {
     public void setWebsite(String website) {
         this.website = website;
     }
+
+	public Publisher(String name, int phoneNumber, String emailAdress,
+			String website) {
+		super();
+		this.name = name;
+		this.phoneNumber = phoneNumber;
+		this.emailAdress = emailAdress;
+		this.website = website;
+	}
+
+	public Publisher() {
+		super();
+	}
+	
+	
 }
