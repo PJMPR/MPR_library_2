@@ -1,14 +1,16 @@
 package library.examples;
 
+import java.sql.Connection;
 import java.util.List;
+
 import library.dao.repositories.AuthorRepository;
 import library.domain.Author;
 
 public class AuthorRepositoryExample {
 
-	public static void execute(){
+	public static void execute(Connection connection){
 
-    	AuthorRepository authorRepository = new AuthorRepository();
+    	AuthorRepository authorRepository = new AuthorRepository(connection);
     	authorRepository.createTable();
     	Author author = new Author("Jan", "Maciej", "Kowalski");
     	authorRepository.add(author);
