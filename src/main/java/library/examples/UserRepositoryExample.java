@@ -1,16 +1,16 @@
 package library.examples;
 
+import java.sql.Connection;
 import java.util.List;
 
 import library.dao.repositories.UserRepository;
-import library.domain.Author;
 import library.domain.User;
 
 public class UserRepositoryExample {
 	
-	public static void execute(){
+	public static void execute(Connection connection){
 
-    	UserRepository userRepository = new UserRepository();
+    	UserRepository userRepository = new UserRepository(connection);
     	userRepository.createTable();
     	User user = new User();
     	user.setLogin("Karol");

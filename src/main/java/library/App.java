@@ -15,7 +15,7 @@ public class App
     	try(Connection connection = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/workdb")) {
 			
 	    	AuthorRepositoryExample.execute(connection);
-	    	UserRepositoryExample.execute();
+	    	UserRepositoryExample.execute(connection);
 	    	AdressRepositoryExample.execute();
 	    	PublisherRepositoryExample.execute();
 	    	
