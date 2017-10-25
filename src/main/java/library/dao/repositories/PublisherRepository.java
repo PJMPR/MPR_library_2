@@ -22,6 +22,8 @@ public class PublisherRepository {
     PreparedStatement lastId;
     PreparedStatement selectByPage;
     PreparedStatement count;
+    PreparedStatement delete;
+    PreparedStatement update;
     
     
     public PublisherRepository() {
@@ -47,6 +49,12 @@ public class PublisherRepository {
 			selectByPage = connection.prepareStatement(""
 					+ "SELECT * FROM publisher OFFSET ? LIMIT ?"
 					+ "");
+			
+			delete = connection.prepareStatement(""
+					+ "DELETE FROM publisher WHERE id=?");
+			
+			update = connection.prepareStatement(""
+					+ "UPDATE publisher SET (name, phoneNumber, emailAdress, website)=(?,?,?,?) WHERE id=?");
             
             ResultSet rs = connection.getMetaData().getTables(null, null, null, null);
           
@@ -64,6 +72,32 @@ public class PublisherRepository {
         }
 
 }
+    
+	public void delete(Publisher publisher){
+		
+		try {
+			delete.setInt(1, publisher.getId());
+			delete.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void update(Publisher publisher){
+		
+		try {
+			
+			update.setString(1, publisher.getName());
+			update.setInt(2, publisher.getPhoneNumber());
+			update.setString(3, publisher.getEmailAdress());
+			update.setString(4, publisher.getWebsite());
+			update.setInt(5, publisher.getId());
+			update.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
     
 public int count(){
 		

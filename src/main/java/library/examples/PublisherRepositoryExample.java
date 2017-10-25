@@ -3,6 +3,7 @@ package library.examples;
 import java.util.List;
 
 import library.dao.repositories.PublisherRepository;
+import library.domain.Author;
 import library.domain.Publisher;
 
 public class PublisherRepositoryExample {
@@ -25,6 +26,14 @@ public class PublisherRepositoryExample {
     		System.out.println(a.getId());
     	}
 		
+    	Publisher toDelete = publishers.get(0);
+    	publisherRepository.delete(toDelete);
+    	
+    	Publisher updateName = publishers.get(1);
+    	updateName.setName("Wilhelm");
+    	
+    	publisherRepository.update(updateName);
+    	
 	}
 	
 }
