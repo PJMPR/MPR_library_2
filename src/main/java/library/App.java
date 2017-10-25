@@ -2,6 +2,7 @@ package library;
 
 import library.examples.AdressRepositoryExample;
 import library.examples.AuthorRepositoryExample;
+import library.examples.UserRepositoryExample;
 import library.examples.PublisherRepositoryExample;
 public class App 
 {
@@ -9,6 +10,7 @@ public class App
     {
     	
     	AuthorRepositoryExample.execute();
+    	UserRepositoryExample.execute();
     	AdressRepositoryExample.execute();
     	PublisherRepositoryExample.execute();
     	
