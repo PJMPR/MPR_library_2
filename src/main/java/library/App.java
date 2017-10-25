@@ -14,6 +14,8 @@ import library.domain.Book;
 import library.domain.BookInformation;
 import library.domain.Publisher;
 import library.domain.Section;
+import library.dao.repositories.*;
+import library.domain.*;
 public class App 
 {
     public static void main( String[] args )
@@ -64,6 +66,14 @@ public class App
     	book.setSection(section);
     	bookRepository.createTable();
     	bookRepository.add(book);
+
+		UserRepository userRepository = new UserRepository();
+		userRepository.createTable();
+		User user = new User();
+		user.setLogin("XYZ");
+		user.setPassword("haslo");
+		user.setStatus(true);
+		userRepository.add(user);
     	
         System.out.println( "Koniec" );
     }
