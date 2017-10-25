@@ -2,28 +2,19 @@ package library.dao.repositories;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import library.domain.Author;
 import library.domain.Publisher;
 
-public class PublisherRepository {
+public class PublisherRepository extends RepositoryBase{
   
     Connection connection;
     private boolean tableExists;
-   
-    PreparedStatement insert;
-    PreparedStatement selectById;
-    PreparedStatement lastId;
-    PreparedStatement selectByPage;
-    PreparedStatement count;
-    PreparedStatement delete;
-    PreparedStatement update;
+
     
     
     public PublisherRepository() {
@@ -99,30 +90,6 @@ public class PublisherRepository {
 	}
 	
     
-public int count(){
-		
-		try {
-			ResultSet rs = count.executeQuery();
-			while(rs.next())
-				return rs.getInt(1);
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return 0;
-	}
-	public int lastId(){
-		
-		try {
-			ResultSet rs = lastId.executeQuery();
-			while(rs.next())
-				return rs.getInt(1);
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return 0;
-	}
 	
 	public List<Publisher> getPage(int offset, int limit){
 		
