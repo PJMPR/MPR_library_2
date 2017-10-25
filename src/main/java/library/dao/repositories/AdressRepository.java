@@ -6,8 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import library.domain.Adress;
+import library.domain.Author;
 
 public class AdressRepository {
 	
@@ -15,6 +18,11 @@ public class AdressRepository {
 	private boolean tableExist;
 	
 	PreparedStatement insert;
+	PreparedStatement selectById;
+    PreparedStatement lastId;
+	PreparedStatement selectByPage;
+	PreparedStatement count;
+	  
 	
 	public AdressRepository(){
 		
@@ -24,6 +32,21 @@ public class AdressRepository {
 			insert = connection.prepareStatement(""
 					+ "INSERT INTO adress(city,postalcode,street,apnumber)"
 					+ "VALUES(?,?,?,?)");
+			
+			selectById = connection.prepareStatement(""
+					+ "SELECT * FROM adress WHERE id=?");
+			
+			lastId = connection.prepareStatement(""
+					+ "SELECT MAX(id) FROM adress"
+					+ "");
+			
+			count = connection.prepareStatement(""
+					+ "SELECT COUNT(*) FROM adress"
+					+ "");
+			
+			selectByPage = connection.prepareStatement(""
+					+ "SELECT * FROM adress OFFSET ? LIMIT ?"
+					+ "");
 			
 			ResultSet rs = connection.getMetaData().getTables(null, null, null, null);
 			
@@ -38,6 +61,76 @@ public class AdressRepository {
 			e.printStackTrace();
 		}
 	}
+	
+	public int count(){
+		
+		try {
+			ResultSet rs = count.executeQuery();
+			while(rs.next())
+				return rs.getInt(1);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+	public List<Adress> getPage(int offset, int limit){
+		
+		List<Adress> result = new ArrayList<Adress>();
+		try {
+			selectByPage.setInt(1, offset);
+			selectByPage.setInt(2, limit);
+			ResultSet rs = selectByPage.executeQuery();
+			while(rs.next()){
+				Adress adress = new Adress();
+				adress = new Adress();
+				adress.setId(rs.getInt("id"));
+				adress.setCity(rs.getString("city"));
+				adress.setPostalCode(rs.getString("postalcode"));
+				adress.setStreet(rs.getString("street"));
+				adress.setApNumber(rs.getString("apnumber"));
+				result.add(adress);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public int lastId(){
+		
+		try {
+			ResultSet rs = lastId.executeQuery();
+			while(rs.next())
+				return rs.getInt(1);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+	public Adress get(int id){
+		Adress adress = null;
+				
+		try {
+			selectById.setInt(1, id);
+			ResultSet rs = selectById.executeQuery();
+			while(rs.next()){
+				adress = new Adress();
+				adress.setId(rs.getInt("id"));
+				adress.setCity(rs.getString("city"));
+				adress.setPostalCode(rs.getString("postalcode"));
+				adress.setStreet(rs.getString("street"));
+				adress.setApNumber(rs.getString("apnumber"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return adress;
+}		
 	
 	public void add(Adress adress)
 	{
