@@ -22,6 +22,8 @@ import library.domain.BookInformation;
 		PreparedStatement lastId;
 		PreparedStatement count;
 		PreparedStatement selectByPage;
+		PreparedStatement delete;
+		PreparedStatement update;
 
 		public BookInformationRepository() {
 
@@ -47,6 +49,14 @@ import library.domain.BookInformation;
 						+"SELECT * FROM bookInformation OFFSET ? LIMIT ?"
 						+"");
 
+				delete = connection.prepareStatement(""
+						+"DELETE * FROM bookInformation WHERE id=?"
+						+"");
+
+				update = connection.prepareStatement(""
+						+"UPDATE bookInformation SET(title)=(?) WHERE id=?"
+						+"");
+
 				ResultSet rs = connection.getMetaData().getTables(null, null, null, null);
 
 				while(rs.next()){
@@ -59,6 +69,25 @@ import library.domain.BookInformation;
 				e.printStackTrace();
 			}
 
+		}
+
+		public void delete(BookInformation bookInformation){
+
+			try {
+				delete.setInt(1, bookInformation.getId());
+				delete.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		public void update(BookInformation bookInformation){
+
+			try {
+				update.setString(1, bookInformation.getTitle());
+				update.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 
 		public BookInformation get(int id){
