@@ -18,51 +18,23 @@ public class PublisherRepository extends RepositoryBase{
     
     
     public PublisherRepository(Connection connection) {
+    	super(connection);
+    }
+    	
+    	@Override
+    	protected String getTableName() {
+    		return "publisher";
+    	}
 
-        try {
-            connection = connection;
-           
-            insert = connection.prepareStatement(""
-                    + "INSERT INTO publisher(name,phoneNumber,emailAdress,website)"
-                    + "VALUES(?,?,?,?)");
-            
-			selectById = connection.prepareStatement(""
-					+ "SELECT * FROM publisher WHERE id=?");
-			
-			lastId = connection.prepareStatement(""
-					+ "SELECT MAX(id) FROM publisher"
-					+ "");
-			
-			count = connection.prepareStatement(""
-					+ "SELECT COUNT(*) FROM publisher"
-					+ "");
-			
-			selectByPage = connection.prepareStatement(""
-					+ "SELECT * FROM publisher OFFSET ? LIMIT ?"
-					+ "");
-			
-			delete = connection.prepareStatement(""
-					+ "DELETE FROM publisher WHERE id=?");
-			
-			update = connection.prepareStatement(""
-					+ "UPDATE publisher SET (name, phoneNumber, emailAdress, website)=(?,?,?,?) WHERE id=?");
-            
-            ResultSet rs = connection.getMetaData().getTables(null, null, null, null);
-          
-            
-            
-            while(rs.next()){
-                if(rs.getString("TABLE_NAME").equalsIgnoreCase("publisher")){
-                    tableExists = true;
-                    break;
-                }
-            }
-          
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    	@Override
+    	protected String getUpdateSql() {
+    		return "UPDATE publisher SET (name, phoneNumber, emailAdress, website)=(?,?,?,?) WHERE id=?";
+    	}
 
-}
+    	@Override
+    	protected String getInsertSql() {
+    		return "INSERT INTO publisher(name,phoneNumber,emailAdress,website) VALUES(?,?,?,?)";
+    	}
     
 	public void delete(Publisher publisher){
 		
