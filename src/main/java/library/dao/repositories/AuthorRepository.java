@@ -14,50 +14,24 @@ import library.domain.Author;
 public class AuthorRepository extends RepositoryBase{
 
 	public AuthorRepository(Connection connection) {
-
-		try {
-			_connection = connection;
-			
-			insert = connection.prepareStatement(""
-					+ "INSERT INTO author(name,secondname,surname)"
-					+ "VALUES(?,?,?)");
-			
-			selectById = connection.prepareStatement(""
-					+ "SELECT * FROM author WHERE id=?");
-			
-			lastId = connection.prepareStatement(""
-					+ "SELECT MAX(id) FROM author"
-					+ "");
-			
-			count = connection.prepareStatement(""
-					+ "SELECT COUNT(*) FROM author"
-					+ "");
-			
-			selectByPage = connection.prepareStatement(""
-					+ "SELECT * FROM author OFFSET ? LIMIT ?"
-					+ "");
-			
-			delete = connection.prepareStatement(""
-					+ "DELETE FROM author WHERE id=?");
-			
-			update = connection.prepareStatement(""
-					+ "UPDATE author SET (name, secondname, surname)=(?,?,?) WHERE id=?");
-			
-			ResultSet rs = connection.getMetaData().getTables(null, null, null, null);
-			
-			while(rs.next()){
-				if(rs.getString("TABLE_NAME").equalsIgnoreCase("author")){
-					tableExists = true;
-					break;
-				}
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
+		super(connection);
 	}
 
+	@Override
+	protected String getTableName() {
+		return "author";
+	}
+
+	@Override
+	protected String getUpdateSql() {
+		return "UPDATE author SET (name, secondname, surname)=(?,?,?) WHERE id=?";
+	}
+
+	@Override
+	protected String getInsertSql() {
+		return "INSERT INTO author(name,secondname,surname) VALUES(?,?,?)";
+	}
+	
 	public void delete(Author author){
 		
 		try {
@@ -156,5 +130,8 @@ public class AuthorRepository extends RepositoryBase{
 			e.printStackTrace();
 		}
 	}
+
+
+
 	
 }
