@@ -7,12 +7,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import library.dao.mappers.IMapper;
 import library.domain.Adress;
 
 public class AdressRepository extends RepositoryBase<Adress>{
 
-	public AdressRepository(Connection connection){
-		super(connection);
+	public AdressRepository(Connection connection, IMapper<Adress> mapper){
+		super(connection, mapper);
 	}
 	
 	@Override
