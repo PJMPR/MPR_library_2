@@ -5,12 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
-import library.domain.Author;
+import library.dao.mappers.IMapper;
 import library.domain.IHaveId;
 
 
-public abstract class RepositoryBase<TEntity extends IHaveId> {
+public abstract class RepositoryBase<TEntity extends IHaveId> implements IRepository<TEntity> {
 	
 	protected Connection _connection;
 	protected boolean tableExists;
@@ -18,14 +20,14 @@ public abstract class RepositoryBase<TEntity extends IHaveId> {
 	protected PreparedStatement selectById;
 	protected PreparedStatement lastId;
 	protected PreparedStatement selectByPage;
-	protected PreparedStatement selectByUser;
-	protected PreparedStatement selectByMessageType;
 	protected PreparedStatement count;
 	protected PreparedStatement delete;
 	protected PreparedStatement update;
+	protected IMapper<TEntity> _mapper;
 	
-	protected RepositoryBase(Connection connection){
+	protected RepositoryBase(Connection connection, IMapper<TEntity> mapper){
 		try {
+			_mapper = mapper;
 			_connection = connection;
 			initStatements(connection);
 			checkIfTableExists(connection);
@@ -34,6 +36,7 @@ public abstract class RepositoryBase<TEntity extends IHaveId> {
 			e.printStackTrace();
 		}
 	}
+
 
 	private void checkIfTableExists(Connection connection) throws SQLException {
 		ResultSet rs = connection.getMetaData().getTables(null, null, null, null);
@@ -45,7 +48,8 @@ public abstract class RepositoryBase<TEntity extends IHaveId> {
 			}
 		}
 	}
-	
+
+
 	private void initStatements(Connection connection) throws SQLException {
 		insert = connection.prepareStatement(getInsertSql());
 		
@@ -108,7 +112,7 @@ public abstract class RepositoryBase<TEntity extends IHaveId> {
 		}
 		return 0;
 	}
-	
+
 	public void add(TEntity entity){
 		
 		try {
@@ -121,9 +125,11 @@ public abstract class RepositoryBase<TEntity extends IHaveId> {
 	}
 	
 	public void update(TEntity entity){
+		
 		try {
 			setUpdate(entity);
 			update.executeUpdate();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -141,6 +147,36 @@ public abstract class RepositoryBase<TEntity extends IHaveId> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+
+	public List<TEntity> getPage(int offset, int limit){
+		
+		List<TEntity> result = new ArrayList<TEntity>();
+		try {
+			selectByPage.setInt(1, offset);
+			selectByPage.setInt(2, limit);
+			ResultSet rs = selectByPage.executeQuery();
+			while(rs.next()){
+				result.add(_mapper.map(rs));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public TEntity get(int id){
+		try {
+			selectById.setInt(1, id);
+			ResultSet rs = selectById.executeQuery();
+			while(rs.next()){
+				return _mapper.map(rs);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+		return null;
 	}
 	
 	protected abstract String createTableSql();

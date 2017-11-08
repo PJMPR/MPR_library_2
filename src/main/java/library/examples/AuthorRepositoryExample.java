@@ -3,14 +3,16 @@ package library.examples;
 import java.sql.Connection;
 import java.util.List;
 
+import library.dao.mappers.AuthorMapper;
 import library.dao.repositories.AuthorRepository;
+import library.dao.repositories.IRepository;
 import library.domain.Author;
 
 public class AuthorRepositoryExample {
 
 	public static void execute(Connection connection){
 
-    	AuthorRepository authorRepository = new AuthorRepository(connection);
+    	IRepository<Author> authorRepository = new AuthorRepository(connection, new AuthorMapper());
     	authorRepository.createTable();
     	Author author = new Author("Jan", "Maciej", "Kowalski");
     	authorRepository.add(author);
