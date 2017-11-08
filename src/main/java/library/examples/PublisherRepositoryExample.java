@@ -1,5 +1,6 @@
 package library.examples;
 
+import java.sql.Connection;
 import java.util.List;
 
 import library.dao.repositories.PublisherRepository;
@@ -8,9 +9,9 @@ import library.domain.Publisher;
 
 public class PublisherRepositoryExample {
 	
-	public static void execute(){
+	public static void execute(Connection connection){
 
-    	PublisherRepository publisherRepository = new PublisherRepository();
+    	PublisherRepository publisherRepository = new PublisherRepository(connection);
     	publisherRepository.createTable();
     	Publisher publisher = new Publisher("Maciek", 1928301723, "maciekwiat@onet.pl",  "maciekwiat.org");
     	publisherRepository.add(publisher);
