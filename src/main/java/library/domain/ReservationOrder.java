@@ -1,6 +1,6 @@
 package library.domain;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class ReservationOrder {
 
@@ -10,10 +10,19 @@ public class ReservationOrder {
 	}
 
 	private User user;
+	private int userId;
 	private Date date;
 
 	public BookInformation getBookInformation() {
 		return bookInformation;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 	public User getUser() {
