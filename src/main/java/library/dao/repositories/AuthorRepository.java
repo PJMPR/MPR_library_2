@@ -1,17 +1,15 @@
 package library.dao.repositories;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
+import library.dao.mappers.IMapper;
 import library.domain.Author;
 
 public class AuthorRepository extends RepositoryBase<Author>{
 
-	public AuthorRepository(Connection connection) {
-		super(connection);
+	public AuthorRepository(Connection connection, IMapper<Author> mapper) {
+		super(connection, mapper);
 	}
 
 	@Override
@@ -46,6 +44,7 @@ public class AuthorRepository extends RepositoryBase<Author>{
 		insert.setString(3, author.getSurname());
 	}
 
+	@Override
 	protected void setUpdate(Author author) throws SQLException {
 		update.setString(1, author.getName());
 		update.setString(2, author.getSecondName());
@@ -53,45 +52,4 @@ public class AuthorRepository extends RepositoryBase<Author>{
 		update.setInt(4, author.getId());
 	}
 	
-	public List<Author> getPage(int offset, int limit){
-		
-		List<Author> result = new ArrayList<Author>();
-		try {
-			selectByPage.setInt(1, offset);
-			selectByPage.setInt(2, limit);
-			ResultSet rs = selectByPage.executeQuery();
-			while(rs.next()){
-				Author a = new Author();
-				a.setId(rs.getInt("id"));
-				a.setName(rs.getString("name"));
-				a.setSecondName(rs.getString("secondname"));
-				a.setSurname(rs.getString("surname"));
-				result.add(a);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-	
-	public Author get(int id){
-		Author author = null;
-				
-		try {
-			selectById.setInt(1, id);
-			ResultSet rs = selectById.executeQuery();
-			while(rs.next()){
-				author=new Author();
-				author.setName(rs.getString("name"));
-				author.setSecondName(rs.getString("secondname"));
-				author.setSurname(rs.getString("surname"));
-				author.setId(rs.getInt("id"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}		
-				
-		return author;
-		
-	}
 }
