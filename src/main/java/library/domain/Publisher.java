@@ -1,6 +1,6 @@
 package library.domain;
 
-public class Publisher {
+public class Publisher implements IHaveId{
 	
 	private int id;
 	private String name;
@@ -8,6 +8,19 @@ public class Publisher {
     private String emailAdress;
     private String website;
 
+
+	public Publisher(String name, int phoneNumber, String emailAdress,
+			String website) {
+		super();
+		this.name = name;
+		this.phoneNumber = phoneNumber;
+		this.emailAdress = emailAdress;
+		this.website = website;
+	}
+
+	public Publisher() {
+		super();
+	}
     
     public int getId() {
  		return id;
@@ -48,19 +61,5 @@ public class Publisher {
     public void setWebsite(String website) {
         this.website = website;
     }
-
-	public Publisher(String name, int phoneNumber, String emailAdress,
-			String website) {
-		super();
-		this.name = name;
-		this.phoneNumber = phoneNumber;
-		this.emailAdress = emailAdress;
-		this.website = website;
-	}
-
-	public Publisher() {
-		super();
-	}
-	
 	
 }

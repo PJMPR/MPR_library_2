@@ -94,5 +94,4 @@ public class AuthorRepository extends RepositoryBase<Author>{
 		return author;
 		
 	}
-	
 }
