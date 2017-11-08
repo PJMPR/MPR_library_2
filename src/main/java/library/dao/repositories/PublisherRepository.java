@@ -1,19 +1,18 @@
 package library.dao.repositories;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+
+import library.dao.mappers.IMapper;
 import library.domain.Publisher;
 
 public class PublisherRepository extends RepositoryBase<Publisher>{
   
     Connection connection;
     
-    public PublisherRepository(Connection connection) {
-    	super(connection);
-    }
+    public PublisherRepository(Connection connection, IMapper<Publisher> mapper) {
+		super(connection, mapper);
+	}
     
     @Override
     protected String createTableSql(){
@@ -58,66 +57,5 @@ public class PublisherRepository extends RepositoryBase<Publisher>{
     		update.setString(4, publisher.getWebsite());
     		update.setInt(5, publisher.getId());
     	}
-
-
-    
-	public void delete(Publisher publisher){
-		
-		try {
-			delete.setInt(1, publisher.getId());
-			delete.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-    
-	
-	public List<Publisher> getPage(int offset, int limit){
-		
-		List<Publisher> result = new ArrayList<Publisher>();
-		try {
-			selectByPage.setInt(1, offset);
-			selectByPage.setInt(2, limit);
-			ResultSet rs = selectByPage.executeQuery();
-			while(rs.next()){
-				Publisher a = new Publisher();
-				a.setId(rs.getInt("id"));
-				a.setName(rs.getString("name"));
-				a.setPhoneNumber(rs.getInt("phoneNumber"));
-				a.setEmailAdress(rs.getString("emailAdress"));
-				a.setWebsite(rs.getString("website"));
-				result.add(a);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-	
-	public Publisher get(int id){
-		Publisher publisher = null;
-				
-		try {
-			selectById.setInt(1, id);
-			ResultSet rs = selectById.executeQuery();
-			while(rs.next()){
-				publisher=new Publisher();
-				publisher.setId(rs.getInt("id"));
-				publisher.setName(rs.getString("name"));
-				publisher.setPhoneNumber(rs.getInt("phoneNumber"));
-				publisher.setEmailAdress(rs.getString("empublisherilpublisherdress"));
-				publisher.setWebsite(rs.getString("website"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}		
-				
-		return publisher;
-		
-	}
-    
-
 
 }

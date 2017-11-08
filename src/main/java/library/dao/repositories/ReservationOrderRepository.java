@@ -1,22 +1,18 @@
 package library.dao.repositories;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
-import library.domain.Publisher;
+
+import library.dao.mappers.IMapper;
 import library.domain.ReservationOrder;
 
 public class ReservationOrderRepository extends RepositoryBase<ReservationOrder>{
 
-	Connection connection;
-	private boolean tableExists;
+	Connection connection;	
 	
-	
-	public ReservationOrderRepository(Connection connection) {
-		super(connection);
+	public ReservationOrderRepository(Connection connection, IMapper<ReservationOrder> mapper) {
+		super(connection, mapper);
 	}
 	
 	@Override
@@ -54,10 +50,6 @@ public class ReservationOrderRepository extends RepositoryBase<ReservationOrder>
 	    update.setDate(2, reservationOrder.getDate());
 		update.setInt(3, reservationOrder.getId());
 	}
-
-
-	
 }
-	}
 	
-}
+
