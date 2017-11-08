@@ -3,12 +3,13 @@ package library.dao.repositories;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import library.dao.mappers.IMapper;
 import library.domain.BorrowingOrder;
 
 public class BorrowingOrderRepository extends RepositoryBase<BorrowingOrder>{
 	
-	public BorrowingOrderRepository(Connection connection) {
-		super(connection);
+	public BorrowingOrderRepository(Connection connection,IMapper<BorrowingOrder> mapper) {
+		super(connection, mapper);
 	}
 	
 	@Override
