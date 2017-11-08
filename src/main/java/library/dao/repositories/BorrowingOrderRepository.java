@@ -1,8 +1,11 @@
 package library.dao.repositories;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
-public class BorrowingOrderRepository extends RepositoryBase{
+import library.domain.BorrowingOrder;
+
+public class BorrowingOrderRepository extends RepositoryBase<BorrowingOrder>{
 	
 	public BorrowingOrderRepository(Connection connection) {
 		super(connection);
@@ -30,6 +33,24 @@ public class BorrowingOrderRepository extends RepositoryBase{
 				+ "datefrom DATETIME,"
 				+ "dateto DATETIME"
 				+ ")";
+	}
+
+	@Override
+	protected void setInsert(BorrowingOrder borrowingOrder) throws SQLException {
+		insert.setString(1, borrowingOrder.getUser().getLogin());
+		insert.setString(2, borrowingOrder.getBook().getBookInformation().getTitle());
+		insert.setString(3, borrowingOrder.getDateFrom().toString());
+		insert.setString(4, borrowingOrder.getDateTo().toString());
+	}
+
+	@Override
+	protected void setUpdate(BorrowingOrder borrowingOrder) throws SQLException {
+		update.setString(1, borrowingOrder.getUser().getLogin());
+		update.setString(2, borrowingOrder.getBook().getBookInformation().getTitle());
+		update.setString(3, borrowingOrder.getDateFrom().toString());
+		update.setString(4, borrowingOrder.getDateTo().toString());
+		update.setInt(5, borrowingOrder.getId());
+		
 	}
 	
 }
