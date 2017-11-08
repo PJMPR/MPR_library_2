@@ -13,57 +13,25 @@ import library.domain.Notification;
 
 public class NotificationRepository extends RepositoryBase{
 	
-	public NotificationRepository(Connection connection) {
-		try {
-			_connection = connection;
-			
-			insert = connection.prepareStatement(""
-					+ "INSERT INTO notification(message,notification_type)"
-					+ "VALUES(?,?)");
-			
-			selectById = connection.prepareStatement(""
-					+ "SELECT * FROM notification WHERE id=?");
-			
-			lastId = connection.prepareStatement(""
-					+ "SELECT MAX(id) FROM notification"
-					+ "");
-			
-			selectByUser = connection.prepareStatement(""
-					+ "SELECT * FROM user WHERE login=?");
-			
-			selectByPage = connection.prepareStatement(""
-					+ "SELECT * FROM notification OFFSET ? LIMIT ?"
-					+ "");
-			
-			count = connection.prepareStatement(""
-					+ "SELECT COUNT(*) FROM notification"
-					+ "");
-			
-			selectByMessageType = connection.prepareStatement(""
-					+ "SELECT * FROM notification WHERE notification_type=?"
-					+ "");
-			
-			delete = connection.prepareStatement(""
-					+ "DELETE FROM notification WHERE id=?");
-			
-			update = connection.prepareStatement(""
-					+ "UPDATE notification SET (message, notifiaction_type)=(?,?) WHERE id=?");
-			
-			
-			ResultSet rs = connection.getMetaData().getTables(null, null, null, null);
-			
-			while(rs.next()){
-				if(rs.getString("TABLE_NAME").equalsIgnoreCase("notification")){
-					tableExists = true;
-					break;
-				}
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
+	public NotificationRepository(Connection connection){
+		super(connection);
 	}
+	
+	@Override
+	protected String getTableName() {
+		return "notification";
+	}
+	
+	@Override
+	protected String getUpdateSql() {
+		return "UPDATE notification SET (message, notifiaction_type)=(?,?) WHERE id=?";
+	}
+	
+	@Override
+	protected String getInsertSql() {
+		return "INSERT INTO notification(message,notification_type) VALUES(?,?)";
+	}
+	
 	
 public void delete(Notification notification){
 		
