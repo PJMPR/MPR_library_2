@@ -6,10 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import library.domain.Author;
 import library.domain.IHaveId;
 
 
-public abstract class RepositoryBase<TEtity extends IHaveId> {
+public abstract class RepositoryBase<TEntity extends IHaveId> {
 	
 	protected Connection _connection;
 	protected boolean tableExists;
@@ -34,7 +35,6 @@ public abstract class RepositoryBase<TEtity extends IHaveId> {
 		}
 	}
 
-
 	private void checkIfTableExists(Connection connection) throws SQLException {
 		ResultSet rs = connection.getMetaData().getTables(null, null, null, null);
 		
@@ -45,8 +45,7 @@ public abstract class RepositoryBase<TEtity extends IHaveId> {
 			}
 		}
 	}
-
-
+	
 	private void initStatements(Connection connection) throws SQLException {
 		insert = connection.prepareStatement(getInsertSql());
 		
@@ -74,7 +73,7 @@ public abstract class RepositoryBase<TEtity extends IHaveId> {
 		update = connection.prepareStatement(getUpdateSql());
 	}
 
-	public void delete(TEtity entity){
+	public void delete(TEntity entity){
 		
 		try {
 			delete.setInt(1, entity.getId());
@@ -110,7 +109,25 @@ public abstract class RepositoryBase<TEtity extends IHaveId> {
 		return 0;
 	}
 	
-
+	public void add(TEntity entity){
+		
+		try {
+			setInsert(entity);
+			insert.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void update(TEntity entity){
+		try {
+			setUpdate(entity);
+			update.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public void createTable(){
 		
@@ -130,4 +147,6 @@ public abstract class RepositoryBase<TEtity extends IHaveId> {
 	protected abstract String getTableName();
 	protected abstract String getInsertSql();
 	protected abstract String getUpdateSql();
+	protected abstract void setInsert(TEntity entity) throws SQLException;
+	protected abstract void setUpdate(TEntity entity) throws SQLException;
 }

@@ -2,13 +2,14 @@ package library.domain;
 
 import java.sql.Date;
 
-public class ReservationOrder {
+public class ReservationOrder implements IHaveId{
 
 	private BookInformation bookInformation;
 	public void setBookInformation(BookInformation bookInformation) {
 		this.bookInformation = bookInformation;
 	}
 
+	private int Id;
 	private User user;
 	private int userId;
 	private Date date;
@@ -17,6 +18,10 @@ public class ReservationOrder {
 		return bookInformation;
 	}
 
+	public int getId(){
+		return Id;
+	}
+	
 	public int getUserId() {
 		return userId;
 	}

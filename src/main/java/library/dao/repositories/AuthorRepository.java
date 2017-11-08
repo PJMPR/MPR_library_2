@@ -1,17 +1,14 @@
 package library.dao.repositories;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import library.domain.Author;
 
-public class AuthorRepository extends RepositoryBase{
+public class AuthorRepository extends RepositoryBase<Author>{
 
 	public AuthorRepository(Connection connection) {
 		super(connection);
@@ -42,18 +39,18 @@ public class AuthorRepository extends RepositoryBase{
 		return "INSERT INTO author(name,secondname,surname) VALUES(?,?,?)";
 	}
 	
-	public void update(Author author){
-		
-		try {
-			
-			update.setString(1, author.getName());
-			update.setString(2, author.getSecondName());
-			update.setString(3, author.getSurname());
-			update.setInt(4, author.getId());
-			update.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	@Override
+	protected void setInsert(Author author) throws SQLException {
+		insert.setString(1, author.getName());
+		insert.setString(2, author.getSecondName());
+		insert.setString(3, author.getSurname());
+	}
+
+	protected void setUpdate(Author author) throws SQLException {
+		update.setString(1, author.getName());
+		update.setString(2, author.getSecondName());
+		update.setString(3, author.getSurname());
+		update.setInt(4, author.getId());
 	}
 	
 	public List<Author> getPage(int offset, int limit){
@@ -97,23 +94,4 @@ public class AuthorRepository extends RepositoryBase{
 		return author;
 		
 	}
-	
-	public void add(Author author){
-		
-		try {
-			insert.setString(1, author.getName());
-			insert.setString(2, author.getSecondName());
-			insert.setString(3, author.getSurname());
-			insert.executeUpdate();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-	}
-
-
-
-
-	
 }
