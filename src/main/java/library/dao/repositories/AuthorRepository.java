@@ -111,9 +111,4 @@ public class AuthorRepository extends RepositoryBase{
 		}
 		
 	}
-
-
-
-
-	
 }
