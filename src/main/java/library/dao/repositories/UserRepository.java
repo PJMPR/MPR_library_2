@@ -1,21 +1,17 @@
 package library.dao.repositories;
 
-import library.domain.Author;
-import library.domain.User;
 
+import library.domain.User;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserRepository extends RepositoryBase{
+public class UserRepository extends RepositoryBase<User>{
 
     
-    PreparedStatement selectByLogin;
+    
 
     	public UserRepository(Connection connection) {
     		super(connection);
@@ -46,64 +42,21 @@ public class UserRepository extends RepositoryBase{
     		return "INSERT INTO user(login,password,status) VALUES(?,?,?)";
     	}
     	
-
-	public void update(User user){
-		
-		try {
-			
-			update.setString(1, user.getLogin());
-			update.setString(2, user.getPassword());
-			update.setBoolean(3, user.isStatus());
-			update.setInt(4, user.getId());
-			update.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+    	@Override
+    	protected void setInsert(User user) throws SQLException {
+    		insert.setString(1, user.getLogin());
+    		insert.setString(2, user.getPassword());
+    		insert.setBoolean(3, user.isStatus());
     
-   
+    	}
+    	
+    	protected void setUpdate(User user) throws SQLException {
+    		update.setString(1, user.getLogin());
+    		update.setString(2, user.getPassword());
+    		update.setBoolean(3, user.isStatus());
+    		update.setInt(4, user.getId());
+    	}
 
-    public User getByLogin(String login){
-        User user = null;
-
-        try {
-            selectByLogin.setString(1, login);
-            ResultSet rs = selectByLogin.executeQuery();
-            while (rs.next()) {
-                user = new User();
-                user.setLogin(rs.getString("login"));
-                user.setPassword(rs.getString("password"));
-                user.setStatus(rs.getBoolean("status"));
-
-            }
-
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
-
-        return user;
-    }
-
-    public User getById(int id){
-        User user = null;
-
-        try {
-            selectById.setInt(1, id);
-            ResultSet rs = selectById.executeQuery();
-            while(rs.next()){
-                user= new User();
-                user.setLogin(rs.getString("login"));
-                user.setPassword(rs.getString("password"));
-                user.setStatus(rs.getBoolean("status"));
-                user.setId(rs.getInt("id"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return user;
-    }
-    
     public List<User> getPage(int offset, int limit){
 		
 		List<User> result = new ArrayList<User>();
@@ -145,18 +98,5 @@ public class UserRepository extends RepositoryBase{
 		return user;
 		
 	}
-
-    public void add(User user){
-
-        try {
-            insert.setString(1, user.getLogin());
-            insert.setString(2, user.getPassword());
-            insert.setBoolean(3, user.isStatus());
-            insert.executeUpdate();
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
-    }
-
 
 }
