@@ -3,14 +3,22 @@ package library.domain;
 import java.util.Calendar;
 import java.util.Date;
 
-public class BorrowingOrder {
+public class BorrowingOrder implements IHaveId{
 
+	private int id;
 	private User user;
 	private Book book;
 	private Date dateFrom;
 	private Date dateTo;
 
+	public int getId() {
+		return id;
+	}
 
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public BorrowingOrder(){
 		
 	}
