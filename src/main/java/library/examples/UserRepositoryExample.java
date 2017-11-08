@@ -3,14 +3,19 @@ package library.examples;
 import java.sql.Connection;
 import java.util.List;
 
+import library.dao.mappers.AuthorMapper;
+import library.dao.mappers.UserMapper;
+import library.dao.repositories.AuthorRepository;
+import library.dao.repositories.IRepository;
 import library.dao.repositories.UserRepository;
+import library.domain.Author;
 import library.domain.User;
 
 public class UserRepositoryExample {
 	
 	public static void execute(Connection connection){
 
-    	UserRepository userRepository = new UserRepository(connection);
+		IRepository<User> userRepository = new UserRepository(connection, new UserMapper());
     	userRepository.createTable();
     	User user = new User();
     	user.setLogin("Karol");

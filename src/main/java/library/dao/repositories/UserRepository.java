@@ -1,20 +1,22 @@
 package library.dao.repositories;
 
 
+import library.dao.mappers.IMapper;
+
 import library.domain.User;
 import java.sql.Connection;
-import java.sql.ResultSet;
+
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+
+
 
 public class UserRepository extends RepositoryBase<User>{
 
     
     
 
-    	public UserRepository(Connection connection) {
-    		super(connection);
+    	public UserRepository(Connection connection,IMapper<User> mapper) {
+    		super(connection,mapper);
     	}
     	
     	@Override
@@ -49,7 +51,7 @@ public class UserRepository extends RepositoryBase<User>{
     		insert.setBoolean(3, user.isStatus());
     
     	}
-    	
+    	@Override
     	protected void setUpdate(User user) throws SQLException {
     		update.setString(1, user.getLogin());
     		update.setString(2, user.getPassword());
@@ -57,46 +59,6 @@ public class UserRepository extends RepositoryBase<User>{
     		update.setInt(4, user.getId());
     	}
 
-    public List<User> getPage(int offset, int limit){
-		
-		List<User> result = new ArrayList<User>();
-		try {
-			selectByPage.setInt(1, offset);
-			selectByPage.setInt(2, limit);
-			ResultSet rs = selectByPage.executeQuery();
-			while(rs.next()){
-				User a = new User();
-				a.setId(rs.getInt("id"));
-				a.setLogin(rs.getString("login"));
-				a.setPassword(rs.getString("password"));
-				a.setStatus(rs.getBoolean("status"));
-				result.add(a);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-    
-    public User get(int id){
-		User user = null;
-				
-		try {
-			selectById.setInt(1, id);
-			ResultSet rs = selectById.executeQuery();
-			while(rs.next()){
-				user = new User();
-				user.setLogin(rs.getString("login"));
-				user.setPassword(rs.getString("password"));
-				user.setStatus(rs.getBoolean("status"));
-				user.setId(rs.getInt("id"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}		
-				
-		return user;
-		
-	}
+
 
 }
