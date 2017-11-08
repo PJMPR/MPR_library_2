@@ -4,8 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
-public abstract class RepositoryBase {
+import library.domain.IHaveId;
+
+
+public abstract class RepositoryBase<TEtity extends IHaveId> {
 	
 	protected Connection _connection;
 	protected boolean tableExists;
@@ -70,6 +74,15 @@ public abstract class RepositoryBase {
 		update = connection.prepareStatement(getUpdateSql());
 	}
 
+	public void delete(TEtity entity){
+		
+		try {
+			delete.setInt(1, entity.getId());
+			delete.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public int count(){
 		
@@ -97,6 +110,23 @@ public abstract class RepositoryBase {
 		return 0;
 	}
 	
+
+	
+	public void createTable(){
+		
+		String createTableSql = createTableSql();
+		
+		try {
+			Statement createTable = _connection.createStatement();
+			if(!tableExists)
+				createTable.executeUpdate(createTableSql);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	protected abstract String createTableSql();
 	protected abstract String getTableName();
 	protected abstract String getInsertSql();
 	protected abstract String getUpdateSql();

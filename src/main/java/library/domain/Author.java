@@ -1,6 +1,6 @@
 package library.domain;
 
-public class Author {
+public class Author implements IHaveId {
 
 	private int id;
     private String name;
