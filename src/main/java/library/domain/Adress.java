@@ -1,6 +1,6 @@
 package library.domain;
 
-public class Adress {
+public class Adress implements IHaveId {
 	private int id;
 	private String city;
 	private String postalCode;

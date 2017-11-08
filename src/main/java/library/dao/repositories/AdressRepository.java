@@ -9,7 +9,7 @@ import java.util.List;
 
 import library.domain.Adress;
 
-public class AdressRepository extends RepositoryBase{
+public class AdressRepository extends RepositoryBase<Adress>{
 
 	public AdressRepository(Connection connection){
 		super(connection);
@@ -41,19 +41,20 @@ public class AdressRepository extends RepositoryBase{
 		return "INSERT INTO adress(city,postalcode,street,apnumber) VALUES(?,?,?,?)";
 	}
 
-	public void update(Adress adress){
+	@Override
+	protected void setUpdate(Adress adress) throws SQLException {
+		update.setString(1, adress.getCity());
+		update.setString(2, adress.getPostalCode());
+		update.setString(3, adress.getStreet());
+		update.setString(4, adress.getApNumber());
+		update.setInt(5, adress.getId());
+	}
 
-		try {
-
-			update.setString(1, adress.getCity());
-			update.setString(2, adress.getPostalCode());
-			update.setString(3, adress.getStreet());
-			update.setString(4, adress.getApNumber());
-			update.setInt(5, adress.getId());
-			update.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	protected void setInsert(Adress adress) throws SQLException {
+		insert.setString(1,adress.getCity());
+		insert.setString(2,adress.getPostalCode());
+		insert.setString(3,adress.getStreet());
+		insert.setString(4,adress.getApNumber());
 	}
 
 	public List<Adress> getPage(int offset, int limit){
@@ -99,20 +100,4 @@ public class AdressRepository extends RepositoryBase{
 
 		return adress;
 	}
-
-	public void add(Adress adress)
-	{
-		try {
-			insert.setString(1,adress.getCity());
-			insert.setString(2,adress.getPostalCode());
-			insert.setString(3,adress.getStreet());
-			insert.setString(4,adress.getApNumber());
-			insert.executeUpdate();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-
 }
