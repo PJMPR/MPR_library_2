@@ -1,6 +1,6 @@
 package library.domain;
 
-public class Notification {
+public class Notification implements IHaveId{
 	
 	private int id;
 	private User user;

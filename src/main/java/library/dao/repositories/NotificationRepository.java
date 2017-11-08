@@ -9,9 +9,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import library.domain.IHaveId;
 import library.domain.Notification;
 
-public class NotificationRepository extends RepositoryBase{
+public class NotificationRepository extends RepositoryBase<Notification>{
 	
 	public NotificationRepository(Connection connection){
 		super(connection);
@@ -41,18 +42,18 @@ public class NotificationRepository extends RepositoryBase{
 		return "INSERT INTO notification(message,notification_type) VALUES(?,?)";
 	}
 	
-
-public void update(Notification notification){
+	@Override
+	protected void setInsert(Notification notification) throws SQLException {
+		insert.setString(1, notification.getMessage());
+		insert.setString(2, notification.getNotification_type());
+	}
 	
-	try {
+	protected void setUpdate(Notification notification) throws SQLException {
 		update.setString(1, notification.getMessage());
 		update.setString(2, notification.getNotification_type());
 		update.setInt(3, notification.getId());
-		update.executeUpdate();
-	} catch (SQLException e) {
-		e.printStackTrace();
 	}
-}
+
 
 public List<Notification> getPage(int offset, int limit){
 	
