@@ -5,13 +5,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import library.domain.Publisher;
 
-public class PublisherRepository extends RepositoryBase{
+public class PublisherRepository extends RepositoryBase<Publisher>{
   
     Connection connection;
-    private boolean tableExists;
     
     public PublisherRepository(Connection connection) {
     	super(connection);
@@ -43,6 +41,25 @@ public class PublisherRepository extends RepositoryBase{
     	protected String getInsertSql() {
     		return "INSERT INTO publisher(name,phoneNumber,emailAdress,website) VALUES(?,?,?,?)";
     	}
+    	
+    	@Override
+    	protected void setInsert(Publisher publisher) throws SQLException {
+    		insert.setString(1, publisher.getName());
+    	    insert.setInt(2, publisher.getPhoneNumber());
+    	    insert.setString(3, publisher.getEmailAdress());
+    	    insert.setString(4, publisher.getWebsite());
+    	}
+
+    	@Override
+    	protected void setUpdate(Publisher publisher) throws SQLException {
+    		update.setString(1, publisher.getName());
+    		update.setInt(2, publisher.getPhoneNumber());
+    		update.setString(3, publisher.getEmailAdress());
+    		update.setString(4, publisher.getWebsite());
+    		update.setInt(5, publisher.getId());
+    	}
+
+
     
 	public void delete(Publisher publisher){
 		
@@ -51,20 +68,6 @@ public class PublisherRepository extends RepositoryBase{
 			delete.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	public void update(Publisher publisher){
-		
-		try {
-			
-			update.setString(1, publisher.getName());
-			update.setInt(2, publisher.getPhoneNumber());
-			update.setString(3, publisher.getEmailAdress());
-			update.setString(4, publisher.getWebsite());
-			update.setInt(5, publisher.getId());
-			update.executeUpdate();
-		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
@@ -115,23 +118,6 @@ public class PublisherRepository extends RepositoryBase{
 		
 	}
     
-    
-    
-public void add(Publisher publisher){
-       
-        try {
-            insert.setString(1, publisher.getName());
-            insert.setInt(2, publisher.getPhoneNumber());
-            insert.setString(3, publisher.getEmailAdress());
-            insert.setString(4, publisher.getWebsite());
-            insert.executeUpdate();
-           
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-       
-    }
-
 
 
 }

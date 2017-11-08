@@ -6,7 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class ReservationOrderRepository extends RepositoryBase{
+import library.domain.Publisher;
+import library.domain.ReservationOrder;
+
+public class ReservationOrderRepository extends RepositoryBase<ReservationOrder>{
 
 	Connection connection;
 	private boolean tableExists;
@@ -39,6 +42,20 @@ public class ReservationOrderRepository extends RepositoryBase{
 		return "INSERT INTO reservationorder(userid, date) VALUES(?,?)";
 	}
 	
+	@Override
+	protected void setInsert(ReservationOrder reservationOrder) throws SQLException {
+		insert.setInt(1, reservationOrder.getUserId());
+	    insert.setDate(2, reservationOrder.getDate());
+	}
+
+	@Override
+	protected void setUpdate(ReservationOrder reservationOrder) throws SQLException {
+		update.setInt(1, reservationOrder.getUserId());
+	    update.setDate(2, reservationOrder.getDate());
+		update.setInt(3, reservationOrder.getId());
+	}
+
+
 	
 }
 	}
