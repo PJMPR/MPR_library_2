@@ -1,6 +1,6 @@
 package library.domain;
 
-public class User {
+public class User implements IHaveId {
 
 	private int id;
 	private String login;
