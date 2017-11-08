@@ -3,13 +3,14 @@ package library.examples;
 import library.dao.repositories.BookInformationRepository;
 import library.domain.BookInformation;
 
+import java.sql.Connection;
 import java.util.List;
 
 public class BookInformationRepositoryExample {
 
-    public static void execute(){
+    public static void execute(Connection connection){
 
-        BookInformationRepository bookInformationRepository = new BookInformationRepository();
+        BookInformationRepository bookInformationRepository = new BookInformationRepository(connection);
         bookInformationRepository.createTable();
         BookInformation bookInformation = new BookInformation();
         bookInformation.setTitle("EXAMPLE");

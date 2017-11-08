@@ -17,10 +17,10 @@ public class PublisherRepository extends RepositoryBase{
 
     
     
-    public PublisherRepository() {
+    public PublisherRepository(Connection connection) {
 
         try {
-            connection = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/workdb");
+            connection = connection;
            
             insert = connection.prepareStatement(""
                     + "INSERT INTO publisher(name,phoneNumber,emailAdress,website)"
