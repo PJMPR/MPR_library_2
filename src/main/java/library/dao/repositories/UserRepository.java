@@ -16,51 +16,26 @@ public class UserRepository extends RepositoryBase{
 
     
     PreparedStatement selectByLogin;
-  
-    public UserRepository(Connection connection){
 
-        try {
-            _connection = connection;
+    	public UserRepository(Connection connection) {
+    		super(connection);
+    	}
 
-            insert = connection.prepareStatement(""
-                                                    +"INSERT INTO user(login,password,status)"
-                                                    +"VALUES(?,?,?)");
+    	@Override
+    	protected String getTableName() {
+    		return "user";
+    	}
 
-            selectByLogin = connection.prepareStatement(""
-                                                            + "SELECT * FROM user WHERE login=?");
+    	@Override
+    	protected String getUpdateSql() {
+    		return "UPDATE user SET (login,password,status)=(?,?,?) WHERE id=?";
+    	}
 
-            selectById = connection.prepareStatement(""
-                                                        +"SELECT * FROM user WHERE id=?");
-            lastId = connection.prepareStatement(""
-            										+ "SELECT MAX(id) FROM user"
-            										+ "");
-            selectByPage = connection.prepareStatement(""
-					+ "SELECT * FROM user OFFSET ? LIMIT ?"
-					+ "");		
-            count = connection.prepareStatement(""
-					+ "SELECT COUNT(*) FROM user"
-					+ "");
-
-
-			delete = connection.prepareStatement(""
-					+ "DELETE FROM user WHERE id=?");
-			
-			update = connection.prepareStatement(""
-					+ "UPDATE user SET (login, password, status)=(?,?,?) WHERE id=?");
-			
-            ResultSet rs = connection.getMetaData().getTables(null,null,null,null);
-
-            while(rs.next()){
-                if (rs.getString("TABLE_NAME").equalsIgnoreCase("user")){
-                    tableExists = true;
-                    break;
-                }
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+    	@Override
+    	protected String getInsertSql() {
+    		return "INSERT INTO user(login,password,status) VALUES(?,?,?)";
+    	}
+    	
 public void delete(User user){
 		
 		try {
