@@ -6,29 +6,27 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class BorrowingOrderRepository {
-
-	Connection connection;
+public class BorrowingOrderRepository extends RepositoryBase{
+	
 	private boolean tableExists;
 	
-	public BorrowingOrderRepository() {
+	public BorrowingOrderRepository(Connection connection) {
+		super(connection);
+	}
+	
+	@Override
+	protected String getTableName() {
+		return "borrowingorder";
+	}
 
-		try {
-			connection = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/workdb");
-			
-			ResultSet rs = connection.getMetaData().getTables(null, null, null, null);
-			
-			while(rs.next()){
-				if(rs.getString("TABLE_NAME").equalsIgnoreCase("borrowingorder")){
-					tableExists = true;
-					break;
-				}
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
+	@Override
+	protected String getUpdateSql() {
+		return "UPDATE borrowingorder SET (user, book, dateFrom, dateTo)=(?,?,?,?) WHERE id=?";
+	}
+
+	@Override
+	protected String getInsertSql() {
+		return "INSERT INTO borrowingorder(user, book, dateFrom, dateTo) VALUES(?,?,?,?)";
 	}
 	
 	public void createTable(){
@@ -40,7 +38,7 @@ public class BorrowingOrderRepository {
 				+ ")";
 		
 		try {
-			Statement createTable = connection.createStatement();
+			Statement createTable = _connection.createStatement();
 			if(!tableExists)
 			createTable.executeUpdate(createTableSql);
 			
