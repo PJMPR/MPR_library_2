@@ -25,6 +25,12 @@ public class ReservationOrder implements IHaveId{
 	public int getUserId() {
 		return userId;
 	}
+	
+	
+
+	public void setId(int id) {
+		Id = id;
+	}
 
 	public void setUserId(int userId) {
 		this.userId = userId;
