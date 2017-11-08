@@ -3,6 +3,7 @@ package library.examples;
 import java.sql.Connection;
 import java.util.List;
 
+import library.dao.mappers.AdressMapper;
 import library.dao.repositories.AdressRepository;
 import library.domain.Adress;
 
@@ -10,8 +11,8 @@ public class AdressRepositoryExample {
 
 	
 	public static void execute(Connection connection){
-		AdressRepository adressRepo = new AdressRepository(connection);
-		adressRepo.createtable();
+		AdressRepository adressRepo = new AdressRepository(connection, new AdressMapper());
+		adressRepo.createTable();
 		Adress adress = new Adress("Gdansk", "34-123", "Brzegi", "55");
 		adressRepo.add(adress);
 		adressRepo.add(adress);
