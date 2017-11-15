@@ -7,7 +7,7 @@ import library.domain.ReservationOrder;
 
 public interface IReservationOrderRepository extends IRepository<ReservationOrder> {
 
-	public List<ReservationOrder> withId(int id);
+	public ReservationOrder withId(int id);
 	public List<ReservationOrder> withDate(Date date);
 
 }

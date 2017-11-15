@@ -2,11 +2,13 @@ package library.dao.repositories.impl;
 
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import library.dao.mappers.IMapper;
-import library.dao.repositories.IBorrowingOrderRepository;
 import library.dao.repositories.IReservationOrderRepository;
 import library.domain.ReservationOrder;
 
@@ -15,8 +17,11 @@ implements IReservationOrderRepository {
 
 	Connection connection;	
 	
-	public ReservationOrderRepository(Connection connection, IMapper<ReservationOrder> mapper) {
+	private PreparedStatement selectByDate;
+	
+	public ReservationOrderRepository(Connection connection, IMapper<ReservationOrder> mapper) throws SQLException{
 		super(connection, mapper);
+		selectByDate = connection.prepareStatement("SELECT * FROM reservationOrder WHERE date=?");
 	}
 	
 	@Override
@@ -55,14 +60,36 @@ implements IReservationOrderRepository {
 		update.setInt(3, reservationOrder.getId());
 	}
 
-	public List<ReservationOrder> withId(int id) {
-		// TODO Auto-generated method stub
+	public ReservationOrder withId(int id) {
+		
+		try {
+			selectById.setInt(1, id);
+			ResultSet rs = selectById.executeQuery();
+			while(rs.next()) {
+				return _mapper.map(rs);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
+
 	}
 
 	public List<ReservationOrder> withDate(Date date) {
-		// TODO Auto-generated method stub
-		return null;
+		List<ReservationOrder> list = new ArrayList<ReservationOrder>();
+		try {
+			selectByDate.setDate(1, date);
+			ResultSet rs = selectById.executeQuery();
+			while(rs.next()) {
+				list.add(_mapper.map(rs));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+
 	}
 }
 	

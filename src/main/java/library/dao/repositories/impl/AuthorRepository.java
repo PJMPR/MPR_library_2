@@ -56,7 +56,7 @@ public class AuthorRepository extends RepositoryBase<Author>
 	}
 
 	public List<Author> withName(String name) {
-		// TODO Auto-generated method stub
+		
 		return null;
 		
 	}
