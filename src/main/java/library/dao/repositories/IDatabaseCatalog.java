@@ -5,5 +5,6 @@ import library.domain.Author;
 public interface IDatabaseCatalog {
 
 	public IAuthorRepository authors();
+	public IAdressRepository addresses();
 	
 }
