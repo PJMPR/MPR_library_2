@@ -1,17 +1,33 @@
 package library.dao.repositories.impl;
 
 import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import library.dao.mappers.IMapper;
+import library.dao.repositories.IBorrowingOrderRepository;
+import library.domain.Author;
 import library.domain.BorrowingOrder;
+import library.domain.ReservationOrder;
 
-public class BorrowingOrderRepository extends RepositoryBase<BorrowingOrder>{
+public class BorrowingOrderRepository extends RepositoryBase<BorrowingOrder>
+implements IBorrowingOrderRepository
+					{
 	
-	public BorrowingOrderRepository(Connection connection,IMapper<BorrowingOrder> mapper) {
+	
+	private PreparedStatement selectByDateFrom;
+	private PreparedStatement selectByDateTo;
+	public BorrowingOrderRepository(Connection connection, IMapper<BorrowingOrder> mapper) throws SQLException{
 		super(connection, mapper);
+		selectByDateFrom = connection.prepareStatement("SELECT * FROM borrowingOrder WHERE dateFrom=?");
+		selectByDateTo = connection.prepareStatement("SELECT * FROM borrowingOrder WHERE dateTo=?");
 	}
 	
+
 	@Override
 	protected String getTableName() {
 		return "borrowingorder";
@@ -52,6 +68,54 @@ public class BorrowingOrderRepository extends RepositoryBase<BorrowingOrder>{
 		update.setString(4, borrowingOrder.getDateTo().toString());
 		update.setInt(5, borrowingOrder.getId());
 		
+	}
+	
+
+	public BorrowingOrder withId(int id) {
+
+		try {
+			selectById.setInt(1, id);
+			ResultSet rs = selectById.executeQuery();
+			while(rs.next()) {
+				return _mapper.map(rs);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+
+	}
+
+	public List<BorrowingOrder> withDateFrom(Date dateFrom) {
+		List<BorrowingOrder> list = new ArrayList<BorrowingOrder>();
+		try {
+			selectByDateFrom.setDate(1, dateFrom);
+			ResultSet rs = selectById.executeQuery();
+			while(rs.next()) {
+				list.add(_mapper.map(rs));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+
+	}
+
+	public List<BorrowingOrder> withDateTo(Date dateTo) {
+		List<BorrowingOrder> list = new ArrayList<BorrowingOrder>();
+		try {
+			selectByDateTo.setDate(1, dateTo);
+			ResultSet rs = selectById.executeQuery();
+			while(rs.next()) {
+				list.add(_mapper.map(rs));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 	
 }

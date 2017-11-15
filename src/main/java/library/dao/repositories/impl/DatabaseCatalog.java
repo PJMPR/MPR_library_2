@@ -4,11 +4,15 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import library.dao.mappers.AuthorMapper;
+import library.dao.mappers.BorrowingOrderMapper;
+import library.dao.mappers.ReservationOrderMapper;
 import library.dao.mappers.NotificationMapper;
 import library.dao.mappers.PublisherMapper;
 import library.dao.mappers.UserMapper;
 import library.dao.repositories.IAuthorRepository;
+import library.dao.repositories.IBorrowingOrderRepository;
 import library.dao.repositories.IDatabaseCatalog;
+import library.dao.repositories.IReservationOrderRepository;
 import library.dao.repositories.INotificationRepository;
 import library.dao.repositories.IPublisherRepository;
 import library.dao.repositories.IRepository;
@@ -27,6 +31,13 @@ public class DatabaseCatalog implements IDatabaseCatalog{
 		return new AuthorRepository(connection, new AuthorMapper());
 	}
 
+	public IBorrowingOrderRepository borrowingOrders() {
+		return new BorrowingOrderRepository(connection, new BorrowingOrderMapper());
+	}
+	
+	public IReservationOrderRepository reservationOrders() {
+		return new ReservationOrderRepository(connection, new ReservationOrderMapper());
+	}
 	public IPublisherRepository publishers() throws SQLException {
 		return new PublisherRepository(connection, new PublisherMapper());
 	}

@@ -6,6 +6,8 @@ import library.domain.Author;
 
 public interface IDatabaseCatalog {
 	public IAuthorRepository authors();
+	public IBorrowingOrderRepository borrowingOrders();
+	public IReservationOrderRepository reservationOrders();
 	public IPublisherRepository publishers() throws SQLException;
 	public INotificationRepository notifications() throws SQLException;
 	public IAuthorRepository authors()

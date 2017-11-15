@@ -19,10 +19,20 @@ public class BorrowingOrder implements IHaveId{
 		this.id = id;
 	}
 	
-	public BorrowingOrder(){
-		
-	}
+
 	
+	public BorrowingOrder() {
+		super();
+	}
+
+	public BorrowingOrder(User user, Book book, Date dateFrom, Date dateTo) {
+		super();
+		this.user = user;
+		this.book = book;
+		this.dateFrom = dateFrom;
+		this.dateTo = dateTo;
+	}
+
 	public void setDateFrom(Date dateFrom) {
 		this.dateFrom = dateFrom;
 	}

@@ -1,18 +1,27 @@
 package library.dao.repositories.impl;
 
 import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.util.ArrayList;
+import java.util.List;
 
 import library.dao.mappers.IMapper;
+import library.dao.repositories.IReservationOrderRepository;
 import library.domain.ReservationOrder;
 
-public class ReservationOrderRepository extends RepositoryBase<ReservationOrder>{
+public class ReservationOrderRepository extends RepositoryBase<ReservationOrder>
+implements IReservationOrderRepository {
 
 	Connection connection;	
 	
-	public ReservationOrderRepository(Connection connection, IMapper<ReservationOrder> mapper) {
+	private PreparedStatement selectByDate;
+	
+	public ReservationOrderRepository(Connection connection, IMapper<ReservationOrder> mapper) throws SQLException{
 		super(connection, mapper);
+		selectByDate = connection.prepareStatement("SELECT * FROM reservationOrder WHERE date=?");
 	}
 	
 	@Override
@@ -49,6 +58,38 @@ public class ReservationOrderRepository extends RepositoryBase<ReservationOrder>
 		update.setInt(1, reservationOrder.getUserId());
 	    update.setDate(2, reservationOrder.getDate());
 		update.setInt(3, reservationOrder.getId());
+	}
+
+	public ReservationOrder withId(int id) {
+		
+		try {
+			selectById.setInt(1, id);
+			ResultSet rs = selectById.executeQuery();
+			while(rs.next()) {
+				return _mapper.map(rs);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+
+	}
+
+	public List<ReservationOrder> withDate(Date date) {
+		List<ReservationOrder> list = new ArrayList<ReservationOrder>();
+		try {
+			selectByDate.setDate(1, date);
+			ResultSet rs = selectById.executeQuery();
+			while(rs.next()) {
+				list.add(_mapper.map(rs));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+
 	}
 }
 	
