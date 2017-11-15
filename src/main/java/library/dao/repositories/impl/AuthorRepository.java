@@ -6,13 +6,14 @@ import java.util.List;
 
 import library.dao.mappers.IMapper;
 import library.dao.repositories.IAuthorRepository;
+import library.dao.uow.IUnitOfWork;
 import library.domain.Author;
 
 public class AuthorRepository extends RepositoryBase<Author>
 	implements IAuthorRepository{
 
-	public AuthorRepository(Connection connection, IMapper<Author> mapper) {
-		super(connection, mapper);
+	public AuthorRepository(Connection connection, IMapper<Author> mapper, IUnitOfWork uow) throws SQLException {
+		super(connection, mapper, uow);
 	}
 
 	@Override
