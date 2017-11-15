@@ -2,15 +2,17 @@ package library.dao.repositories.impl;
 
 
 import library.dao.mappers.IMapper;
-
+import library.dao.repositories.IUserRepository;
 import library.domain.User;
 import java.sql.Connection;
 
 import java.sql.SQLException;
+import java.util.List;
 
 
 
-public class UserRepository extends RepositoryBase<User>{
+public class UserRepository extends RepositoryBase<User>
+	implements IUserRepository{
 
     
     
@@ -58,6 +60,16 @@ public class UserRepository extends RepositoryBase<User>{
     		update.setBoolean(3, user.isStatus());
     		update.setInt(4, user.getId());
     	}
+
+		public List<User> withStatus(boolean status) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		public List<User> withLogin(String login) {
+			// TODO Auto-generated method stub
+			return null;
+		}
 
 
 

@@ -3,44 +3,49 @@ package library.examples;
 import java.sql.Connection;
 import java.util.List;
 
-import library.dao.mappers.AuthorMapper;
+
 import library.dao.mappers.UserMapper;
 import library.dao.repositories.IRepository;
-import library.dao.repositories.impl.AuthorRepository;
+
 import library.dao.repositories.impl.UserRepository;
-import library.domain.Author;
+
 import library.domain.User;
+import library.dao.repositories.IDatabaseCatalog;
 
 public class UserRepositoryExample {
 	
-	public static void execute(Connection connection){
+	public static void execute(Connection connection, IDatabaseCatalog catalog){
 
-		IRepository<User> userRepository = new UserRepository(connection, new UserMapper());
-    	userRepository.createTable();
+		
+		catalog.users().createTable();
+		
     	User user = new User();
     	user.setLogin("Karol");
     	user.setPassword("kkk");
     	user.setStatus(true);
     	
-    	userRepository.add(user);
-    	userRepository.add(user);
-    	userRepository.add(user);
+    	catalog.users().add(user);
+    	catalog.users().add(user);
+    	catalog.users().add(user);
 
-    	System.out.println("Count: "+userRepository.count());
-    	System.out.println("last id: "+userRepository.lastId());
+    	System.out.println("Count: "+catalog.users().count());
+    	System.out.println("last id: "+catalog.users().lastId());
     	
-    	List<User> users = userRepository.getPage(1, 2);
+    	List<User> userWithLoginKarol = catalog.users().withLogin("Karol");
+    	List<User> userWithStatusTrue = catalog.users().withStatus(true);
+    	
+    	List<User> users = catalog.users().getPage(1, 2);
     	
     	for(User a: users){
     		System.out.println(a.getId());
     	}
     	User toDelete = users.get(0);
-    	userRepository.delete(toDelete);
+    	catalog.users().delete(toDelete);
     	
     	User updateLogin = users.get(1);
     	updateLogin.setLogin("ewik");
     	
-    	userRepository.update(updateLogin);
+    	catalog.users().update(updateLogin);
 	}
 
 }
