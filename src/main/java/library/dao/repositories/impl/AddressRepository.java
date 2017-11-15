@@ -18,13 +18,11 @@ public class AddressRepository extends RepositoryBase<Address> implements IAdres
 	protected PreparedStatement selectByCity;
 	protected PreparedStatement selectByPostal;
 	protected PreparedStatement selectByStreet;
-	protected PreparedStatement selectByApNumber;
 
 	private void selectStatements(Connection connection) throws SQLException {
 		selectByCity = connection.prepareStatement( "SELECT * FROM address WHERE city=?");
 		selectByPostal = connection.prepareStatement( "SELECT * FROM address WHERE postalcode=?");
-		selectByCity = connection.prepareStatement( "SELECT * FROM address WHERE street=?");
-		selectByCity = connection.prepareStatement( "SELECT * FROM address WHERE apnumber=?");
+		selectByStreet = connection.prepareStatement( "SELECT * FROM address WHERE street=?");
 
 	}
 
