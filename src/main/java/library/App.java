@@ -6,6 +6,8 @@ import java.sql.SQLException;
 
 import library.dao.repositories.IDatabaseCatalog;
 import library.dao.repositories.impl.DatabaseCatalog;
+import library.dao.uow.IUnitOfWork;
+import library.dao.uow.UnitOfWork;
 import library.examples.*;
 
 public class App
@@ -14,7 +16,8 @@ public class App
     {
     	Connection connection 
     		= DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/workdb");
-			IDatabaseCatalog catalog = new DatabaseCatalog(connection);
+    	IUnitOfWork uow = new UnitOfWork(connection);
+			IDatabaseCatalog catalog = new DatabaseCatalog(connection, uow);
 	    	AuthorRepositoryExample.execute(connection, catalog);
 	    	AddressRepositoryExample.execute(connection);
 	    	UserRepositoryExample.execute(connection);
@@ -22,6 +25,7 @@ public class App
 	    	PublisherRepositoryExample.execute(connection, catalog);
 			BookInformationRepositoryExample.execute(connection);
 	    	
+			uow.saveChanges();
     	connection.close();
     	
         System.out.println( "Koniec" );

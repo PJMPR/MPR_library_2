@@ -10,10 +10,14 @@ import java.util.List;
 
 import library.dao.mappers.IMapper;
 import library.dao.repositories.IRepository;
+import library.dao.uow.Entity;
+import library.dao.uow.IUnitOfWork;
+import library.dao.uow.IUnitOfWorkRepository;
 import library.domain.IHaveId;
 
 
-public abstract class RepositoryBase<TEntity extends IHaveId> implements IRepository<TEntity> {
+public abstract class RepositoryBase<TEntity extends IHaveId> 
+	implements IRepository<TEntity>, IUnitOfWorkRepository {
 	
 	protected Connection _connection;
 	protected boolean tableExists;
@@ -25,17 +29,15 @@ public abstract class RepositoryBase<TEntity extends IHaveId> implements IReposi
 	protected PreparedStatement delete;
 	protected PreparedStatement update;
 	protected IMapper<TEntity> _mapper;
+	protected IUnitOfWork _uow;
 	
-	protected RepositoryBase(Connection connection, IMapper<TEntity> mapper){
-		try {
+	protected RepositoryBase(Connection connection, IMapper<TEntity> mapper, IUnitOfWork uow) throws SQLException{
+
 			_mapper = mapper;
 			_connection = connection;
 			initStatements(connection);
 			checkIfTableExists(connection);
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+			_uow = uow;
 	}
 
 
@@ -79,13 +81,10 @@ public abstract class RepositoryBase<TEntity extends IHaveId> implements IReposi
 	}
 
 	public void delete(TEntity entity){
-		
-		try {
-			delete.setInt(1, entity.getId());
-			delete.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+
+		Entity ent = new Entity(this);
+		ent.setEntity(entity);
+		_uow.markAsDeleted(ent);
 	}
 	
 	public int count(){
@@ -115,25 +114,16 @@ public abstract class RepositoryBase<TEntity extends IHaveId> implements IReposi
 	}
 
 	public void add(TEntity entity){
-		
-		try {
-			setInsert(entity);
-			insert.executeUpdate();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		Entity ent = new Entity(this);
+		ent.setEntity(entity);
+		_uow.markAsNew(ent);
 	}
 	
 	public void update(TEntity entity){
-		
-		try {
-			setUpdate(entity);
-			update.executeUpdate();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+
+		Entity ent = new Entity(this);
+		ent.setEntity(entity);
+		_uow.markAsChanged(ent);
 	}
 	
 	public void createTable(){
@@ -179,6 +169,36 @@ public abstract class RepositoryBase<TEntity extends IHaveId> implements IReposi
 		}		
 		return null;
 	}
+	
+
+	public void persistAdd(Entity entity){
+		
+		try {
+			setInsert((TEntity)entity.getEntity());
+			insert.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void persistUpdate(Entity entity){
+		try {
+			setUpdate((TEntity)entity.getEntity());
+			update.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	public void persistDelete(Entity entity){
+		try {
+			delete.setInt(1, entity.getEntity().getId());
+			delete.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}}
+	
 	
 	protected abstract String createTableSql();
 	protected abstract String getTableName();
