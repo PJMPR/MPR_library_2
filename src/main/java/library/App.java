@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import library.dao.repositories.IDatabaseCatalog;
+import library.dao.repositories.impl.DatabaseCatalog;
 import library.examples.*;
 
 public class App
@@ -12,9 +14,9 @@ public class App
     {
     	Connection connection 
     		= DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/workdb");
-			
-	    	AuthorRepositoryExample.execute(connection);
-	    	AdressRepositoryExample.execute(connection);
+			IDatabaseCatalog catalog = new DatabaseCatalog(connection);
+	    	AuthorRepositoryExample.execute(connection, catalog);
+	    	AddressRepositoryExample.execute(connection);
 	    	UserRepositoryExample.execute(connection);
 	    	PublisherRepositoryExample.execute(connection);
 			BookInformationRepositoryExample.execute(connection);

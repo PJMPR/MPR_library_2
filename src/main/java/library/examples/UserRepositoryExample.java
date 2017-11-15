@@ -5,9 +5,9 @@ import java.util.List;
 
 import library.dao.mappers.AuthorMapper;
 import library.dao.mappers.UserMapper;
-import library.dao.repositories.AuthorRepository;
 import library.dao.repositories.IRepository;
-import library.dao.repositories.UserRepository;
+import library.dao.repositories.impl.AuthorRepository;
+import library.dao.repositories.impl.UserRepository;
 import library.domain.Author;
 import library.domain.User;
 

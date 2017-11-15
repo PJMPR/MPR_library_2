@@ -4,16 +4,16 @@ import java.sql.Connection;
 import java.util.List;
 
 import library.dao.mappers.AdressMapper;
-import library.dao.repositories.AdressRepository;
-import library.domain.Adress;
+import library.dao.repositories.impl.AddressRepository;
+import library.domain.Address;
 
-public class AdressRepositoryExample {
+public class AddressRepositoryExample {
 
 	
 	public static void execute(Connection connection){
-		AdressRepository adressRepo = new AdressRepository(connection, new AdressMapper());
+		AddressRepository adressRepo = new AddressRepository(connection, new AdressMapper());
 		adressRepo.createTable();
-		Adress adress = new Adress("Gdansk", "34-123", "Brzegi", "55");
+		Address adress = new Address("Gdansk", "34-123", "Brzegi", "55");
 		adressRepo.add(adress);
 		adressRepo.add(adress);
 		adressRepo.add(adress);
@@ -21,16 +21,16 @@ public class AdressRepositoryExample {
 		System.out.println("Count: "+adressRepo.count());
     	System.out.println("last id: "+adressRepo.lastId());
     	
-    	List<Adress> adresses = adressRepo.getPage(1, 2);
+    	List<Address> adresses = adressRepo.getPage(1, 2);
     	
-    	for(Adress a: adresses){
+    	for(Address a: adresses){
     		System.out.println(a.getId());
     	}
     	
-    	Adress toDelete = adresses.get(0);
+    	Address toDelete = adresses.get(0);
     	adressRepo.delete(toDelete);
     	
-    	Adress updateName = adresses.get(1);
+    	Address updateName = adresses.get(1);
     	updateName.setCity("Radom");
     	
     	adressRepo.update(updateName);

@@ -1,4 +1,4 @@
-package library.dao.repositories;
+package library.dao.repositories.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import library.dao.mappers.IMapper;
+import library.dao.repositories.IRepository;
 import library.domain.IHaveId;
 
 

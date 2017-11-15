@@ -1,4 +1,4 @@
-package library.dao.repositories;
+package library.dao.repositories.impl;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
