@@ -5,7 +5,8 @@ import java.sql.SQLException;
 
 import library.domain.BorrowingOrder;
 
-public class BorrowingOrderMapper {
+public class BorrowingOrderMapper implements IMapper<BorrowingOrder> {
+	
 	public BorrowingOrder map(ResultSet rs) throws SQLException {
 		BorrowingOrder a = new BorrowingOrder();
 		a.setId(rs.getInt("id"));

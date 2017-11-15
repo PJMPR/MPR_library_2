@@ -1,12 +1,18 @@
 package library.dao.repositories.impl;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.util.List;
 
 import library.dao.mappers.IMapper;
+import library.dao.repositories.IBorrowingOrderRepository;
+import library.domain.Author;
 import library.domain.BorrowingOrder;
 
-public class BorrowingOrderRepository extends RepositoryBase<BorrowingOrder>{
+public class BorrowingOrderRepository extends RepositoryBase<BorrowingOrder>
+implements IBorrowingOrderRepository
+					{
 	
 	public BorrowingOrderRepository(Connection connection,IMapper<BorrowingOrder> mapper) {
 		super(connection, mapper);
@@ -52,6 +58,22 @@ public class BorrowingOrderRepository extends RepositoryBase<BorrowingOrder>{
 		update.setString(4, borrowingOrder.getDateTo().toString());
 		update.setInt(5, borrowingOrder.getId());
 		
+	}
+	
+
+	public List<BorrowingOrder> withId(int id) {
+		// TODO Auto-generated method stub
+		return null;		
+	}
+
+	public List<BorrowingOrder> withDateFrom(Date dateFrom) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<BorrowingOrder> withDateTo(Date dateTo) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

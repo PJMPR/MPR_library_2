@@ -51,4 +51,19 @@ public class ReservationOrder implements IHaveId{
 	public void setDate(Date date) {
 		this.date = date;
 	}
+
+	public ReservationOrder(BookInformation bookInformation, User user,
+			int userId, Date date) {
+		super();
+		this.bookInformation = bookInformation;
+		this.user = user;
+		this.userId = userId;
+		this.date = date;
+	}
+
+	public ReservationOrder() {
+		super();
+	}
+	
+	
 }
