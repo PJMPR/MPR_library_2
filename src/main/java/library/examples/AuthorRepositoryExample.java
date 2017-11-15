@@ -4,37 +4,39 @@ import java.sql.Connection;
 import java.util.List;
 
 import library.dao.mappers.AuthorMapper;
-import library.dao.repositories.AuthorRepository;
+import library.dao.repositories.IDatabaseCatalog;
 import library.dao.repositories.IRepository;
+import library.dao.repositories.impl.AuthorRepository;
 import library.domain.Author;
 
 public class AuthorRepositoryExample {
 
-	public static void execute(Connection connection){
+	public static void execute(Connection connection, IDatabaseCatalog catalog){
 
-    	IRepository<Author> authorRepository = new AuthorRepository(connection, new AuthorMapper());
-    	authorRepository.createTable();
+    	catalog.authors().createTable();
     	Author author = new Author("Jan", "Maciej", "Kowalski");
-    	authorRepository.add(author);
-    	authorRepository.add(author);
-    	authorRepository.add(author);
+    	catalog.authors().add(author);
+    	catalog.authors().add(author);
+    	catalog.authors().add(author);
 
-    	System.out.println("Count: "+authorRepository.count());
-    	System.out.println("last id: "+authorRepository.lastId());
+    	System.out.println("Count: "+catalog.authors().count());
+    	System.out.println("last id: "+catalog.authors().lastId());
     	
-    	List<Author> authors = authorRepository.getPage(1, 2);
+    	List<Author> authorsWithNameJanek = catalog.authors().withName("jan");
+    	
+    	List<Author> authors = catalog.authors().getPage(1, 2);
     	
     	for(Author a: authors){
     		System.out.println(a.getId());
     	}
 		
     	Author toDelete = authors.get(0);
-    	authorRepository.delete(toDelete);
+    	catalog.authors().delete(toDelete);
     	
     	Author updateName = authors.get(1);
     	updateName.setName("Adam");
     	
-    	authorRepository.update(updateName);
+    	catalog.authors().update(updateName);
     	
 	}
 	

@@ -1,20 +1,20 @@
 package library.domain.checkers;
 
 import static org.junit.Assert.*;
-import library.domain.Adress;
+import library.domain.Address;
 import library.domain.Author;
 
 import org.junit.Test;
 
-public class AdressCheckerTest {
+public class AddressCheckerTest {
 	AdressChecker checker = new AdressChecker();
 	
 	@Test
 	public void test_street() {
 		
 		
-		Adress adressWithNullStreet = new Adress();
-		Adress adressWithEmptyStringStreet = new Adress();
+		Address adressWithNullStreet = new Address();
+		Address adressWithEmptyStringStreet = new Address();
 		adressWithEmptyStringStreet.setStreet("");
 		
 		boolean nullStreetIsValid = checker.validAdressStreet(adressWithNullStreet);
@@ -25,8 +25,8 @@ public class AdressCheckerTest {
 	}
 	@Test
 	public void test_city() {
-		Adress adressWithNullCity = new Adress();
-		Adress adressWithEmptyStringCity = new Adress();
+		Address adressWithNullCity = new Address();
+		Address adressWithEmptyStringCity = new Address();
 		adressWithEmptyStringCity.setCity("");
 		
 		boolean nullCityIsValid = checker.validAdressCity(adressWithNullCity);
@@ -38,10 +38,10 @@ public class AdressCheckerTest {
 		
 	@Test
 	public void test_postal_code() {
-		Adress adressWithNullPostal = new Adress();
-		Adress adressWithEmptyStringPostal = new Adress();
+		Address adressWithNullPostal = new Address();
+		Address adressWithEmptyStringPostal = new Address();
 		adressWithEmptyStringPostal.setPostalCode("");
-		Adress adressWithWrongPostalStyle = new Adress();
+		Address adressWithWrongPostalStyle = new Address();
 		adressWithWrongPostalStyle.setPostalCode("12345");
 		
 		boolean nullPostalIsValid = checker.validAdressPostal(adressWithNullPostal);
@@ -55,8 +55,8 @@ public class AdressCheckerTest {
 	
 	@Test
 	public void test_apt_number() {
-		Adress adressWithNullApt = new Adress();
-		Adress adressWithEmptyStringApt = new Adress();
+		Address adressWithNullApt = new Address();
+		Address adressWithEmptyStringApt = new Address();
 		adressWithEmptyStringApt.setStreet("");
 		
 		boolean nullAptIsValid = checker.validAdressApt(adressWithNullApt);

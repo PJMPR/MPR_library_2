@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.util.List;
 
 import library.dao.mappers.PublisherMapper;
-import library.dao.repositories.PublisherRepository;
+import library.dao.repositories.impl.PublisherRepository;
 import library.domain.Author;
 import library.domain.Publisher;
 

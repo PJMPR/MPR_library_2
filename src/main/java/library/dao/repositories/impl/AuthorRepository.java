@@ -1,12 +1,15 @@
-package library.dao.repositories;
+package library.dao.repositories.impl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import library.dao.mappers.IMapper;
+import library.dao.repositories.IAuthorRepository;
 import library.domain.Author;
 
-public class AuthorRepository extends RepositoryBase<Author>{
+public class AuthorRepository extends RepositoryBase<Author>
+	implements IAuthorRepository{
 
 	public AuthorRepository(Connection connection, IMapper<Author> mapper) {
 		super(connection, mapper);
@@ -50,6 +53,17 @@ public class AuthorRepository extends RepositoryBase<Author>{
 		update.setString(2, author.getSecondName());
 		update.setString(3, author.getSurname());
 		update.setInt(4, author.getId());
+	}
+
+	public List<Author> withName(String name) {
+		// TODO Auto-generated method stub
+		return null;
+		
+	}
+
+	public List<Author> withSurname(String surname) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

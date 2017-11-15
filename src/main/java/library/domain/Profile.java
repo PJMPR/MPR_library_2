@@ -6,12 +6,12 @@ public class Profile {
 	private String pesel;
 	private String phone;
 	private String mail;
-	private Adress[] adresses;
+	private Address[] adresses;
 	
-	public Adress[] getAdresses() {
+	public Address[] getAdresses() {
 		return adresses;
 	}
-	public void setAdresses(Adress[] adresses) {
+	public void setAdresses(Address[] adresses) {
 	
 	}
 	public String getName() {

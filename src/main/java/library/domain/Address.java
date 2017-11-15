@@ -1,20 +1,20 @@
 package library.domain;
 
-public class Adress implements IHaveId {
+public class Address implements IHaveId {
 	private int id;
 	private String city;
 	private String postalCode;
 	private String street;
 	private String apNumber;
 	
-	public Adress(String city, String postalCode, String street, String apNumber) {
+	public Address(String city, String postalCode, String street, String apNumber) {
 		super();
 		this.city = city;
 		this.postalCode = postalCode;
 		this.street = street;
 		this.apNumber = apNumber;
 	}
-	public Adress() {
+	public Address() {
 		super();
 	}
 	public String getCity() {

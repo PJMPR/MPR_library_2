@@ -5,9 +5,9 @@ import java.util.List;
 
 import library.dao.mappers.AuthorMapper;
 import library.dao.mappers.NotificationMapper;
-import library.dao.repositories.AuthorRepository;
 import library.dao.repositories.IRepository;
-import library.dao.repositories.NotificationRepository;
+import library.dao.repositories.impl.AuthorRepository;
+import library.dao.repositories.impl.NotificationRepository;
 import library.domain.Author;
 import library.domain.Notification;
 
