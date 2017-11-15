@@ -5,8 +5,10 @@ import library.dao.mappers.IMapper;
 import library.dao.repositories.IUserRepository;
 import library.domain.User;
 import java.sql.Connection;
-
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -14,11 +16,14 @@ import java.util.List;
 public class UserRepository extends RepositoryBase<User>
 	implements IUserRepository{
 
-    
+    	private PreparedStatement selectByLogin;
+    	private PreparedStatement selectByStatus;
     
 
-    	public UserRepository(Connection connection,IMapper<User> mapper) {
+    	public UserRepository(Connection connection,IMapper<User> mapper) throws SQLException {
     		super(connection,mapper);
+    		selectByLogin = connection.prepareStatement("SELECT * FROM user WHERE login=?");
+    		selectByStatus = connection.prepareStatement("SELECT * FROM user WHERE status=?");
     	}
     	
     	@Override
@@ -62,12 +67,32 @@ public class UserRepository extends RepositoryBase<User>
     	}
 
 		public List<User> withStatus(boolean status) {
-			// TODO Auto-generated method stub
-			return null;
+			
+			List<User> result = new ArrayList<User>();
+			try {
+				selectByStatus.setBoolean(1, status);
+				ResultSet rs = selectByStatus.executeQuery();
+				while(rs.next()){
+					result.add(_mapper.map(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return result;
 		}
 
-		public List<User> withLogin(String login) {
-			// TODO Auto-generated method stub
+		public User withLogin(String login) {
+			try {
+				selectByLogin.setString(1, login);
+				ResultSet rs = selectByLogin.executeQuery();
+				while(rs.next()){
+					return _mapper.map(rs);
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			
+			}
 			return null;
 		}
 

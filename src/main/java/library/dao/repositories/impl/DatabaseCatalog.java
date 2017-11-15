@@ -1,6 +1,7 @@
 package library.dao.repositories.impl;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import library.dao.mappers.AuthorMapper;
 import library.dao.mappers.UserMapper;
@@ -22,7 +23,7 @@ public class DatabaseCatalog implements IDatabaseCatalog{
 		return new AuthorRepository(connection, new AuthorMapper());
 	}
 
-	public IUserRepository users() {
+	public IUserRepository users() throws SQLException {
 		return new UserRepository(connection, new UserMapper());
 	}
 
