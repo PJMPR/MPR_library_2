@@ -3,14 +3,28 @@ package library.dao.repositories.impl;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import library.dao.mappers.IMapper;
+import library.dao.repositories.IAdressRepository;
 import library.domain.Address;
 
-public class AddressRepository extends RepositoryBase<Address>{
+
+public class AddressRepository extends RepositoryBase<Address> implements IAdressRepository{
+
+	protected PreparedStatement selectByCity;
+	protected PreparedStatement selectByPostal;
+	protected PreparedStatement selectByStreet;
+
+	private void selectStatements(Connection connection) throws SQLException {
+		selectByCity = connection.prepareStatement( "SELECT * FROM address WHERE city=?");
+		selectByPostal = connection.prepareStatement( "SELECT * FROM address WHERE postalcode=?");
+		selectByStreet = connection.prepareStatement( "SELECT * FROM address WHERE street=?");
+
+	}
 
 	public AddressRepository(Connection connection, IMapper<Address> mapper){
 		super(connection, mapper);
@@ -57,48 +71,44 @@ public class AddressRepository extends RepositoryBase<Address>{
 		insert.setString(3,adress.getStreet());
 		insert.setString(4,adress.getApNumber());
 	}
+	public List<Address> withCity(String city) {
 
-	public List<Address> getPage(int offset, int limit){
-
-		List<Address> result = new ArrayList<Address>();
+		List<Address> Addresses = new ArrayList<Address>();
 		try {
-			selectByPage.setInt(1, offset);
-			selectByPage.setInt(2, limit);
-			ResultSet rs = selectByPage.executeQuery();
+			ResultSet rs = selectByCity.executeQuery();
 			while(rs.next()){
-				Address adress = new Address();
-				adress = new Address();
-				adress.setId(rs.getInt("id"));
-				adress.setCity(rs.getString("city"));
-				adress.setPostalCode(rs.getString("postalcode"));
-				adress.setStreet(rs.getString("street"));
-				adress.setApNumber(rs.getString("apnumber"));
-				result.add(adress);
+				Addresses.add(_mapper.map(rs));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return result;
+		return Addresses;
+
 	}
 
-	public Address get(int id){
-		Address adress = null;
-
+	public List<Address> withPostal(String postal) {
+		List<Address> Addresses = new ArrayList<Address>();
 		try {
-			selectById.setInt(1, id);
-			ResultSet rs = selectById.executeQuery();
+			ResultSet rs = selectByPostal.executeQuery();
 			while(rs.next()){
-				adress = new Address();
-				adress.setId(rs.getInt("id"));
-				adress.setCity(rs.getString("city"));
-				adress.setPostalCode(rs.getString("postalcode"));
-				adress.setStreet(rs.getString("street"));
-				adress.setApNumber(rs.getString("apnumber"));
+				Addresses.add(_mapper.map(rs));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-		return adress;
+		return Addresses;
 	}
+	public List<Address> withStreet(String street) {
+		List<Address> Addresses = new ArrayList<Address>();
+		try {
+			ResultSet rs = selectByStreet.executeQuery();
+			while(rs.next()){
+				Addresses.add(_mapper.map(rs));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return Addresses;
+	}
+
 }

@@ -18,7 +18,8 @@ public class App
 	    	AuthorRepositoryExample.execute(connection, catalog);
 	    	AddressRepositoryExample.execute(connection);
 	    	UserRepositoryExample.execute(connection);
-	    	PublisherRepositoryExample.execute(connection);
+	    	NotificationRepositoryExample.execute(connection, catalog);
+	    	PublisherRepositoryExample.execute(connection, catalog);
 			BookInformationRepositoryExample.execute(connection);
 	    	
     	connection.close();

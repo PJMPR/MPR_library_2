@@ -1,16 +1,18 @@
 package library.examples;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 import library.dao.mappers.PublisherMapper;
+import library.dao.repositories.IDatabaseCatalog;
 import library.dao.repositories.impl.PublisherRepository;
 import library.domain.Author;
 import library.domain.Publisher;
 
 public class PublisherRepositoryExample {
 	
-	public static void execute(Connection connection){
+	public static void execute(Connection connection, IDatabaseCatalog catalog) throws SQLException{
 
     	PublisherRepository publisherRepository = new PublisherRepository(connection, new PublisherMapper());
     	publisherRepository.createTable();
@@ -19,9 +21,10 @@ public class PublisherRepositoryExample {
     	publisherRepository.add(publisher);
     	publisherRepository.add(publisher);
 
-    	System.out.println("Count: "+publisherRepository.count());
-    	System.out.println("last id: "+publisherRepository.lastId());
+    	System.out.println("Count: "+ catalog.publishers().count());
+    	System.out.println("last id: "+ catalog.publishers().lastId());
     	
+      	List<Publisher> publishersWithNameA = catalog.publishers().withName("A");
     	List<Publisher> publishers = publisherRepository.getPage(1, 2);
     	
     	for(Publisher a: publishers){
