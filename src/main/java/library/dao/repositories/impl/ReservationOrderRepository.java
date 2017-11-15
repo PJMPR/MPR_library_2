@@ -1,13 +1,17 @@
 package library.dao.repositories.impl;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
-
+import java.util.List;
 
 import library.dao.mappers.IMapper;
+import library.dao.repositories.IBorrowingOrderRepository;
+import library.dao.repositories.IReservationOrderRepository;
 import library.domain.ReservationOrder;
 
-public class ReservationOrderRepository extends RepositoryBase<ReservationOrder>{
+public class ReservationOrderRepository extends RepositoryBase<ReservationOrder>
+implements IReservationOrderRepository {
 
 	Connection connection;	
 	
@@ -49,6 +53,16 @@ public class ReservationOrderRepository extends RepositoryBase<ReservationOrder>
 		update.setInt(1, reservationOrder.getUserId());
 	    update.setDate(2, reservationOrder.getDate());
 		update.setInt(3, reservationOrder.getId());
+	}
+
+	public List<ReservationOrder> withId(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<ReservationOrder> withDate(Date date) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 	
