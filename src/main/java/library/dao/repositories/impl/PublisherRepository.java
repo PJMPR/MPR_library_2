@@ -1,17 +1,28 @@
 package library.dao.repositories.impl;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import library.dao.mappers.IMapper;
+import library.dao.repositories.IPublisherRepository;
 import library.domain.Publisher;
 
-public class PublisherRepository extends RepositoryBase<Publisher>{
+public class PublisherRepository extends RepositoryBase<Publisher>
+	implements IPublisherRepository{
   
     Connection connection;
+    private PreparedStatement selectByName;
+   
     
-    public PublisherRepository(Connection connection, IMapper<Publisher> mapper) {
+    public PublisherRepository(Connection connection, IMapper<Publisher> mapper) throws SQLException {
 		super(connection, mapper);
+		
+		selectByName = connection.prepareStatement("SELECT * FROM publisher WHERE name = ?");
+		
 	}
     
     @Override
@@ -57,5 +68,20 @@ public class PublisherRepository extends RepositoryBase<Publisher>{
     		update.setString(4, publisher.getWebsite());
     		update.setInt(5, publisher.getId());
     	}
+
+		public List<Publisher> withName(String name) {
+
+			List<Publisher> result = new ArrayList<Publisher>();
+			try {
+				selectByName.setString(1, name);
+				ResultSet rs = selectByName.executeQuery();
+				while(rs.next()){
+					result.add(_mapper.map(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return result;
+		}
 
 }
