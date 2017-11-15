@@ -1,12 +1,13 @@
 package library.domain.checkers;
 
+import java.sql.Date;
+
 import library.domain.ReservationOrder;
 import library.domain.User;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import java.util.Date;
 
 /**
  * Created by Owner on 11/10/2017.
@@ -23,7 +24,7 @@ public class ReservationOrderCheckerTest {
 
 
         ReservationOrder reservationOrderWithDate= new ReservationOrder();
-        reservationOrderWithDate.setDate(new Date());
+        reservationOrderWithDate.setDate(new Date(1));
         ReservationOrder reservationOrderWithNullDate= new ReservationOrder();
 
         boolean isReservationOrderWithUser= checker.isValidUser(reservationOrderWithUser);

@@ -1,5 +1,6 @@
 package library.examples;
 
+import library.dao.mappers.BookInformationMapper;
 import library.dao.repositories.BookInformationRepository;
 import library.domain.BookInformation;
 
@@ -10,7 +11,7 @@ public class BookInformationRepositoryExample {
 
     public static void execute(Connection connection){
 
-        BookInformationRepository bookInformationRepository = new BookInformationRepository(connection);
+        BookInformationRepository bookInformationRepository = new BookInformationRepository(connection, new BookInformationMapper());
         bookInformationRepository.createTable();
         BookInformation bookInformation = new BookInformation();
         bookInformation.setTitle("EXAMPLE");

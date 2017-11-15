@@ -3,18 +3,22 @@
     package library.dao.repositories;
      
     import java.sql.Connection;
-    import java.sql.ResultSet;
-    import java.sql.SQLException;
-    import java.sql.Statement;
-    import java.util.ArrayList;
-    import java.util.List;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
      
-    import library.domain.BookInformation;
+
+
+import library.dao.mappers.IMapper;
+import library.domain.BookInformation;
+import library.domain.IHaveId;
      
     public class BookInformationRepository extends RepositoryBase {
      
-        public BookInformationRepository(Connection connection) {
-            super(connection);
+        public BookInformationRepository(Connection connection, IMapper<BookInformation> mapper) {
+            super(connection, mapper);
         }
      
         @Override
@@ -115,6 +119,24 @@
                 e.printStackTrace();
             }
         }
+
+		@Override
+		protected String createTableSql() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		protected void setInsert(IHaveId entity) throws SQLException {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		protected void setUpdate(IHaveId entity) throws SQLException {
+			// TODO Auto-generated method stub
+			
+		}
      
      
     }
