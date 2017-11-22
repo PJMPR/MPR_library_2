@@ -25,7 +25,7 @@ public class NotificationRepository extends RepositoryBase<Notification>
 	public NotificationRepository(Connection connection, IMapper<Notification> mapper, IUnitOfWork uow) throws SQLException {
 		super(connection, mapper, uow);
 		
-		selectByType = connection.prepareStatement("SELECT * FROM notification WHERE notification_type = ?");
+		selectByType = connection.prepareStatement("SELECT * FROM notification WHERE notificationtype = ?");
 	}
 	
 	@Override
@@ -44,12 +44,12 @@ public class NotificationRepository extends RepositoryBase<Notification>
 	
 	@Override
 	protected String getUpdateSql() {
-		return "UPDATE notification SET (message, notifiaction_type)=(?,?) WHERE id=?";
+		return "UPDATE notification SET (message, notificationtype)=(?,?) WHERE id=?";
 	}
 	
 	@Override
 	protected String getInsertSql() {
-		return "INSERT INTO notification(message,notification_type) VALUES(?,?)";
+		return "INSERT INTO notification(message,notificationtype) VALUES(?,?)";
 	}
 	
 	@Override
