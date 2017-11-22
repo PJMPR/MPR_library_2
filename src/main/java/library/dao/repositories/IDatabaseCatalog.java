@@ -11,7 +11,7 @@ public interface IDatabaseCatalog {
 	public IReservationOrderRepository reservationOrders() throws SQLException;
 	public IPublisherRepository publishers();
 	public INotificationRepository notifications() throws SQLException;
-	public IRepository<Book> books() throws SQLException;
+	public IBookRepository books();
 	public IUserRepository users();
 	
 	public IAdressRepository addresses();

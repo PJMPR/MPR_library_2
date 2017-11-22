@@ -1,38 +1,56 @@
 package library.examples;
 
 import library.dao.repositories.IDatabaseCatalog;
+import library.dao.repositories.IDatabaseCatalog;
+
+
+import library.domain.Book;
+
 
 import java.sql.Connection;
+
 import java.util.List;
 
 public class BookInformationRepositoryExample {
 
     public static void execute(Connection connection, IDatabaseCatalog catalog){
-/*
-        BookInformationRepository bookInformationRepository = new BookInformationRepository(connection, new BookInformationMapper());
-        bookInformationRepository.createTable();
-        BookInformation bookInformation = new BookInformation();
-        bookInformation.setTitle("EXAMPLE");
-        bookInformationRepository.add(bookInformation);
-        bookInformationRepository.add(bookInformation);
-        bookInformationRepository.add(bookInformation);
 
-        System.out.println("Count: "+bookInformationRepository.count());
-        System.out.println("last id: "+bookInformationRepository.lastId());
+    	//Date date = new Date();
+    	Book book = new Book();
+    	book.setAvailable(true);
+    	//book.setAdditionDate(2015-05-09);
+    	//book.setReleaseDate();
+    	book.setLanguage("polski");
+    	book.setTitle("Karolajn");
+    	
+    	catalog.books().add(book);
+    	catalog.books().add(book);
+    	catalog.books().add(book);
 
-        List<BookInformation> bookInformations = bookInformationRepository.getPage(1,2);
+    	System.out.println("Count: "+catalog.books().count());
+    	System.out.println("last id: "+catalog.books().lastId());
+    
+    	List<Book> bookWithLanguagePolish = catalog.books().withLanguage("polski");
+    	List<Book> bookWithTitleKarol = catalog.books().withTitle("karol");
+    	List<Book> bookisAvailable = catalog.books().withAvailability(true);
+    	List<Book> books = catalog.books().getPage(1, 2);
 
-        for (BookInformation bI: bookInformations){
-            System.out.println(bI.getId());
-        }
-
-        BookInformation toDelete = bookInformations.get(0);
-        bookInformationRepository.delete(toDelete);
-
-        BookInformation updateTitle = bookInformations.get(1);
-        updateTitle.setTitle("otherExample");
-
-        bookInformationRepository.update(updateTitle);
-        */
-    }
+    	for(Book a: books){
+    		System.out.println(a.getId());
+    	}
+    	catalog.saveChanges();
+    	
+    	Book toDelete = books.get(0);
+    	catalog.books().delete(toDelete);
+    	
+    	catalog.saveChanges();
+    	
+    	Book updateTitle = books.get(1);
+    	updateTitle.setTitle("kkk");
+    	
+    	catalog.books().update(updateTitle);
+    	
+	}
+  
+    
 }

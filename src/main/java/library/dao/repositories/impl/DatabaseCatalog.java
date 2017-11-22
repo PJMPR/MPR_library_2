@@ -12,6 +12,7 @@ import library.dao.mappers.PublisherMapper;
 import library.dao.mappers.UserMapper;
 import library.dao.repositories.IAdressRepository;
 import library.dao.repositories.IAuthorRepository;
+import library.dao.repositories.IBookRepository;
 import library.dao.repositories.IBorrowingOrderRepository;
 import library.dao.repositories.IDatabaseCatalog;
 import library.dao.repositories.IReservationOrderRepository;
@@ -81,8 +82,15 @@ public class DatabaseCatalog implements IDatabaseCatalog{
 		
 	}
 
-	public IRepository<Book> books() throws SQLException {
-		return new BookRepository(connection, new BookMapper(), uow);
+	public IBookRepository books() {
+		try {
+			return new BookRepository(connection, new BookMapper(), uow);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	
 	}
 
 }
