@@ -9,7 +9,7 @@ public interface IDatabaseCatalog {
 	public IAuthorRepository authors();
 	public IBorrowingOrderRepository borrowingOrders() throws SQLException;
 	public IReservationOrderRepository reservationOrders() throws SQLException;
-	public IPublisherRepository publishers() throws SQLException;
+	public IPublisherRepository publishers();
 	public INotificationRepository notifications() throws SQLException;
 	public IRepository<Book> books() throws SQLException;
 	public IUserRepository users();
