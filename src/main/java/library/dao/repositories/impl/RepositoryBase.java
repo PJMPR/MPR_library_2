@@ -35,6 +35,7 @@ public abstract class RepositoryBase<TEntity extends IHaveId>
 
 			_mapper = mapper;
 			_connection = connection;
+			_uow = uow;
 			checkIfTableExists(connection);
 			if(!tableExists){
 				createTable();
