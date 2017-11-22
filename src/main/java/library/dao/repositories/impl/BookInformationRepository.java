@@ -11,14 +11,16 @@ import java.util.List;
      
 
 
+
 import library.dao.mappers.IMapper;
+import library.dao.uow.IUnitOfWork;
 import library.domain.BookInformation;
 import library.domain.IHaveId;
      
     public class BookInformationRepository extends RepositoryBase {
      
-        public BookInformationRepository(Connection connection, IMapper<BookInformation> mapper) {
-            super(connection, mapper);
+        public BookInformationRepository(Connection connection, IMapper<BookInformation> mapper, IUnitOfWork uow) throws SQLException {
+            super(connection, mapper, uow);
         }
      
         @Override

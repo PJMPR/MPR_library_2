@@ -3,7 +3,9 @@ package library.dao.repositories.impl;
 
 import library.dao.mappers.IMapper;
 import library.dao.repositories.IUserRepository;
+import library.dao.uow.IUnitOfWork;
 import library.domain.User;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,8 +22,8 @@ public class UserRepository extends RepositoryBase<User>
     	private PreparedStatement selectByStatus;
     
 
-    	public UserRepository(Connection connection,IMapper<User> mapper) throws SQLException {
-    		super(connection,mapper);
+    	public UserRepository(Connection connection,IMapper<User> mapper, IUnitOfWork uow) throws SQLException {
+    		super(connection,mapper, uow);
     		selectByLogin = connection.prepareStatement("SELECT * FROM user WHERE login=?");
     		selectByStatus = connection.prepareStatement("SELECT * FROM user WHERE status=?");
     	}

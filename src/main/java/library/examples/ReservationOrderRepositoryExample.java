@@ -2,6 +2,7 @@ package library.examples;
 
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.List;
 
 import library.dao.repositories.IDatabaseCatalog;
@@ -13,7 +14,7 @@ import library.domain.Book;
 public class ReservationOrderRepositoryExample {
 
 
-public static void execute(Connection connection, IDatabaseCatalog catalog){
+public static void execute(Connection connection, IDatabaseCatalog catalog) throws SQLException{
 	
 	@SuppressWarnings("deprecation")
 	Date date = new Date(03, 03, 1993);
@@ -36,7 +37,7 @@ public static void execute(Connection connection, IDatabaseCatalog catalog){
 	System.out.println("Count: "+catalog.reservationOrders().count());
 	System.out.println("last id: "+catalog.reservationOrders().lastId());
 	
-	List<ReservationOrder> reservationOrdersWithId5 = catalog.reservationOrders().withId(5);
+	//List<ReservationOrder> reservationOrdersWithId5 = catalog.reservationOrders().withId(5);
 	
 	List<ReservationOrder> reservationOrders = catalog.reservationOrders().getPage(1, 2);
 	

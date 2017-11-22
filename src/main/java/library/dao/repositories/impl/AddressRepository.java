@@ -10,6 +10,7 @@ import java.util.List;
 
 import library.dao.mappers.IMapper;
 import library.dao.repositories.IAdressRepository;
+import library.dao.uow.IUnitOfWork;
 import library.domain.Address;
 
 
@@ -26,8 +27,8 @@ public class AddressRepository extends RepositoryBase<Address> implements IAdres
 
 	}
 
-	public AddressRepository(Connection connection, IMapper<Address> mapper){
-		super(connection, mapper);
+	public AddressRepository(Connection connection, IMapper<Address> mapper, IUnitOfWork uow) throws SQLException{
+		super(connection, mapper, uow);
 	}
 	
 	@Override

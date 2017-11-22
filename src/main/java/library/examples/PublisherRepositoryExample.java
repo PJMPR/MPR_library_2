@@ -6,6 +6,7 @@ import java.util.List;
 
 import library.dao.mappers.PublisherMapper;
 import library.dao.repositories.IDatabaseCatalog;
+import library.dao.repositories.IPublisherRepository;
 import library.dao.repositories.impl.PublisherRepository;
 import library.domain.Author;
 import library.domain.Publisher;
@@ -14,7 +15,7 @@ public class PublisherRepositoryExample {
 	
 	public static void execute(Connection connection, IDatabaseCatalog catalog) throws SQLException{
 
-    	PublisherRepository publisherRepository = new PublisherRepository(connection, new PublisherMapper());
+    	IPublisherRepository publisherRepository = catalog.publishers();
     	publisherRepository.createTable();
     	Publisher publisher = new Publisher("Maciek", 1928301723, "maciekwiat@onet.pl",  "maciekwiat.org");
     	publisherRepository.add(publisher);

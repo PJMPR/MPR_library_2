@@ -10,6 +10,7 @@ import java.util.List;
 
 import library.dao.mappers.IMapper;
 import library.dao.repositories.IBorrowingOrderRepository;
+import library.dao.uow.IUnitOfWork;
 import library.domain.Author;
 import library.domain.BorrowingOrder;
 import library.domain.ReservationOrder;
@@ -21,8 +22,8 @@ implements IBorrowingOrderRepository
 	
 	private PreparedStatement selectByDateFrom;
 	private PreparedStatement selectByDateTo;
-	public BorrowingOrderRepository(Connection connection, IMapper<BorrowingOrder> mapper) throws SQLException{
-		super(connection, mapper);
+	public BorrowingOrderRepository(Connection connection, IMapper<BorrowingOrder> mapper, IUnitOfWork uow) throws SQLException{
+		super(connection, mapper, uow);
 		selectByDateFrom = connection.prepareStatement("SELECT * FROM borrowingOrder WHERE dateFrom=?");
 		selectByDateTo = connection.prepareStatement("SELECT * FROM borrowingOrder WHERE dateTo=?");
 	}

@@ -15,4 +15,6 @@ public interface IDatabaseCatalog {
 	
 	public IAdressRepository addresses();
 	
+	public void saveChanges();
+	
 }
