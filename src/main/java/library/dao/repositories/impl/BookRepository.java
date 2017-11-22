@@ -1,18 +1,34 @@
 package library.dao.repositories.impl;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import library.dao.mappers.IMapper;
+import library.dao.repositories.IBookRepository;
 import library.dao.uow.IUnitOfWork;
 import library.domain.Book;
+import library.domain.User;
 
-public class BookRepository extends RepositoryBase<Book>  {
+public class BookRepository extends RepositoryBase<Book> implements IBookRepository  {
 	
+	
+	
+	private PreparedStatement selectByLanguage;
+	private PreparedStatement selectByTitle;
+	private PreparedStatement selectByAvailability;
 protected BookRepository(Connection connection, IMapper<Book> mapper,
 			IUnitOfWork uow) throws SQLException {
 		super(connection, mapper, uow);
+		selectByLanguage = connection.prepareStatement("SELECT * FROM book WHERE language=?");
+		selectByTitle = connection.prepareStatement("SELECT * FROM book WHERE title=?");
+		selectByAvailability = connection.prepareStatement("SELECT * FROM book WHERE isAvailable=?");
+		
+		
 	}
 
 	
@@ -65,7 +81,7 @@ protected String getInsertSql() {
 
 @Override
 protected String getUpdateSql() {
-	return "INSERT INTO book (title, publisher, releaseDate, language, section, isAvailable)"
+	return "UPDATE book Set (title, publisher, releaseDate, language, section, isAvailable)"
 			+ "= (?,?,?,?,?,?) WHERE id=?";
 }
 
@@ -89,6 +105,69 @@ protected void setUpdate(Book book) throws SQLException {
 	update.setString(5, "section");
 	update.setString(6, (book.isAvailable() ? "Y" : "N"));
 	update.setInt(7, book.getId());
+}
+
+
+public List<Book> withLanguage(String language) {
+	List<Book> Books = new ArrayList<Book>();
+	try {
+		selectByLanguage.setString(1, language);
+		ResultSet rs = selectByLanguage.executeQuery();
+		while(rs.next()){
+			Books.add(_mapper.map(rs));
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	
+	}
+	return Books;
+}
+
+
+public List<Book> withTitle(String title) {
+	List<Book> Books = new ArrayList<Book>();
+	try {
+		selectByTitle.setString(1, title);
+		ResultSet rs = selectByTitle.executeQuery();
+		while(rs.next()){
+			Books.add(_mapper.map(rs));
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	
+	}
+	return Books;
+}
+
+
+public List<Book> withAdditionDate(Date additionDate) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+
+public List<Book> withReleaseDate(Date releaseDate) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+
+public List<Book> withAvailability(Boolean isAvaialble) {
+	List<Book> Books = new ArrayList<Book>();
+	try {
+		selectByAvailability.setBoolean(1, isAvaialble);
+		ResultSet rs = selectByAvailability.executeQuery();
+		while(rs.next()){
+			Books.add(_mapper.map(rs));
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	
+	}
+	return Books;
 }
 	
 

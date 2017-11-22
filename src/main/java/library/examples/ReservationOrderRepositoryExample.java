@@ -6,10 +6,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 import library.dao.repositories.IDatabaseCatalog;
-import library.domain.BookInformation;
+import library.domain.Book;
 import library.domain.ReservationOrder;
 import library.domain.User;
-import library.domain.Book;
 
 public class ReservationOrderRepositoryExample {
 
@@ -23,7 +22,7 @@ public static void execute(Connection connection, IDatabaseCatalog catalog) thro
 	Date date2 = new Date(03, 04, 1993);
 	
 	User user = new User();
-	BookInformation bookInformation = new BookInformation();
+	Book bookInformation = new Book();
 	
 
 	
