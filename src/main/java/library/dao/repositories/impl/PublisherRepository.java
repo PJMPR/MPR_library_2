@@ -9,6 +9,7 @@ import java.util.List;
 
 import library.dao.mappers.IMapper;
 import library.dao.repositories.IPublisherRepository;
+import library.dao.uow.IUnitOfWork;
 import library.domain.Publisher;
 
 public class PublisherRepository extends RepositoryBase<Publisher>
@@ -18,8 +19,8 @@ public class PublisherRepository extends RepositoryBase<Publisher>
     private PreparedStatement selectByName;
    
     
-    public PublisherRepository(Connection connection, IMapper<Publisher> mapper) throws SQLException {
-		super(connection, mapper);
+    public PublisherRepository(Connection connection, IMapper<Publisher> mapper, IUnitOfWork uow) throws SQLException {
+		super(connection, mapper, uow);
 		
 		selectByName = connection.prepareStatement("SELECT * FROM publisher WHERE name = ?");
 		

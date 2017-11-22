@@ -16,7 +16,7 @@ import library.domain.Notification;
 public class NotificationRepositoryExample {
 	public static void execute(Connection connection, IDatabaseCatalog catalog) throws SQLException{
 
-    	IRepository<Notification> notificationRepository = new NotificationRepository(connection, new NotificationMapper());
+    	IRepository<Notification> notificationRepository = catalog.notifications();
     	notificationRepository.createTable();
     	Notification notification = new Notification();
     	notification.setMessage("cokolwiek");

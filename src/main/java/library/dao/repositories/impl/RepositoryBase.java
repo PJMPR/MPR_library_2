@@ -35,9 +35,13 @@ public abstract class RepositoryBase<TEntity extends IHaveId>
 
 			_mapper = mapper;
 			_connection = connection;
-			initStatements(connection);
-			checkIfTableExists(connection);
 			_uow = uow;
+			checkIfTableExists(connection);
+			if(!tableExists){
+				createTable();
+				_uow.saveChanges();
+			}
+			initStatements(connection);
 	}
 
 

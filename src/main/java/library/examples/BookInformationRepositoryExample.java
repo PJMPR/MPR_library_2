@@ -1,6 +1,7 @@
 package library.examples;
 
 import library.dao.mappers.BookInformationMapper;
+import library.dao.repositories.IDatabaseCatalog;
 import library.dao.repositories.impl.BookInformationRepository;
 import library.domain.BookInformation;
 
@@ -9,8 +10,8 @@ import java.util.List;
 
 public class BookInformationRepositoryExample {
 
-    public static void execute(Connection connection){
-
+    public static void execute(Connection connection, IDatabaseCatalog catalog){
+/*
         BookInformationRepository bookInformationRepository = new BookInformationRepository(connection, new BookInformationMapper());
         bookInformationRepository.createTable();
         BookInformation bookInformation = new BookInformation();
@@ -35,5 +36,6 @@ public class BookInformationRepositoryExample {
         updateTitle.setTitle("otherExample");
 
         bookInformationRepository.update(updateTitle);
+        */
     }
 }

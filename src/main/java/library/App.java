@@ -19,11 +19,11 @@ public class App
     	IUnitOfWork uow = new UnitOfWork(connection);
 			IDatabaseCatalog catalog = new DatabaseCatalog(connection, uow);
 	    	AuthorRepositoryExample.execute(connection, catalog);
-	    	AddressRepositoryExample.execute(connection);
-	    	UserRepositoryExample.execute(connection);
-	    	NotificationRepositoryExample.execute(connection, catalog);
-	    	PublisherRepositoryExample.execute(connection, catalog);
-			BookInformationRepositoryExample.execute(connection);
+	    	//AddressRepositoryExample.execute(connection, catalog);
+	    	//UserRepositoryExample.execute(connection, catalog);
+	    	//NotificationRepositoryExample.execute(connection, catalog);
+	    	//PublisherRepositoryExample.execute(connection, catalog);
+			//BookInformationRepositoryExample.execute(connection, catalog);
 	    	
 			uow.saveChanges();
     	connection.close();

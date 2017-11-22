@@ -11,6 +11,7 @@ import java.util.List;
 
 import library.dao.mappers.IMapper;
 import library.dao.repositories.INotificationRepository;
+import library.dao.uow.IUnitOfWork;
 import library.domain.Author;
 import library.domain.IHaveId;
 import library.domain.Notification;
@@ -21,8 +22,8 @@ public class NotificationRepository extends RepositoryBase<Notification>
 	
     private PreparedStatement selectByType;
 	
-	public NotificationRepository(Connection connection, IMapper<Notification> mapper) throws SQLException {
-		super(connection, mapper);
+	public NotificationRepository(Connection connection, IMapper<Notification> mapper, IUnitOfWork uow) throws SQLException {
+		super(connection, mapper, uow);
 		
 		selectByType = connection.prepareStatement("SELECT * FROM notification WHERE notification_type = ?");
 	}

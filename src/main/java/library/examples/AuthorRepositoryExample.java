@@ -13,7 +13,6 @@ public class AuthorRepositoryExample {
 
 	public static void execute(Connection connection, IDatabaseCatalog catalog){
 
-    	catalog.authors().createTable();
     	Author author = new Author("Jan", "Maciej", "Kowalski");
     	catalog.authors().add(author);
     	catalog.authors().add(author);
@@ -29,9 +28,12 @@ public class AuthorRepositoryExample {
     	for(Author a: authors){
     		System.out.println(a.getId());
     	}
+		catalog.saveChanges();
 		
     	Author toDelete = authors.get(0);
     	catalog.authors().delete(toDelete);
+    	
+    	catalog.saveChanges();
     	
     	Author updateName = authors.get(1);
     	updateName.setName("Adam");

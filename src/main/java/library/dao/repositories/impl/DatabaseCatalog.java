@@ -41,23 +41,23 @@ public class DatabaseCatalog implements IDatabaseCatalog{
 	}
 
 	public IBorrowingOrderRepository borrowingOrders() throws SQLException {
-		return new BorrowingOrderRepository(connection, new BorrowingOrderMapper());
+		return new BorrowingOrderRepository(connection, new BorrowingOrderMapper(), uow);
 	}
 	
 	public IReservationOrderRepository reservationOrders() throws SQLException {
-		return new ReservationOrderRepository(connection, new ReservationOrderMapper());
+		return new ReservationOrderRepository(connection, new ReservationOrderMapper(), uow);
 	}
 	public IPublisherRepository publishers() throws SQLException {
-		return new PublisherRepository(connection, new PublisherMapper());
+		return new PublisherRepository(connection, new PublisherMapper(), uow);
 	}
 
 	public INotificationRepository notifications() throws SQLException {
-		return new NotificationRepository(connection, new NotificationMapper());
+		return new NotificationRepository(connection, new NotificationMapper(), uow);
   }
   
 	public IUserRepository users() {
 		try {
-			return new UserRepository(connection, new UserMapper());
+			return new UserRepository(connection, new UserMapper(), uow);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
@@ -67,6 +67,11 @@ public class DatabaseCatalog implements IDatabaseCatalog{
 	public IAdressRepository addresses() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public void saveChanges() {
+		uow.saveChanges();
+		
 	}
 
 }
