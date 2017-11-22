@@ -1,9 +1,6 @@
 package library.examples;
 
-import library.dao.mappers.BookInformationMapper;
 import library.dao.repositories.IDatabaseCatalog;
-import library.dao.repositories.impl.BookInformationRepository;
-import library.domain.BookInformation;
 
 import java.sql.Connection;
 import java.util.List;
