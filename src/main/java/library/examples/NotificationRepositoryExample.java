@@ -21,9 +21,9 @@ public class NotificationRepositoryExample {
     	Notification notification = new Notification();
     	notification.setMessage("cokolwiek");
     	notification.setNotification_type("przypomnienie");
-    	notificationRepository.add(notification);
-    	notificationRepository.add(notification);
-    	notificationRepository.add(notification);
+    	catalog.notifications().add(notification);
+    	catalog.notifications().add(notification);
+    	catalog.notifications().add(notification);
 
     	System.out.println("Count: "+ catalog.notifications().count());
     	System.out.println("last id: "+ catalog.notifications().lastId());
@@ -35,13 +35,17 @@ public class NotificationRepositoryExample {
     		System.out.println(n.getId());
     	}
 		
+    	catalog.saveChanges();
+		
     	Notification toDelete = notifications.get(0);
-    	notificationRepository.delete(toDelete);
+    	catalog.notifications().delete(toDelete);
+    	
+		catalog.saveChanges();
     	
     	Notification updateMessage = notifications.get(1);
     	updateMessage.setMessage("Zaplac");
     	
-    	notificationRepository.update(updateMessage);
+    	catalog.notifications().update(updateMessage);
     	
 	}
 }
