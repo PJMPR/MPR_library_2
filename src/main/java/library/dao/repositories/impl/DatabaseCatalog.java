@@ -47,8 +47,13 @@ public class DatabaseCatalog implements IDatabaseCatalog{
 	public IReservationOrderRepository reservationOrders() throws SQLException {
 		return new ReservationOrderRepository(connection, new ReservationOrderMapper(), uow);
 	}
-	public IPublisherRepository publishers() throws SQLException {
-		return new PublisherRepository(connection, new PublisherMapper(), uow);
+	public IPublisherRepository publishers() {
+		try {
+			return new PublisherRepository(connection, new PublisherMapper(), uow);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	public INotificationRepository notifications() throws SQLException {
