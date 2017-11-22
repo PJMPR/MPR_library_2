@@ -31,7 +31,7 @@ public class UserRepositoryExample {
     	System.out.println("Count: "+catalog.users().count());
     	System.out.println("last id: "+catalog.users().lastId());
     	
-    	//List<User> userWithLoginKarol = catalog.users().withLogin("Karol");
+    	List<User> userWithLoginKarol = catalog.users().withLogin("Karol");
     	List<User> userWithStatusTrue = catalog.users().withStatus(true);
     	
     	List<User> users = catalog.users().getPage(1, 2);
