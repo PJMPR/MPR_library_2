@@ -70,32 +70,34 @@ public class UserRepository extends RepositoryBase<User>
 
 		public List<User> withStatus(boolean status) {
 			
-			List<User> result = new ArrayList<User>();
+			List<User> Users = new ArrayList<User>();
 			try {
 				selectByStatus.setBoolean(1, status);
 				ResultSet rs = selectByStatus.executeQuery();
 				while(rs.next()){
-					result.add(_mapper.map(rs));
+					Users.add(_mapper.map(rs));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			return result;
+			return Users;
 		}
 
-		public User withLogin(String login) {
+		public List<User> withLogin(String login) {
+
+			List<User> Users = new ArrayList<User>();
 			try {
 				selectByLogin.setString(1, login);
 				ResultSet rs = selectByLogin.executeQuery();
 				while(rs.next()){
-					return _mapper.map(rs);
+					Users.add(_mapper.map(rs));
 				}
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			
 			}
-			return null;
+			return Users;
 		}
 
 
