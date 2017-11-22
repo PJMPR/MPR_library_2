@@ -22,7 +22,7 @@ public class App
 	    	//AddressRepositoryExample.execute(connection, catalog);
 	    	//UserRepositoryExample.execute(connection, catalog);
 	    	NotificationRepositoryExample.execute(connection, catalog);
-	    	//PublisherRepositoryExample.execute(connection, catalog);
+	    	PublisherRepositoryExample.execute(connection, catalog);
 			//BookInformationRepositoryExample.execute(connection, catalog);
 	    	
 			uow.saveChanges();

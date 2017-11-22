@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import library.dao.mappers.AuthorMapper;
+import library.dao.mappers.BookMapper;
 import library.dao.mappers.BorrowingOrderMapper;
 import library.dao.mappers.ReservationOrderMapper;
 import library.dao.mappers.NotificationMapper;
@@ -20,6 +21,7 @@ import library.dao.repositories.IRepository;
 import library.dao.repositories.IUserRepository;
 import library.dao.uow.IUnitOfWork;
 import library.domain.Author;
+import library.domain.Book;
 
 public class DatabaseCatalog implements IDatabaseCatalog{
 
@@ -47,8 +49,13 @@ public class DatabaseCatalog implements IDatabaseCatalog{
 	public IReservationOrderRepository reservationOrders() throws SQLException {
 		return new ReservationOrderRepository(connection, new ReservationOrderMapper(), uow);
 	}
-	public IPublisherRepository publishers() throws SQLException {
-		return new PublisherRepository(connection, new PublisherMapper(), uow);
+	public IPublisherRepository publishers() {
+		try {
+			return new PublisherRepository(connection, new PublisherMapper(), uow);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	public INotificationRepository notifications() throws SQLException {
@@ -72,6 +79,10 @@ public class DatabaseCatalog implements IDatabaseCatalog{
 	public void saveChanges() {
 		uow.saveChanges();
 		
+	}
+
+	public IRepository<Book> books() throws SQLException {
+		return new BookRepository(connection, new BookMapper(), uow);
 	}
 
 }

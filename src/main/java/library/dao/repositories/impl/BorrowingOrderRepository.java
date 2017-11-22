@@ -56,7 +56,7 @@ implements IBorrowingOrderRepository
 	@Override
 	protected void setInsert(BorrowingOrder borrowingOrder) throws SQLException {
 		insert.setString(1, borrowingOrder.getUser().getLogin());
-		insert.setString(2, borrowingOrder.getBook().getBookInformation().getTitle());
+		insert.setString(2, borrowingOrder.getBook().getTitle());
 		insert.setString(3, borrowingOrder.getDateFrom().toString());
 		insert.setString(4, borrowingOrder.getDateTo().toString());
 	}
@@ -64,7 +64,7 @@ implements IBorrowingOrderRepository
 	@Override
 	protected void setUpdate(BorrowingOrder borrowingOrder) throws SQLException {
 		update.setString(1, borrowingOrder.getUser().getLogin());
-		update.setString(2, borrowingOrder.getBook().getBookInformation().getTitle());
+		update.setString(2, borrowingOrder.getBook().getTitle());
 		update.setString(3, borrowingOrder.getDateFrom().toString());
 		update.setString(4, borrowingOrder.getDateTo().toString());
 		update.setInt(5, borrowingOrder.getId());

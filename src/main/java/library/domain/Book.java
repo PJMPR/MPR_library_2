@@ -1,17 +1,20 @@
 package library.domain;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.sql.Date;
+import java.util.List;
 
 
-public class Book {
+public class Book implements IHaveId{
     private int id;
-    private BookInformation bookInformation;
     private Publisher publisher;
     private Date releaseDate;
     private Date additionDate;
     private String language;
     private Section section;
     private boolean isAvailable;
+    private String title;
+    List<Author> authors = new ArrayList<Author>();
 
 
     public int getId() {
@@ -22,15 +25,25 @@ public class Book {
         this.id = id;
     }
 
-    public BookInformation getBookInformation() {
-        return bookInformation;
-    }
 
-    public void setBookInformation(BookInformation bookInformation) {
-        this.bookInformation = bookInformation;
-    }
+    
+    public String getTitle() {
+		return title;
+	}
 
-    public Publisher getPublisher() {
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public List<Author> getAuthors() {
+		return authors;
+	}
+
+	public void setAuthors(List<Author> authors) {
+		this.authors = authors;
+	}
+
+	public Publisher getPublisher() {
         return publisher;
     }
 

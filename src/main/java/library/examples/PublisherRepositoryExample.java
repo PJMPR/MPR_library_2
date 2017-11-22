@@ -13,32 +13,34 @@ import library.domain.Publisher;
 
 public class PublisherRepositoryExample {
 	
-	public static void execute(Connection connection, IDatabaseCatalog catalog) throws SQLException{
+	public static void execute(Connection connection, IDatabaseCatalog catalog) {
 
-    	IPublisherRepository publisherRepository = catalog.publishers();
-    	publisherRepository.createTable();
+    	
     	Publisher publisher = new Publisher("Maciek", 1928301723, "maciekwiat@onet.pl",  "maciekwiat.org");
-    	publisherRepository.add(publisher);
-    	publisherRepository.add(publisher);
-    	publisherRepository.add(publisher);
+    	catalog.publishers().add(publisher);
+    	catalog.publishers().add(publisher);
+    	catalog.publishers().add(publisher);
 
     	System.out.println("Count: "+ catalog.publishers().count());
     	System.out.println("last id: "+ catalog.publishers().lastId());
     	
       	List<Publisher> publishersWithNameA = catalog.publishers().withName("A");
-    	List<Publisher> publishers = publisherRepository.getPage(1, 2);
+    	List<Publisher> publishers = catalog.publishers().getPage(1, 2);
     	
     	for(Publisher a: publishers){
     		System.out.println(a.getId());
     	}
-		
+    	catalog.saveChanges();
+    	
     	Publisher toDelete = publishers.get(0);
-    	publisherRepository.delete(toDelete);
+    	catalog.publishers().delete(toDelete);
+    	
+    	catalog.saveChanges();
     	
     	Publisher updateName = publishers.get(1);
     	updateName.setName("Wilhelm");
     	
-    	publisherRepository.update(updateName);
+    	catalog.publishers().update(updateName);
     	
 	}
 	
