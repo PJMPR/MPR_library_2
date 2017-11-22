@@ -21,9 +21,9 @@ public class App
 	    	//AuthorRepositoryExample.execute(connection, catalog);
 	    	//AddressRepositoryExample.execute(connection, catalog);
 	    	//UserRepositoryExample.execute(connection, catalog);
-	    	//NotificationRepositoryExample.execute(connection, catalog);
-	    	//PublisherRepositoryExample.execute(connection, catalog);
 			BookInformationRepositoryExample.execute(connection, catalog);
+	    	NotificationRepositoryExample.execute(connection, catalog);
+	    	PublisherRepositoryExample.execute(connection, catalog);
 	    	
 			uow.saveChanges();
     	connection.close();

@@ -23,9 +23,6 @@ public static void execute(Connection connection, IDatabaseCatalog catalog) thro
 	
 	User user = new User();
 	Book bookInformation = new Book();
-	
-
-	
 
 	catalog.reservationOrders().createTable();
 	ReservationOrder reservationOrder = new ReservationOrder(bookInformation, user, 8, date);
@@ -33,24 +30,6 @@ public static void execute(Connection connection, IDatabaseCatalog catalog) thro
 	catalog.reservationOrders().add(reservationOrder);
 	catalog.reservationOrders().add(reservationOrder);
 
-	System.out.println("Count: "+catalog.reservationOrders().count());
-	System.out.println("last id: "+catalog.reservationOrders().lastId());
-	
-	//List<ReservationOrder> reservationOrdersWithId5 = catalog.reservationOrders().withId(5);
-	
-	List<ReservationOrder> reservationOrders = catalog.reservationOrders().getPage(1, 2);
-	
-	for(ReservationOrder a: reservationOrders){
-		System.out.println(a.getId());
-	}
-	
-	ReservationOrder toDelete = reservationOrders.get(0);
-	catalog.reservationOrders().delete(toDelete);
-	
-	ReservationOrder updateDateFrom = reservationOrders.get(3);
-	updateDateFrom.setDate(date2);
-	
-	catalog.reservationOrders().update(updateDateFrom);
 	
 }
 
