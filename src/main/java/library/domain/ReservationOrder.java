@@ -4,18 +4,19 @@ import java.sql.Date;
 
 public class ReservationOrder implements IHaveId{
 
-	private BookInformation bookInformation;
-	public void setBookInformation(BookInformation bookInformation) {
-		this.bookInformation = bookInformation;
-	}
-
+	private Book book;
+	
 	private int Id;
 	private User user;
 	private int userId;
 	private Date date;
 
-	public BookInformation getBookInformation() {
-		return bookInformation;
+	public Book getBook() {
+		return book;
+	}
+
+	public void setBook(Book book) {
+		this.book = book;
 	}
 
 	public int getId(){
@@ -52,10 +53,10 @@ public class ReservationOrder implements IHaveId{
 		this.date = date;
 	}
 
-	public ReservationOrder(BookInformation bookInformation, User user,
+	public ReservationOrder(Book book, User user,
 			int userId, Date date) {
 		super();
-		this.bookInformation = bookInformation;
+		this.book = book;
 		this.user = user;
 		this.userId = userId;
 		this.date = date;
