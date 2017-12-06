@@ -3,14 +3,12 @@ package library.examples;
 import java.sql.Connection;
 import java.util.List;
 
-
 import library.dao.mappers.UserMapper;
 import library.dao.repositories.IRepository;
-
 import library.dao.repositories.impl.UserRepository;
-
 import library.domain.User;
 import library.dao.repositories.IDatabaseCatalog;
+import library.web.servlets.UserServlet;
 
 public class UserRepositoryExample {
 	
@@ -20,7 +18,6 @@ public class UserRepositoryExample {
 		catalog.users().createTable();
 		
     	User user = new User();
-    	user.setLogin("Karol");
     	user.setPassword("kkk");
     	user.setStatus(true);
     	

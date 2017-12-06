@@ -14,7 +14,7 @@ import library.dao.repositories.impl.HsqlCatalogFactory;
 import library.domain.Book;
 
 
-@WebServlet("/DemoServlet")
+@WebServlet("DemoServlet")
 public class DemoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
