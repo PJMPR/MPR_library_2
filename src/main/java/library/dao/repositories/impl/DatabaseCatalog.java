@@ -3,6 +3,7 @@ package library.dao.repositories.impl;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import library.dao.mappers.AdressMapper;
 import library.dao.mappers.AuthorMapper;
 import library.dao.mappers.BookMapper;
 import library.dao.mappers.BorrowingOrderMapper;
@@ -73,8 +74,13 @@ public class DatabaseCatalog implements IDatabaseCatalog{
 	}
 
 	public IAdressRepository addresses() {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			return new AddressRepository(connection, new AdressMapper(), uow);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	public void saveChanges() {
