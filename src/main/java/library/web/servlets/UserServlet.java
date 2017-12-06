@@ -9,18 +9,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import library.dao.repositories.IDatabaseCatalog;
-import library.dao.repositories.impl.HsqlCatalogFactory;
-import library.domain.Book;
 
-
-@WebServlet("DemoServlet")
-public class DemoServlet extends HttpServlet {
+@WebServlet("UserServlet")
+public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public DemoServlet() {
+    public UserServlet() {
         super();
-        System.out.println("Demo Servlet Created !");
+        System.out.println("User Servlet Created!");
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
@@ -28,16 +24,14 @@ public class DemoServlet extends HttpServlet {
 		
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
-		String name = request.getParameter("name");
+		String nickname = request.getParameter("nickname");
+		String password = request.getParameter("password");
 		
-		if(name!=null && !name.isEmpty()){
-			out.println("Hello "+ name);
+		if(nickname!=null && !nickname.isEmpty() 
+				&& password!=null && !password.isEmpty()){
+			out.println("Login: "+ nickname + "<br>Password: "+ password);
 		}
 		
-		out.println("<h1>Hello World</h1>");
-		
-	
-	
 	}
 
 }
