@@ -59,9 +59,15 @@ public class DatabaseCatalog implements IDatabaseCatalog{
 		}
 	}
 
-	public INotificationRepository notifications() throws SQLException {
-		return new NotificationRepository(connection, new NotificationMapper(), uow);
-  }
+	public INotificationRepository notifications(){
+			try {
+					return new NotificationRepository(connection, new NotificationMapper(), uow);
+				} catch (SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+	}
+ 
   
 	public IUserRepository users() {
 		try {

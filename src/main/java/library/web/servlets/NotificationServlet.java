@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import library.dao.repositories.IDatabaseCatalog;
+import library.dao.repositories.impl.HsqlCatalogFactory;
+import library.domain.Notification;
+
 
 
 @WebServlet("NotificationServlet")
@@ -25,13 +29,23 @@ public class NotificationServlet extends HttpServlet {
 		
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
+		IDatabaseCatalog library = new HsqlCatalogFactory().library();
 		String message = request.getParameter("message");
 		String type = request.getParameter("type");
+		Notification notification = new Notification();
+		
+		
 		
 		if(message!=null && !message.isEmpty() && type!=null && !type.isEmpty()){
-			out.println("Message: "+ message + ", type " + type);
+			notification.setMessage(message);
+			notification.setNotification_type(type);
+			library.notifications().add(notification);
+			out.println("Operacja zakonczona sukcesem");
+			library.saveChanges();
 		}
-		
+		else {
+			out.println("Popraw dane");
+		}
 		
 		
 	
