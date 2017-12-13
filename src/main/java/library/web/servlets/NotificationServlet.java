@@ -2,6 +2,7 @@ package library.web.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -39,7 +40,12 @@ public class NotificationServlet extends HttpServlet {
 		if(message!=null && !message.isEmpty() && type!=null && !type.isEmpty()){
 			notification.setMessage(message);
 			notification.setNotification_type(type);
-			library.notifications().add(notification);
+			try {
+				library.notifications().add(notification);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			out.println("Operacja zakonczona sukcesem");
 			library.saveChanges();
 		}
