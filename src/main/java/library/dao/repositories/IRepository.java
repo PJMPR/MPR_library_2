@@ -18,7 +18,7 @@ public interface IRepository<TEntity extends IHaveId> {
 
 	public void createTable();
 
-	public List<TEntity> getPage(int offset, int limit);
+	public List<TEntity> getPage(int page, int limit);
 
 	public TEntity get(int id);
 
