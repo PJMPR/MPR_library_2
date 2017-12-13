@@ -1,4 +1,4 @@
-<%@page import="library.domain.User"%>
+<%@page import="library.domain.Notification"%>
 <%@page import="library.dao.repositories.impl.HsqlCatalogFactory"%>
 <%@page import="library.dao.repositories.IDatabaseCatalog"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -7,15 +7,19 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Notification details</title>
 </head>
 <body>
 <ul>
 	<% 
-		IDatabaseCatalog library = new HsqlCatalogFactory().library();
-		for(User u : library.users().getPage(1, 10)){%>		
-			<li><%=u.getLogin()%></li>
-		<% } %>
+		IDatabaseCatalog library = new HsqlCatalogFactory().library(); 
+		int id = Integer.parseInt(request.getParameter("id"));
+		Notification n = library.notifications().get(id); %>
+		<%= n.getId()%><br>
+		<%= n.getMessage()%><br>
+		<%= n.getNotification_type()%><br>
+		<%= n.getUser()	%><br>
 </ul>
+	
 </body>
 </html>
