@@ -17,7 +17,7 @@ public class AuthorRepositoryExample {
     	catalog.authors().add(author);
     	catalog.authors().add(author);
     	catalog.authors().add(author);
-
+    	catalog.saveChanges();
     	System.out.println("Count: "+catalog.authors().count());
     	System.out.println("last id: "+catalog.authors().lastId());
     	

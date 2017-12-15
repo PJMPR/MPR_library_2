@@ -25,7 +25,7 @@ public static void execute(Connection connection, IDatabaseCatalog catalog) thro
 	Book bookInformation = new Book();
 
 	catalog.reservationOrders().createTable();
-	ReservationOrder reservationOrder = new ReservationOrder(bookInformation, user, 8, date);
+	ReservationOrder reservationOrder = new ReservationOrder(bookInformation, user, date);
 	catalog.reservationOrders().add(reservationOrder);
 	catalog.reservationOrders().add(reservationOrder);
 	catalog.reservationOrders().add(reservationOrder);

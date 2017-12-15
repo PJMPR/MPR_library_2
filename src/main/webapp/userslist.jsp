@@ -13,7 +13,7 @@
 <ul>
 	<% 
 		IDatabaseCatalog library = new HsqlCatalogFactory().library();
-		for(User u : library.users().getPage(0, 10)){%>		
+		for(User u : library.users().getPage(1, 10)){%>		
 			<li><%=u.getLogin()%></li>
 		<% } %>
 </ul>

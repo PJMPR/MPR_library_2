@@ -8,5 +8,6 @@ public interface IAuthorRepository extends IRepository<Author> {
 
 	public List<Author> withName(String name);
 	public List<Author> withSurname(String surname);
+	public List<Author> selectAll();
 	
 }

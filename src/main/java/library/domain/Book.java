@@ -1,8 +1,6 @@
 package library.domain;
 
-import java.util.ArrayList;
 import java.sql.Date;
-import java.util.List;
 
 
 public class Book implements IHaveId{
@@ -14,7 +12,7 @@ public class Book implements IHaveId{
     private Section section;
     private boolean isAvailable;
     private String title;
-    List<Author> authors = new ArrayList<Author>();
+    Author author;
 
 
     public int getId() {
@@ -35,12 +33,12 @@ public class Book implements IHaveId{
 		this.title = title;
 	}
 
-	public List<Author> getAuthors() {
-		return authors;
+	public Author getAuthor() {
+		return author;
 	}
 
-	public void setAuthors(List<Author> authors) {
-		this.authors = authors;
+	public void setAuthor(Author author) {
+		this.author = author;
 	}
 
 	public Publisher getPublisher() {

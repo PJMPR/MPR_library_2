@@ -12,5 +12,6 @@ public interface IBookRepository extends IRepository<Book>{
 	public List<Book> withAdditionDate(Date additionDate);
 	public List<Book> withReleaseDate(Date releaseDate);
 	public List<Book> withAvailability(Boolean isAvaialble );
+	public List<Book> selectAll();
 
 }

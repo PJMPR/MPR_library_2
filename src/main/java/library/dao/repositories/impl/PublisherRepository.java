@@ -17,14 +17,14 @@ public class PublisherRepository extends RepositoryBase<Publisher>
   
     Connection connection;
     private PreparedStatement selectByName;
-   
+    private PreparedStatement selectAll;
     
     public PublisherRepository(Connection connection, IMapper<Publisher> mapper, IUnitOfWork uow) throws SQLException {
 		super(connection, mapper, uow);
 		
 		selectByName = connection.prepareStatement("SELECT * FROM publisher WHERE name = ?");
-		
-	}
+		selectAll = connection.prepareStatement("SELECT * FROM " + getTableName());
+    }
     
     @Override
     protected String createTableSql(){
@@ -80,6 +80,20 @@ public class PublisherRepository extends RepositoryBase<Publisher>
 					result.add(_mapper.map(rs));
 				}
 			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return result;
+		}
+
+		@Override
+		public List<Publisher> selectAll() {
+			List<Publisher> result = new ArrayList<Publisher>();
+			try {
+				ResultSet rs = selectAll.executeQuery();
+				while(rs.next()) {
+					result.add(_mapper.map(rs));
+				}
+			} catch(SQLException e) {
 				e.printStackTrace();
 			}
 			return result;
