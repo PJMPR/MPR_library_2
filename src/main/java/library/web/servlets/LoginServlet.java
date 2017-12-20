@@ -2,6 +2,7 @@ package library.web.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,9 +14,10 @@ import javax.servlet.http.Cookie;
 import library.dao.repositories.IDatabaseCatalog;
 import library.dao.repositories.impl.HsqlCatalogFactory;
 import library.domain.User;
+import library.web.SessionNames;
 
 @WebServlet("LoginServlet")
-public class LoginServlet {
+public class LoginServlet extends HttpServlet{
     private static final long serialVersionUID = 1L;
 
     public LoginServlet() {
@@ -30,21 +32,23 @@ public class LoginServlet {
         IDatabaseCatalog library = new HsqlCatalogFactory().library();
         String nickname = request.getParameter("nickname");
         String password = request.getParameter("password");
-        User user = new User();
+        User user=null;
+        List<User> users = library.users().withLogin(nickname);
 
-        if ((nickname == user.getLogin()) && (password == user.getPassword()) ) {
-            out.println("Login: "+ nickname + "<br>Password: "+ password);
-            Cookie loginCookie = new Cookie("user",nickname);
-            loginCookie.setMaxAge(120*60);
-            response.addCookie(loginCookie);
-            response.sendRedirect("login.jsp");
-            out.println("<br>Zalogowano.");
+        if(!users.isEmpty())
+            {
+            user = users.get(0);
+            if (password.equals(user.getPassword()) ) {
+                
+            	out.println("Login: "+ nickname + "<br>Password: "+ password);
+                out.println("<br>Zalogowano.");
+                request.getSession().setAttribute(SessionNames.LoggedUser, user);
 
 
-
-        } else {
-            out.println("<br>Wprowadzono niepoprawne dane.");
-        }
+            } else {
+                out.println("<br>Wprowadzono niepoprawne dane.");
+            }
+           }
 
     }
 
