@@ -40,8 +40,8 @@
 			<%=o.getBook().getTitle()%> <a href =/CartItemDeleteServlet?bookId=<%=o.getBook().getId() %> > usuń to</a><br>
 		<% } %>
 
-		<%session.setAttribute("deletedItemId", deletedReservationOrderId);%>;
-		<br><button type="submit" action=/CartServlet%>>Zatwierdzam</button>
+		<%session.setAttribute("deletedItemId", deletedReservationOrderId);%>
+		<br><button type="submit" action=/CartServlet%>Zatwierdzam</button>
 
 		
 	
