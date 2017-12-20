@@ -17,7 +17,7 @@ import library.domain.User;
 public class NotificationListFilter extends LoginFilter implements Filter {
 
 	@Override
-	public boolean IsUserLoggedOut(User u) {
+	public boolean IsUserLogged(User u) {
 		return u!=null;
 	}
 

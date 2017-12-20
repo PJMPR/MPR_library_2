@@ -36,7 +36,7 @@ public abstract class LoginFilter implements Filter {
 		User u = (User) req.getSession().getAttribute(SessionNames.LoggedUser);
 		
 		
-		if(IsUserLoggedOut(u))
+		if(IsUserLogged(u))
 			chain.doFilter(request, response);
 		else
 			res.sendRedirect(getUrl());
@@ -49,7 +49,7 @@ public abstract class LoginFilter implements Filter {
 		
 	}
 	
-	public abstract boolean IsUserLoggedOut(User u);
+	public abstract boolean IsUserLogged(User u);
 	
 	public abstract String getUrl();
 

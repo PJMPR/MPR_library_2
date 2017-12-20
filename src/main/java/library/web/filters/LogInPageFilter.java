@@ -17,7 +17,7 @@ import library.domain.User;
 public class LogInPageFilter extends LoginFilter implements Filter {
 
 	@Override
-	public boolean IsUserLoggedOut(User u) {
+	public boolean IsUserLogged(User u) {
 		return u==null;
 	}
 
