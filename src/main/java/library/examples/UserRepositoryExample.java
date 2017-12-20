@@ -20,6 +20,7 @@ public class UserRepositoryExample {
     	User user = new User();
     	user.setPassword("kkk");
     	user.setStatus(true);
+    	user.setAdmin(true);
     	
     	catalog.users().add(user);
     	catalog.users().add(user);

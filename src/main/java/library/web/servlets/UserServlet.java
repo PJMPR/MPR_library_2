@@ -31,13 +31,22 @@ public class UserServlet extends HttpServlet {
 		IDatabaseCatalog library = new HsqlCatalogFactory().library();
 		String nickname = request.getParameter("nickname");
 		String password = request.getParameter("password");
+		String adminString = request.getParameter("admin");
+		Boolean admin = false;
+		if(adminString != null){
+			if(adminString.equals("on")){
+				admin = true;
+			}
+		}
 		User user = new User();
+		
 		
 		if(nickname!=null && !nickname.isEmpty() 
 				&& password!=null && !password.isEmpty()){
-			out.println("Login: "+ nickname + "<br>Password: "+ password);
+			out.println("Login: "+ nickname + "<br>Password: "+ password + "<br>Admin: "+ admin);
 			user.setLogin(nickname);
 			user.setPassword(password);
+			user.setAdmin(admin);
 			library.users().add(user);
 			library.saveChanges();
 			out.println("<br>Wprowadzono dane poprawnie.");
