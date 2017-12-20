@@ -16,8 +16,7 @@ import library.domain.User;
 import library.web.SessionNames;
 
 
-@WebFilter(urlPatterns = {"login.jsp"})
-public class LoginFilter implements Filter {
+public abstract class LoginFilter implements Filter {
 
     public LoginFilter() {
        
@@ -36,10 +35,12 @@ public class LoginFilter implements Filter {
 		
 		User u = (User) req.getSession().getAttribute(SessionNames.LoggedUser);
 		
-		if(u!=null)
-			res.sendRedirect("http://localhost:8080");
-		else
+		
+		if(IsUserLoggedOut(u))
 			chain.doFilter(request, response);
+		else
+			res.sendRedirect(getUrl());
+			
 	
 	}
 
@@ -47,5 +48,9 @@ public class LoginFilter implements Filter {
 	public void init(FilterConfig fConfig) throws ServletException {
 		
 	}
+	
+	public abstract boolean IsUserLoggedOut(User u);
+	
+	public abstract String getUrl();
 
 }
