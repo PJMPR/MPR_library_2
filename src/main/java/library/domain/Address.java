@@ -2,6 +2,7 @@ package library.domain;
 
 public class Address implements IHaveId {
 	private int id;
+	private int userId;
 	private String city;
 	private String postalCode;
 	private String street;
@@ -47,4 +48,11 @@ public class Address implements IHaveId {
 	public void setId(int id) {
 		this.id = id;
 	}
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+	
 }

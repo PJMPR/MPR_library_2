@@ -38,13 +38,14 @@ public class AddressRepository extends RepositoryBase<Address> implements IAdres
 				+ "city VARCHAR(20),"
 				+ "postalcode Varchar(7),"
 				+ "street VARCHAR(32),"
-				+ "apnumber VARCHAR(8)"
+				+ "apnumber VARCHAR(8),"
+				+ "userId int"
 				+ ")";
 	}
 
 	@Override
 	protected String getUpdateSql() {
-		return "UPDATE address SET (city, postalcode, street, apnumber)=(?,?,?,?) WHERE id=?";
+		return "UPDATE address SET (city, postalcode, street, apnumber, userId)=(?,?,?,?,1) WHERE id=?";
 	}
 
 	@Override
@@ -54,7 +55,7 @@ public class AddressRepository extends RepositoryBase<Address> implements IAdres
 
 	@Override
 	protected String getInsertSql() {
-		return "INSERT INTO address(city,postalcode,street,apnumber) VALUES(?,?,?,?)";
+		return "INSERT INTO address(city,postalcode,street,apnumber, userId) VALUES(?,?,?,?,0)";
 	}
 
 	@Override
