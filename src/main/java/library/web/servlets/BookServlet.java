@@ -9,10 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import sun.util.calendar.BaseCalendar.Date;
 import library.dao.repositories.IDatabaseCatalog;
 import library.dao.repositories.impl.HsqlCatalogFactory;
 import library.domain.Book;
+import library.domain.Publisher;
+import library.domain.Author;
 
 @WebServlet("/BookServlet")
 public class BookServlet extends HttpServlet {
@@ -31,14 +32,25 @@ public class BookServlet extends HttpServlet {
 		IDatabaseCatalog library = new HsqlCatalogFactory().library();
 		String language = request.getParameter("Language");
 		String title = request.getParameter("Title");
-		String isAvaiable = request.getParameter("Avaiability");
-		String publisher = request.getParameter("Publisher");
-		String author = request.getParameter("Author");
+		boolean isAvaiable;
+		if(request.getParameter("Availability") != null&&request.getParameter("Availability").equalsIgnoreCase("on"))
+			isAvaiable = true;
+		else
+			isAvaiable = false;
+		int publisherId = Integer.parseInt(request.getParameter("Publisher"));
+		Publisher publisher = library.publishers().get(publisherId);
+		int authorId = Integer.parseInt(request.getParameter("Author"));
+		Author author = library.authors().get(authorId);
 
 		
-		if(title != null && !title.isEmpty() && language != null && !language.isEmpty() && isAvaiable != null && isAvaiable.isEmpty()
-				 && publisher != null && publisher.isEmpty() && author != null && author.isEmpty()) {
+		if(title != null && !title.isEmpty() && language != null && !language.isEmpty() && 
+				publisher != null && author != null) {
 			Book book = new Book();
+			book.setLanguage(language);
+			book.setTitle(title);
+			book.setAvailable(isAvaiable);
+			book.setPublisher(publisher);
+			book.setAuthor(author);
 			library.books().add(book);
 			library.saveChanges();
 			out.println("Changes saved!");

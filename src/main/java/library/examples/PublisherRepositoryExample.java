@@ -20,7 +20,7 @@ public class PublisherRepositoryExample {
     	catalog.publishers().add(publisher);
     	catalog.publishers().add(publisher);
     	catalog.publishers().add(publisher);
-
+    	catalog.saveChanges();
     	System.out.println("Count: "+ catalog.publishers().count());
     	System.out.println("last id: "+ catalog.publishers().lastId());
     	

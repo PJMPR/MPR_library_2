@@ -5,10 +5,8 @@ import java.sql.Date;
 public class ReservationOrder implements IHaveId{
 
 	private Book book;
-	
 	private int Id;
 	private User user;
-	private int userId;
 	private Date date;
 
 	public Book getBook() {
@@ -22,19 +20,9 @@ public class ReservationOrder implements IHaveId{
 	public int getId(){
 		return Id;
 	}
-	
-	public int getUserId() {
-		return userId;
-	}
-	
-	
 
 	public void setId(int id) {
 		Id = id;
-	}
-
-	public void setUserId(int userId) {
-		this.userId = userId;
 	}
 
 	public User getUser() {
@@ -49,21 +37,24 @@ public class ReservationOrder implements IHaveId{
 		this.user = user;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setDate(Date date2) {
+		this.date = date2;
 	}
 
-	public ReservationOrder(Book book, User user,
-			int userId, Date date) {
+	public ReservationOrder(Book book, User user, Date date) {
 		super();
 		this.book = book;
 		this.user = user;
-		this.userId = userId;
 		this.date = date;
 	}
 
 	public ReservationOrder() {
 		super();
+	}
+
+	public void setDate(long time) {
+		this.date = new Date(time);
+		
 	}
 	
 	

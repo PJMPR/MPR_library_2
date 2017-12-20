@@ -1,7 +1,10 @@
 package library.dao.repositories.impl;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import library.dao.mappers.IMapper;
@@ -11,9 +14,12 @@ import library.domain.Author;
 
 public class AuthorRepository extends RepositoryBase<Author>
 	implements IAuthorRepository{
+	
+	private PreparedStatement selectAll;
 
 	public AuthorRepository(Connection connection, IMapper<Author> mapper, IUnitOfWork uow) throws SQLException {
 		super(connection, mapper, uow);
+		selectAll = connection.prepareStatement("SELECT * FROM " + getTableName());
 	}
 
 	@Override
@@ -65,6 +71,20 @@ public class AuthorRepository extends RepositoryBase<Author>
 	public List<Author> withSurname(String surname) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<Author> selectAll() {
+		List<Author> result = new ArrayList<Author>();
+		try {
+			ResultSet rs = selectAll.executeQuery();
+			while(rs.next())
+				result.add(_mapper.map(rs));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
 	}
 	
 }
