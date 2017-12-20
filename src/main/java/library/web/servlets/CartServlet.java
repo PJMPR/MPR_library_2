@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import library.dao.repositories.IDatabaseCatalog;
 import library.dao.repositories.impl.HsqlCatalogFactory;
 import library.domain.ReservationOrder;
+import library.web.SessionNames;
 
 /**
  * Servlet implementation class CartServlet
@@ -37,23 +38,20 @@ public class CartServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		IDatabaseCatalog library = new HsqlCatalogFactory().library();
 		
-		ArrayList<ReservationOrder> listOfBooks = (ArrayList<ReservationOrder>)reservationOrderItem.getAttribute("myList");
-		int deletedReservationOrderId = (Integer)reservationOrderItem.getAttribute("deletedItemId");
-		boolean toSave = (Boolean)reservationOrderItem.getAttribute("saveAll");
-		
-			if(deletedReservationOrderId >= 0) {
+		ArrayList<ReservationOrder> listOfBooks = (ArrayList<ReservationOrder>)reservationOrderItem.getAttribute(SessionNames.OrderedBookList);
+	
+		for(ReservationOrder o : listOfBooks) {
+			
 			try {
-				library.reservationOrders().delete(listOfBooks.get(deletedReservationOrderId));
-				library.saveChanges();
+				library.reservationOrders().add(o);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			}
-				
-		if(toSave){
-			library.saveChanges();
 		}
+		
+		
+			library.saveChanges();
+	
 		out.println("<h1>Succesfully added</h1>");
 	}
 			
