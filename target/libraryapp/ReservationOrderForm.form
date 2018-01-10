@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservation Order Form</title>
+</head>
+<body>
+ 
+<h1>Reservation Order</h1>
+<form>
+    Book Title: <br>
+    <input type="text" name="bookTitle">
+    <br>
+    Date: <br>
+    <input type="date" name="date">
+    <br>
+ 
+    <button type="submit">SUBMIT</button>
+</form>
+ 
+</body>
+</html>
+ 
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservation Order Form</title>
+ 
+    <h1>Reservation Order</h1>
+    <form>
+        Book Title: <br>
+        <input type="text" name="bookTitle">
+        <br>
+        From: <br>
+        <input type="date" name="dateFrom">
+        <br>
+        To <br>
+        <input type="date" name="dateTo">
+        <br>
+ 
+        <button type="submit">SUBMIT</button>
+    </form>
+ 
+</head>
+<body>
+ 
+</body>
+</html>

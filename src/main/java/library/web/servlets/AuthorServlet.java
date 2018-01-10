@@ -27,9 +27,9 @@ public class AuthorServlet extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		IDatabaseCatalog library = new HsqlCatalogFactory().library();
-		String name = request.getParameter("Name");
-		String secondname = request.getParameter("Secondname");
-		String surname = request.getParameter("Surname");
+		String name = request.getParameter("name");
+		String secondname = request.getParameter("secondname");
+		String surname = request.getParameter("surname");
 		
 		if(name != null && name.isEmpty() && secondname != null && secondname.isEmpty() && surname != null && surname.isEmpty()){
 			Author author = new Author();
