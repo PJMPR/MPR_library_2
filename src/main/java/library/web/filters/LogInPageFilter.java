@@ -13,7 +13,7 @@ import javax.servlet.annotation.WebFilter;
 import library.domain.User;
 
 
-@WebFilter(urlPatterns={"login.jsp"})
+@WebFilter(urlPatterns={"/login.jsp"})
 public class LogInPageFilter extends LoginFilter implements Filter {
 
 	@Override
