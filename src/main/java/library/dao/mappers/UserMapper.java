@@ -13,6 +13,7 @@ public class UserMapper implements IMapper<User>{
 		a.setLogin(rs.getString("login"));
 		a.setPassword(rs.getString("password"));
 		a.setStatus(rs.getBoolean("status"));
+		a.setAdmin(rs.getBoolean("admin"));
 		return a;
 	}
 

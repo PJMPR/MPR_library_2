@@ -7,6 +7,7 @@ public class User implements IHaveId {
 	private String login;
 	private String password;
 	private boolean status;
+	private boolean admin;
 
 	public String getLogin() {
 		return login;
@@ -34,4 +35,11 @@ public class User implements IHaveId {
 	public void setId(int id) {
 		this.id = id;
 	}
+	public boolean isAdmin() {
+		return admin;
+	}
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
+	
 }
