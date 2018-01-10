@@ -83,7 +83,6 @@ public class DatabaseCatalog implements IDatabaseCatalog{
 		try {
 			return new AddressRepository(connection, new AdressMapper(), uow);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
