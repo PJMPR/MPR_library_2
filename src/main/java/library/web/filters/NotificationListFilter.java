@@ -13,7 +13,7 @@ import javax.servlet.annotation.WebFilter;
 import library.domain.User;
 
 
-@WebFilter(urlPatterns={"notificationlist.jsp"})
+@WebFilter(urlPatterns={"/notificationlist.jsp"})
 public class NotificationListFilter extends LoginFilter implements Filter {
 
 	@Override

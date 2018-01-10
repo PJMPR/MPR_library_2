@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import library.domain.User;
 import library.web.SessionNames;
 
-@WebFilter(urlPatterns = {"test.html"})
+@WebFilter(urlPatterns = {"/test.html"})
 public class TestFilter implements Filter{
 
 	@Override
