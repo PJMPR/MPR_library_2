@@ -15,7 +15,6 @@ import javax.ejb.Stateless;
 import library.dao.repositories.IAdressRepository;
 import library.dao.repositories.impl.HsqlCatalogFactory;
 import library.domain.Address;
-import library.domain.User;
 
 @Path("/adresses")
 @Stateless
