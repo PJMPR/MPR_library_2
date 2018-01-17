@@ -42,6 +42,7 @@ public class PublishersResources{
 	public Response get(@PathParam("id") int id){
 		List<Publisher> publishers = mgr
 				.createNamedQuery("publishers.id", Publisher.class)
+				.setParameter("id", id)
 				.getResultList();
 				
 		if(publishers.size()==0)
