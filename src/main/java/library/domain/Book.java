@@ -2,9 +2,22 @@ package library.domain;
 
 import java.sql.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+
+@Entity
+
 
 public class Book implements IHaveId{
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
+    @OneToOne
     private Publisher publisher;
     private Date releaseDate;
     private Date additionDate;
