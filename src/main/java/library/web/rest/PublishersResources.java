@@ -23,7 +23,7 @@ public class PublishersResources{
 	IPublisherRepository _Publishers;
 	
 	public PublishersResources() {
-		_Publishers = new HsqlCatalogFactory().library().publishers();
+		//_Publishers = new HsqlCatalogFactory().library().publishers();
 	}
 	
 	

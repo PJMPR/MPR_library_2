@@ -3,6 +3,8 @@ package library.web.rest;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -25,19 +27,16 @@ import library.domain.User;
 @Stateless
 public class UsersResources {
 
-	IUserRepository _users;
-	IDatabaseCatalog _library;
-	public UsersResources() {
-		_library = new HsqlCatalogFactory().library();
-		_users = _library.users();
-	}
-	
+	@PersistenceContext
+	EntityManager mgr;
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAll(@QueryParam("page") int page,@QueryParam("max") int max){
 		
-		List<User> users = _users.getPage(page, max);
+		List<User> users = mgr
+				.createNamedQuery("users.all", User.class)
+				.getResultList();
 		if(users.isEmpty())
 			return Response.status(404).build();
 		return Response.ok(new GenericEntity<List<User>>(users){}).build();
@@ -47,17 +46,18 @@ public class UsersResources {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{id}")
 	public Response get(@PathParam("id") int id){
-		User user = _users.get(id);
-		if(user==null)
+		List<User> users = mgr.createNamedQuery("users.id",User.class)
+				.setParameter("id", id)
+				.getResultList();
+		if(users.size()==0)
 			return Response.status(404).build();
-		return Response.ok(user).build();
+		return Response.ok(users.get(0)).build();
 	}
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addUser(User user){
-		_users.add(user);
-		_library.saveChanges();
+		mgr.persist(user);
 		return Response.ok().build();
 	}
 	
@@ -65,24 +65,29 @@ public class UsersResources {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/{id}")
 	public Response updateUser(@PathParam("id") int id ,User user){
-		
-		User u = _users.get(id);
-		if(u ==null)
+		List<User> users = mgr.createNamedQuery("users.id",User.class)
+				.setParameter("id", id)
+				.getResultList();
+		if(users.size()==0)
 			return Response.status(404).build();
-		user.setId(id);
-		_users.update(user);
-		_library.saveChanges();
+		User u = users.get(0);
+		u.setLogin(user.getLogin());
+		u.setPassword(user.getPassword());
+		//...
+		
+		mgr.persist(u);
 		return Response.ok().build();
 	}
 	
 	@DELETE
 	@Path("/{id}")
 	public Response deleteUser(@PathParam("id") int id){
-		User u = _users.get(id);
-		if(u==null)
+		List<User> users = mgr.createNamedQuery("users.id",User.class)
+				.setParameter("id", id)
+				.getResultList();
+		if(users.size()==0)
 			return Response.status(404).build();
-		_users.delete(u);
-		_library.saveChanges();
+		mgr.remove(users.get(0));
 		return Response.noContent().build();
 	}
 	

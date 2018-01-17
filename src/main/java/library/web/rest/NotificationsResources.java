@@ -29,8 +29,8 @@ public class NotificationsResources {
 	INotificationRepository _Notifications;
 	IDatabaseCatalog _library;
 	public NotificationsResources() throws SQLException {
-		_library = new HsqlCatalogFactory().library();
-		_Notifications = _library.notifications();
+//		_library = new HsqlCatalogFactory().library();
+//		_Notifications = _library.notifications();
 	}
 	
 	

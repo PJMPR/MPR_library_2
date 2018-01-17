@@ -1,12 +1,27 @@
 package library.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="adres")
 public class Address implements IHaveId {
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	private int userId;
 	private String city;
 	private String postalCode;
 	private String street;
 	private String apNumber;
+	
+	@ManyToOne
+	private Profile profile;
+	
 	
 	public Address(String city, String postalCode, String street, String apNumber) {
 		super();
@@ -17,6 +32,15 @@ public class Address implements IHaveId {
 	}
 	public Address() {
 		super();
+	}
+	
+	
+	
+	public Profile getProfile() {
+		return profile;
+	}
+	public void setProfile(Profile profile) {
+		this.profile = profile;
 	}
 	public String getCity() {
 		return city;
@@ -47,12 +71,6 @@ public class Address implements IHaveId {
 	}
 	public void setId(int id) {
 		this.id = id;
-	}
-	public int getUserId() {
-		return userId;
-	}
-	public void setUserId(int userId) {
-		this.userId = userId;
 	}
 	
 }

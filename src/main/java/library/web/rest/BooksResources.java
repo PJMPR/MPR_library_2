@@ -24,7 +24,7 @@ public class BooksResources {
     IBookRepository _books;
    
     public BooksResources() {
-        _books = new HsqlCatalogFactory().library().books();
+//        _books = new HsqlCatalogFactory().library().books();
     }
    
     @GET
