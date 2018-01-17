@@ -22,7 +22,7 @@ public class AdressesResources {
 	IAdressRepository _addresses;
 	
 	public AdressesResources() {
-		_addresses = new HsqlCatalogFactory().library().addresses();
+//		_addresses = new HsqlCatalogFactory().library().addresses();
 	}
 	
 	
