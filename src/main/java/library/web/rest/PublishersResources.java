@@ -13,17 +13,17 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import library.dao.repositories.IpublisherRepository;
+import library.dao.repositories.IPublisherRepository;
 import library.dao.repositories.impl.HsqlCatalogFactory;
-import library.domain.publisher;
+import library.domain.Publisher;
 
 @Path("/Publishers")
 @Stateless
 public class PublishersResources{
-	IpublisherRepository _Publishers;
+	IPublisherRepository _Publishers;
 	
 	public PublishersResources() {
-		_Publishers = new HsqlCatalogFactory().library().Publishers();
+		_Publishers = new HsqlCatalogFactory().library().publishers();
 	}
 	
 	
@@ -31,17 +31,17 @@ public class PublishersResources{
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAll(@QueryParam("page") int page,@QueryParam("max") int max){
 		
-		List<publisher> Publishers = _Publishers.getPage(page, max);
+		List<Publisher> Publishers = _Publishers.getPage(page, max);
 		if(Publishers.isEmpty())
 			return Response.status(404).build();
-		return Response.ok(new GenericEntity<List<publisher>>(Publishers){}).build();
+		return Response.ok(new GenericEntity<List<Publisher>>(Publishers){}).build();
 	}	
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{id}")
 	public Response get(@PathParam("id") int id){
-		publisher publisher = _Publishers.get(id);
+		Publisher publisher = _Publishers.get(id);
 		if(publisher==null)
 			return Response.status(404).build();
 		return Response.ok(publisher).build();
