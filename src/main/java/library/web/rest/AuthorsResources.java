@@ -51,7 +51,7 @@ public class AuthorsResources {
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addUser(Author author){
+	public Response addAuthor(Author author){
 		mgr.persist(author);
 		return Response.ok().build();
 	}
@@ -76,7 +76,7 @@ public class AuthorsResources {
 	
 	@DELETE
 	@Path("/{id}")
-	public Response deleteUser(@PathParam("id") int id){
+	public Response deleteAuthor(@PathParam("id") int id){
 		List<Author> authors = mgr.createNamedQuery("users.id",Author.class)
 				.setParameter("id", id)
 				.getResultList();
