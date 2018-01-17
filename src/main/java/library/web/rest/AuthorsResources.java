@@ -28,7 +28,6 @@ public class AuthorsResources {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAll(@QueryParam("page") int page,@QueryParam("max") int max){
-		
 		List<Author> authors = mgr
 				.createNamedQuery("authors.all", Author.class)
 				.getResultList();

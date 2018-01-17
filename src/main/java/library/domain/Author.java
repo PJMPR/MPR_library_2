@@ -25,7 +25,7 @@ public class Author implements IHaveId {
     private String secondName;
     private String surname;
     
-    @ManyToMany(mappedBy="books")
+    @ManyToMany(mappedBy="book")
     private List<Book> books;
 
     public Author(String name, String secondName, String surname) {

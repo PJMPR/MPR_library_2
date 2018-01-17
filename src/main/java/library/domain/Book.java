@@ -1,19 +1,38 @@
 package library.domain;
 
-import java.sql.Date;
+import java.util.Date;
+import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="books")
+@NamedQueries({
+	@NamedQuery(name="books.all", query="SELECT b FROM Book b"),
+	@NamedQuery(name="books.id", query="SELECT b FROM Book b WHERE b.id=:id")
+})
 public class Book implements IHaveId{
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private Publisher publisher;
-    private Date releaseDate;
-    private Date additionDate;
+    //private Publisher publisher;
+    //private Date releaseDate;
+    //private Date additionDate;
     private String language;
-    private Section section;
+    //private Section section;
     private boolean isAvailable;
     private String title;
-    Author author;
-
+    
+    @ManyToMany(mappedBy="authors")
+    List<Author> author;
+    
 
     public int getId() {
         return id;
@@ -33,14 +52,14 @@ public class Book implements IHaveId{
 		this.title = title;
 	}
 
-	public Author getAuthor() {
+	public List<Author> getAuthor() {
 		return author;
 	}
 
-	public void setAuthor(Author author) {
+	public void setAuthor(List<Author> author) {
 		this.author = author;
 	}
-
+/*
 	public Publisher getPublisher() {
         return publisher;
     }
@@ -64,7 +83,7 @@ public class Book implements IHaveId{
     public void setAdditionDate(Date additionDate) {
         this.additionDate = additionDate;
     }
-
+*/
     public String getLanguage() {
         return language;
     }
@@ -72,7 +91,7 @@ public class Book implements IHaveId{
     public void setLanguage(String language) {
         this.language = language;
     }
-
+    /*
     public Section getSection() {
         return section;
     }
@@ -80,7 +99,7 @@ public class Book implements IHaveId{
     public void setSection(Section section) {
         this.section = section;
     }
-
+	*/
     public boolean isAvailable() {
         return isAvailable;
     }
