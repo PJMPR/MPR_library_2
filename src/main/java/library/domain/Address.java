@@ -5,10 +5,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="adres")
+@NamedQueries({
+	@NamedQuery(name="adres.all", query="SELECT a FROM Address a"),
+	@NamedQuery(name="adres.id", query="SELECT a FROM Address a WHERE a.id=:id")
+})
 public class Address implements IHaveId {
 	
 	@Id
