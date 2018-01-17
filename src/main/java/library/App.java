@@ -18,12 +18,12 @@ public class App
     		= DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/workdb");
     	IUnitOfWork uow = new UnitOfWork(connection);
 			IDatabaseCatalog catalog = new DatabaseCatalog(connection, uow);
-	    	//AuthorRepositoryExample.execute(connection, catalog);
-	    	AddressRepositoryExample.execute(connection, catalog);
-	    	//UserRepositoryExample.execute(connection, catalog);
-			//BookInformationRepositoryExample.execute(connection, catalog);
-	    	//NotificationRepositoryExample.execute(connection, catalog);
-	    	//PublisherRepositoryExample.execute(connection, catalog);
+	    	AuthorRepositoryExample.execute(connection, catalog);
+	    	//AddressRepositoryExample.execute(connection, catalog);
+	    	UserRepositoryExample.execute(connection, catalog);
+			BookInformationRepositoryExample.execute(connection, catalog);
+	    	NotificationRepositoryExample.execute(connection, catalog);
+	    	PublisherRepositoryExample.execute(connection, catalog);
 	    	
 			uow.saveChanges();
     	connection.close();
