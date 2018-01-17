@@ -2,11 +2,37 @@ package library.domain;
 
 import java.sql.Date;
 
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="rezerwacje")
+@NamedQueries({
+	@NamedQuery(name="reservationorders.all", query="SELECT r FROM ReservationOrder r"),
+	@NamedQuery(name="reservationorders.id", query="SELECT r FROM ReservationOrder r WHERE r.id=:id")
+})
+
 public class ReservationOrder implements IHaveId{
 
-	private Book book;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int Id;
+	
+	@OneToOne
+	private Book book;
+	
+	@OneToOne
 	private User user;
+	
+	
 	private Date date;
 
 	public Book getBook() {
