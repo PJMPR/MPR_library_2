@@ -1,5 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
     <meta charset="UTF-8">
     <title>Adress</title>
@@ -7,9 +9,9 @@
 <body>
 
 <h1>Adress Form</h1>
-<form action="AuthorServlet">
-    Street:
-    <input type="text" name="street">
+<form action="AdressServlet">
+    City:
+    <input type="text" name="city">
     <br>
     Postal code:
     <input type="text" name="postal">
@@ -17,8 +19,8 @@
     Street:
     <input type="text" name="street">
     <br>
-    App Number:
-    <input type="text" name="appnum">
+    Ap Number:
+    <input type="text" name="apnumber">
     <br>
     <button type="submit">SUBMIT</button>
 </form>

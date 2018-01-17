@@ -7,19 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="AuthorServlet">
-	Name:
-    <input type="text" name="name">
-    <br>
-    Surname:
-    <input type="text" name="surname">
-    <br>
-    Second Name:
-    <input type="text" name="secondname">
-    <br>
-    <button type="submit">SUBMIT</button>
-    <br>
-    <a href="index.html">Return to main page</a>
-</form>
+	<form action="DemoServlet">
+		<label>name:<input type="text" id="name" name="name"></label>
+		<br/>
+		<button type="submit">Send</button>
+	</form>
 </body>
 </html>
