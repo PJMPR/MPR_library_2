@@ -21,12 +21,12 @@ public class AddressRepositoryExample {
 		catalog.addresses().add(adress);
 		catalog.addresses().add(adress);
 		catalog.addresses().add(adress);
-		
+
 		System.out.println("Count: "+ catalog.addresses().count());
     	System.out.println("last id: "+ catalog.addresses().lastId());
 
-    	List<Address> addressWithCity = catalog.addresses().withCity("Gdansk");
-		List<Address> addressWithPostal = catalog.addresses().withPostal("80-041");
+    	//List<Address> addressWithCity = catalog.addresses().withCity("Gdansk");
+		//List<Address> addressWithPostal = catalog.addresses().withPostal("80-041");
     	
     	List<Address> adresses = catalog.addresses().getPage(1, 2);
     	
